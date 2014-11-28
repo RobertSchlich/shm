@@ -8,12 +8,12 @@
 % This package should properly format in-text
 % reference calls and reference-list numbers.
 
-\usepackage{scicite}
+%\usepackage{scicite}
 
 % Use times if you have the font installed; otherwise, comment out the
 % following line.
 
-\usepackage{times}
+%\usepackage{times}
 
 % The preamble here sets up a lot of new/revised commands and
 % environments.  It's annoying, but please do *not* try to strip these
@@ -63,7 +63,8 @@
 
 % Include your paper's title here
 
-\title{A simple {\it Science\/} Template} 
+\title{Neural networks \\
+in decentralized, autonomous sensor fault detection} 
 
 
 % Place the author information here.  Please hand-code the contact
@@ -73,14 +74,15 @@
 % settings shown here.
 
 \author
-{John Smith,$^{1\ast}$ Jane Doe,$^{1}$ Joe Scientist$^{2}$\\
+{Katrin Jahr, Robert Schlich$^{1}$\\
 \\
-\normalsize{$^{1}$Department of Chemistry, University of Wherever,}\\
-\normalsize{An Unknown Address, Wherever, ST 00000, USA}\\
-\normalsize{$^{2}$Another Unknown Address, Palookaville, ST 99999, USA}\\
+\normalsize{$^{1}$Degree program “Civil Engineering” (M.Sc.)}\\
+\normalsize{Bauhaus-Universität Weimar, Germany}\\
 \\
-\normalsize{$^\ast$To whom correspondence should be addressed; E-mail:  jsmith@wherever.edu.}
+\normalsize{katrin.jahr@uni-weimar.de}\\
+\normalsize{robert.schlich@uni-weimar.de}
 }
+
 
 % Include the date command, but leave its argument blank.
 
@@ -107,12 +109,37 @@
 % Place your abstract within the special {sciabstract} environment.
 
 \begin{sciabstract}
-  This document presents a number of hints about how to set up your
-  {\it Science\/} paper in \LaTeX\ .  We provide a template file,
-  \texttt{scifile.tex}, that you can use to set up the \LaTeX\ source
-  for your article.  An example of the style is the special
-  \texttt{\{sciabstract\}} environment used to set up the abstract you
-  see here.
+
+
+
+
+
+The dependability and the accuracy of structural health monitoring systems are significantly affected by sensor faults. In this paper, the design and implementation of a wireless structural health monitoring system, capable of autonomous fault detection, is presented. A neural network is used for self-monitoring of each sensor node by predicting the measured data with data values submitted by adjacent sensor nodes. These predictions are then compared to the measured data.In laboratory experiments, sensor faults were detected, proving that the use of neural networks increases the reliability of structural health monitoring systems.
+
+%To autonomously detect sensor faults, neural networks 
+%
+%
+% For implementing a reliable fault detection strategy, neural networks can be embedded into the wireless sensor nodes. 
+%
+%
+%Based on neural networks, each sensor node checks the correctness of
+%the sensor data by comparing the recorded measurements with expected measurements
+%obtained from predictions calculated directly on the node.
+
+
+
+
+
+
+%1. Draft:
+%The dependability and the accuracy of structural health monitoring systems are significantly affected by sensor faults. Autonomous fault detection can be obtained by comparing sensor data with data predicted by neural networks. In this paper, the design and implementation of a wireless structural health monitoring system capable of autonomous sensor fault detection using a neural network is presented. The system was validated in laboratory experiments showing its efficency.
+
+%2. Draft
+%The dependability and the accuracy of structural health monitoring systems are significantly affected by sensor faults. In this paper, the design and implementation of a wireless structural health monitoring system is presented. A neural network is used for autonomous fault detection by comparing the predicted data with measured sensor data. In laboratory experiments, sensor faults were detected reliably, proving that the use of neural networks increases the reliability of structural health monitoring systems.
+
+%3th Draft 
+%The dependability and the accuracy of structural health monitoring systems are significantly affected by sensor faults. In this paper, the design and implementation of a wireless structural health monitoring system, capable of autonomous fault detection, is presented. A neural network is used for self-monitoring of each sensor by predicting data values and comparing these values to measured sensor data. In laboratory experiments, sensor faults were detected reliably, proving that the use of neural networks increases the reliability of structural health monitoring systems.
+
 \end{sciabstract}
 
 
