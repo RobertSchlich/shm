@@ -1,0 +1,7 @@
+git pull // auf aktuellen Stand bringen
+
+git add file.end // geänderte Datei dem lokalen Index hinzufügen
+
+git commit -m "Hinweis was geändert wurde" // Überträgt Änderungen ins lokale Verzeichnis
+
+git push // lädt Dateien hoch und setzt sie als neuesten Stand
