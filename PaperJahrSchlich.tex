@@ -1,9 +1,9 @@
 \documentclass[12pt]{article}
-\usepackage[english, ngerman]{babel}
+\usepackage[ngerman, english]{babel}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage[color=yellow!15]{todonotes}
-
+\usepackage{graphicx}
 
 % The following parameters seem to provide a reasonable page setup.
 \topmargin 0.0cm
@@ -130,10 +130,9 @@ vorhergesagte Werte & predicted data \\
 \hline 
 durch Vorhersage erwartete Werte & expected data \\ 
 \hline 
-
-
 \end{tabular} 
 
+%----------------------------------------------------------------------------------------
 
 \section*{Introduction}
 
@@ -150,11 +149,7 @@ durch Vorhersage erwartete Werte & expected data \\
 \item Überblick über geleistete Arbeit
 \end{itemize}
 
-
-
 \newpage
-
-
 
 Buildings are constructed to resist against extensive exposure over several decades. 
 Over time, the structural stability can decrease to an hazardous level. 
@@ -195,6 +190,9 @@ The system is then tested in laboratory experiments.
 Finally, the experimental results are analyzed and future research directions proposed.
 
 \newpage
+
+%----------------------------------------------------------------------------------------
+
 \section*{Design and implementation of the wireless structural health monitoring system}
 
 \textbf{1. paragraph: SHM general}
@@ -218,8 +216,6 @@ Finally, the experimental results are analyzed and future research directions pr
 
 \textbf{3. paragraph: UML / Java implementaion}
 
-
-
 %According to [3], a structural health monitoring system basically consists of the following components:
 %1. data acquisition, 2. data communication, 3. data processing, 4. data storage, 5. diagnostics and 6. data retrieval.
 %
@@ -231,16 +227,40 @@ Finally, the experimental results are analyzed and future research directions pr
 %In the present study, wireless sensor nodes of the type “Oracle Sun SPOTs” are used. The sensor nodes are Java-programmable enabling embedded analyses and the sensor nodes include a 3-dimensional accelerometer, temperature and other sensors (Oracle Lab, 2014). In this study, acceleration measurements taken from the structure are used for analyzing the structural condition. Furthermore, the radios of the sensor nodes ensure wireless communications between the sensor nodes as well as between the sensor nodes and the base station in order to transmit monitoring data or control commands. The base station is able to receive monitoring data measured by the sensor nodes, and the base station can store the data in a database installed on the local computer. The main Java classes are shown in an Unified Modelling Language diagram (UML diagram), which is a standard way to visualize the implementation of a application. The following UML diagrams (cp. Figure 1 and Figure 2) show just the main classes embedded into the base station and the sensor nodes. In the following subsection, the implementation of the main components of the fault detection strategy, including synchronization and fault detection, are shown.
 
 \newpage
+
+%----------------------------------------------------------------------------------------
+
 \section*{Implementation and training of neural networks}
 
 \textbf{1. paragraph: neural networks general}
 
-\begin{itemize}
-\item neurons
-\item layer
-\item weights
-\item activation function / identity function
-\end{itemize}
+\todo[inline]{Die Vorteile von neuronalen Netzwerken müssen m.E. noch in der Einleitung heruasgearbeitet werden}
+
+Artificial neural networks were developed, driven by the desire to enable computer systems to learn autonomously.
+This development is based on the attempt to emulate the data processing mechanics of the human brain. %(and is therefore inherently interwoven with advances in neuroscience)
+In an artificial neural network \emph{neurons} are grouped in different \emph{layers}, as depicted in figure~\ref{fig:neuralnetwork}. 
+Each neuron sends data exclusively to neurons from neighbouring layers through weighted \emph{connections}.
+For each neuron a \emph{propagation function} processes incoming data, in consideration of the connection weights, to the net input.
+An \emph{activation function} then processes the net input to calculate the activation of the neuron, which subsequently determines its output. \cite{KrieselNN}
+
+A neural network learns, most commonly, by adjusting its connection weights until it recreates the results of a desired transfer function with sufficient accuracy.
+In our case...
+\todo[inline]{Weiteres zur Gewichtsveränderung in der Lernphase später im Abschnitt}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics{figures/neuralnetworks.pdf}
+    \caption{Schematic drawing of an artificial neural network with three layers}
+    \label{fig:neuralnetwork}
+\end{figure}
+\todo[inline]{Grafik kann nacher noch an unser neuronales Netz angepasst werden}
+
+%\begin{itemize}
+%\item neurons
+%\item layer
+%\item weights
+%\item activation function / identity function
+%\end{itemize}
 
 \textbf{2. paragraph: proposed nn}
 
@@ -258,6 +278,7 @@ Finally, the experimental results are analyzed and future research directions pr
 
 \textbf{4. paragraph?: learning, proposed}
 
+%----------------------------------------------------------------------------------------
 
 \section*{FFT}
 
@@ -279,8 +300,6 @@ Finally, the experimental results are analyzed and future research directions pr
 \item learning phase
 \end{itemize}
 
-
-
 \textbf{2. paragraph: data measurement and processing}
 
 \begin{itemize}
@@ -300,16 +319,17 @@ Finally, the experimental results are analyzed and future research directions pr
 \item sensor node sends alert to base station
 \end{itemize}
 
-\cite{PDIdocu}
+%----------------------------------------------------------------------------------------
 
 \section*{Discussion of the experimental results}
 
+%----------------------------------------------------------------------------------------
 
 \section*{Summary and conclusions}
 
+%----------------------------------------------------------------------------------------
 
-\bibliographystyle{ieeert}
-
+\bibliographystyle{unsrtnat}
 \bibliography{literature}
 
 \end{document}
