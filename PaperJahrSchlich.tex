@@ -113,7 +113,6 @@ These results indicate that the use of neural networks increases the dependabili
 \end{sciabstract}
 
 \section*{Dictionary}
-\addsec
 
 \begin{tabular}{|l|l|}
 \hline 
@@ -169,7 +168,8 @@ However, using wired SHM systems has several disadvantages:
 For monitoring large constructions like bridges or high-rise buildings, many sensor nodes and therefore a big amount of wire is needed, raising material and personnel expenses.
 Optimal positions for sensor nodes can be impossible to wire and clamps can damage the facade. 
 Visible wires compromise the aesthetic view of a construction and draw interest to vandalism.
-Wireless SHM systems are composed of a base station and several sensor nodes, that communicate by radio.
+
+Wireless SHM systems are composed of a base station and several sensor nodes, that communicate by radio. Therefor, the named disadvantages of cables do not apply.
 Wireless SHM, however, bear some challenges that have to be considered. 
 Electricity supply is constrained to battery life or expensive alternative power suppliers.
 The transmitter signal strength has to be optimized to span long distances without disturbing nearby electronic devices or humans.
@@ -210,6 +210,25 @@ Finally, the experimental results are analyzed and future research directions pr
 \end{itemize}
 
 
+According to \cite[5]{BisbySHM}, a structural health monitoring system commonly consists of the following components:
+1. data acquisition,
+2. data transmission, 
+3. data processing,
+4. data storage,
+5. diagnostics and 
+6. information retrieval.
+
+Task 1. to 3. are implemented on the building site, tasks 4. to 6. at a workstation. 
+A wireless SHM system installed on the building site consists of sensor nodes attached to the construction, a base station and a local computer. 
+The base station, which can be an external device or a computer program, links the individual sensor nodes with each other and the local computer.
+To each sensor node, several sensors measuring different physical quantities may be connected. 
+During a measurement, the sensor nodes acquire sensor data and may perform initial processing.
+The processed data is then transmitted via radio to the base station and, from there, to the local computer. 
+At the computer, the data gets stored accessible and save, e. g. in a database for analysis and diagnosis.
+
+\todo[inline]{vielleicht eine Abbildung?}
+
+
 \textbf{2. paragraph: SunSPOTs}
 
 \begin{itemize}
@@ -218,6 +237,8 @@ Finally, the experimental results are analyzed and future research directions pr
 \item wireless communication
 \item base station
 \end{itemize}
+
+
 
 \textbf{3. paragraph: UML / Java implementaion}
 
@@ -334,6 +355,7 @@ In our case...
 \section*{Summary and conclusions}
 
 %----------------------------------------------------------------------------------------
+\todo{sie sind da!}
 
 \bibliographystyle{unsrtnat}
 \bibliography{literature}
