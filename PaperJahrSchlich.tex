@@ -113,6 +113,7 @@ These results indicate that the use of neural networks increases the dependabili
 \end{sciabstract}
 
 \section*{Dictionary}
+\addsec
 
 \begin{tabular}{|l|l|}
 \hline 
@@ -129,6 +130,8 @@ gemessene Werte & sensor data \\
 vorhergesagte Werte & predicted data \\ 
 \hline 
 durch Vorhersage erwartete Werte & expected data \\ 
+\hline 
+einzelner Messwert & measurement value \\ 
 \hline 
 \end{tabular} 
 
@@ -155,13 +158,14 @@ Buildings are constructed to resist against extensive exposure over several deca
 Over time, the structural stability can decrease to an hazardous level. 
 To prevent structural failure, demolition and replacement of the building or rehabilitation and repair works have to be considered.
 From the outside, it is hard to determine whether building structures are damaged.
-To decide whether cost- and scheduling-intensive strengthening actions are required and to predict failure in advance, structural health monitoring (SHM) is used. 
+To decide whether cost- and scheduling-intensive strengthening actions are required and to predict failure in advance, structural health monitoring (SHM) is used.
+
+\cite[4]{BisbySHM} defines SHM to be "a non-destructive \textit{in-situ} structural evaluation method that uses any of several sensors which are attached to, or embedded in, a structure". The obtained data is "collected, analyzed and stored".
 The construction is observed over long periods of time - up to several years - using data obtained by sensor nodes attached to the building.
 Via analyzing the measured data, such as acceleration or strain, changes in material and geometric behaviour can be recognized early on.
 
-\todo[inline]{Überleitung... verkabelte Sensornetzwerke}
-
-Using wired SHM systems has several disadvantages: 
+Traditionally, the used sensor nodes are wired with optical fiber cables. 
+However, using wired SHM systems has several disadvantages: 
 For monitoring large constructions like bridges or high-rise buildings, many sensor nodes and therefore a big amount of wire is needed, raising material and personnel expenses.
 Optimal positions for sensor nodes can be impossible to wire and clamps can damage the facade. 
 Visible wires compromise the aesthetic view of a construction and draw interest to vandalism.
@@ -170,7 +174,8 @@ Wireless SHM, however, bear some challenges that have to be considered.
 Electricity supply is constrained to battery life or expensive alternative power suppliers.
 The transmitter signal strength has to be optimized to span long distances without disturbing nearby electronic devices or humans.
 Data security may have to be ensured by encrypting the transmitted data and eliminating the possibility of data manipulation.
-\todo[inline]{Synchronisation; warum müssen die sensoren synchron sein?}
+When using several different sensor nodes, the timestamps of single measurement values can differ. 
+To assure the relatability of the sensor data, it is therefor necessary to synchronize all sensor timers. 
 
 Over time, sensors can break and become faulty. Faults can be due to either sudden failure or gradually loss of accuracy.
 To ensure the dependability and the accuracy of the structural health monitoring system, these sensor faults must be detected and eliminated in real time. 
@@ -254,6 +259,7 @@ In our case...
     \label{fig:neuralnetwork}
 \end{figure}
 \todo[inline]{Grafik kann nacher noch an unser neuronales Netz angepasst werden}
+\cite[4]{BisbySHM} defines SHM to be "a non-destructive \textit{in-situ} structural evaluation method that uses any of several sensors which are attached to, or embedded in, a structure". The obtained data is "collected, analyzed and stored".
 
 %\begin{itemize}
 %\item neurons
