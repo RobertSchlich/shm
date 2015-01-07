@@ -223,9 +223,14 @@ When using wireless SHM systems, one has to consider battery life and sensor nod
 Over time, sensors can break and become faulty. Failures can either occur suddenly, or be due to gradual loss of accuracy.
 To ensure the dependability and the accuracy of the SHM system, these sensor faults must be detected and isolated in real time. 
 
-\todo[inline]{Literatur zu nicht neuronalen netzwerken und deren Probleme}
+\todo[inline]{Literatur zu anderen Ansätzen zur Fehlererkennung und deren Probleme}
 
-\todo[inline]{neuronale Netze. später Abgleich mit Abschnitt.}
+A promising approach to fault detection in structural health monitoring systems is the use of artificial neural networks.
+Artificial neural networks consist of neurons which communicate through weighted connection.
+In an initial learning phase neural networks can be trained to approximate arbitrary functions by shifting the weights of the connections until the desired output is reached with satisfying accuracy.
+In this case a neural network is implemented in each sensor node and trained to predict the measurements of said node using data from adjacent nodes as input.
+If implemented correctly sensor faults are indicated by deviation of predicted and measured data.
+\todo[inline]{Vorteile gegenüber anderen Ansätzen(wenn die anderen Ansätze beschrieben wurden)}
 
 This paper presents a wireless structural health monitoring system capable of autonomous fault detection. 
 First, the SHM system is designed and implemented. 
@@ -318,7 +323,6 @@ In our case...
     \label{fig:neuralnetwork}
 \end{figure}
 \todo[inline]{Grafik kann nacher noch an unser neuronales Netz angepasst werden}
-\cite[4]{BisbySHM} defines SHM to be "a non-destructive \textit{in-situ} structural evaluation method that uses any of several sensors which are attached to, or embedded in, a structure". The obtained data is "collected, analyzed and stored".
 
 %\begin{itemize}
 %\item neurons
