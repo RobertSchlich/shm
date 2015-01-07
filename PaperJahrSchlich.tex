@@ -5,6 +5,9 @@
 \usepackage[color=yellow!15]{todonotes}
 \usepackage{graphicx}
 
+% used for line numbering
+\usepackage{lineno}
+
 % The following parameters seem to provide a reasonable page setup.
 \topmargin 0.0cm
 \oddsidemargin 0.2cm
@@ -85,9 +88,9 @@
 
 
 The dependability and the accuracy of structural health monitoring systems are significantly affected by sensor faults. 
-In this paper, the design and implementation of a wireless structural health monitoring system, capable of decentralized autonomous fault detection, is presented. 
-For self-detecting sensor faults, each sensor node predicts its expected sensor data and compares it to measured sensor data. 
-The predictions are computed using neural networks with measured data of adjacent sensor nodes.
+In this paper, the design and implementation of a wireless structural health monitoring system, capable of decentralized autonomous fault detection, are presented. 
+For self-detecting sensor faults, each sensor node predicts its expected sensor data and compares it to the measured sensor data. 
+The predictions are computed using neural networks \textbf{with measured sensor data} of adjacent sensor nodes.
 In laboratory experiments, devised to validate the proposed approach, several simulated sensor faults are detected.
 These results indicate that the use of neural networks increases the dependability and the accuracy of structural health monitoring systems.
 
@@ -111,6 +114,10 @@ These results indicate that the use of neural networks increases the dependabili
 
 
 \end{sciabstract}
+
+\linenumbers % Schaltet Zeilennummerierung ein
+%\modulolinenumbers[5] % nur jede 5. Zeile
+
 
 \section*{Dictionary}
 
@@ -138,51 +145,83 @@ einzelner Messwert & measurement value \\
 
 \section*{Introduction}
 
-\begin{itemize}
-\item Unfälle gefährden Menschenleben und sind teuer
-\item SHMS können Unfälle verhindern
-\item kabellose Sensoren sind besser
-\item Sensoren sind fehleranfällig
-\item Lösung: autonome Fehlererkennung 
-\item Lösungsansätze mit Literaturbelegen
-\item Ansatz: Neuronales Netz
-\item Überblick, Vorteile
-\item Literatur zu neuronalen Netzen
-\item Überblick über geleistete Arbeit
-\end{itemize}
+%\begin{itemize}
+%\item Unfälle gefährden Menschenleben und sind teuer
+%\item SHMS können Unfälle verhindern
+%\item kabellose Sensoren sind besser
+%\item Sensoren sind fehleranfällig
+%\item Lösung: autonome Fehlererkennung 
+%\item Lösungsansätze mit Literaturbelegen
+%\item Ansatz: Neuronales Netz
+%\item Überblick, Vorteile
+%\item Literatur zu neuronalen Netzen
+%\item Überblick über geleistete Arbeit
+%\end{itemize}
+%
+%\newpage
+%
+%Civil engineering structures are designed to resist extensive external impact over several decades. 
+%Over time, the structural stability can decrease to an hazardous level. 
+%To prevent structural failure, demolition and replacement of the building or rehabilitation and repair works have to be considered.
+%From the outside, it is hard to determine whether building structures are damaged.
+%To decide whether cost- and scheduling-intensive strengthening actions are required and to predict failure in advance, structural health monitoring (SHM) is used.
+%
+%\cite[4]{BisbySHM} defines SHM as "a non-destructive \textit{in-situ} structural evaluation method that uses any of several sensors which are attached to, or embedded in, a structure". 
+%The obtained sensor data is "collected, analyzed and stored".
+%The structure is observed over long periods of time - up to several years - using data obtained by sensor nodes attached to the \textbf{construction}.
+%Via analyzing the measured data, such as acceleration or strain, changes in material and geometric behaviour can be recognized early on.
+%
+%
+%((((
+%
+%Traditionally, the used sensor nodes are wired with optical fiber cables. 
+%However, using wired SHM systems has several disadvantages: 
+%For monitoring large constructions like bridges or high-rise buildings, many sensor nodes and therefore a big amount of wire is needed, raising material and personnel expenses.
+%Optimal positions for sensor nodes can be impossible to wire and clamps can damage the facade. 
+%Visible wires compromise the aesthetic view of a construction and draw interest to vandalism.
+%
+%))))
+%
+%Wireless SHM systems are composed of a several sensor nodes, a base station and a personal computer, that communicate by radio. 
+%Therefore, the named disadvantages of cables do not apply.
+%Wireless SHM, however, bear some challenges that have to be considered. 
+%Electricity supply is constrained to battery life or expensive alternative power suppliers.
+%The transmitter signal strength has to be optimized to span long distances without disturbing nearby electronic devices or humans.
+%Data security may have to be ensured by encrypting the transmitted data and eliminating the possibility of data manipulation.
+%When using several different sensor nodes, the timestamps of single measurement values can differ. 
+%To assure the relatability of the sensor data, it is therefore necessary to synchronize all sensor timers. 
+%
+%Over time, sensors can break and become faulty. Faults can be due to either sudden failure or gradually loss of accuracy.
+%To ensure the dependability and the accuracy of the structural health monitoring system, these sensor faults must be detected and eliminated in real time. 
+%
+%To autonomously detect sensor faults, several different approaches have been tested.
+%
+%...
+%
+%\todo[inline]{Literatur zu nicht neuronalen netzwerken und deren Probleme}
+%
+%\todo[inline]{neuronale Netze. später Abgleich mit Abschnitt.}
+%
+%This paper shows a wireless structural health monitoring system with autonomous fault detection. 
+%At first, the SHM system is designed and implemented. 
+%Next, a neural network is implemented in each sensor and trained to detect faulty behaviour. 
+%The system is then tested in laboratory experiments. 
+%Finally, the experimental results are analyzed and future research directions proposed.
 
-\newpage
+Civil engineering structures are exposed to external impacts over several decades. 
+To ensure the structural stability and evaluate the conditions of civil engineering structures, structural health monitoring (SHM) systems can be installed.
+\cite[4]{BisbySHM} defines SHM as "a non-destructive \textit{in-situ} structural evaluation method that uses any of several sensors which are attached to, or embedded in, a structure". 
+The obtained sensor data is "collected, analyzed and stored" over long periods of time.
+Analysis of the sensor data can reveal abnormal changes in material and geometric behaviour early on.
 
-Buildings are constructed to resist against extensive exposure over several decades. 
-Over time, the structural stability can decrease to an hazardous level. 
-To prevent structural failure, demolition and replacement of the building or rehabilitation and repair works have to be considered.
-From the outside, it is hard to determine whether building structures are damaged.
-To decide whether cost- and scheduling-intensive strengthening actions are required and to predict failure in advance, structural health monitoring (SHM) is used.
+Traditionally, the sensor nodes are wired with cables and connected to computer systems.
+However, using wired SHM systems has several disadvantages, including expensive wiring, high personnal costs and inaccessibility of optimal positions with wires.
+In wireless SHM systems, the sensor nodes communicate with a base station via radio, ruling out wiring-specific problems.
+When using wireless SHM systems, one has to consider battery life and sensor node \textit{sychronization}.
+\todo{wird später darauf eingegangen? Sonst raus.}
 
-\cite[4]{BisbySHM} defines SHM to be "a non-destructive \textit{in-situ} structural evaluation method that uses any of several sensors which are attached to, or embedded in, a structure". The obtained data is "collected, analyzed and stored".
-The construction is observed over long periods of time - up to several years - using data obtained by sensor nodes attached to the building.
-Via analyzing the measured data, such as acceleration or strain, changes in material and geometric behaviour can be recognized early on.
-
-Traditionally, the used sensor nodes are wired with optical fiber cables. 
-However, using wired SHM systems has several disadvantages: 
-For monitoring large constructions like bridges or high-rise buildings, many sensor nodes and therefore a big amount of wire is needed, raising material and personnel expenses.
-Optimal positions for sensor nodes can be impossible to wire and clamps can damage the facade. 
-Visible wires compromise the aesthetic view of a construction and draw interest to vandalism.
-
-Wireless SHM systems are composed of a base station and several sensor nodes, that communicate by radio. Therefore, the named disadvantages of cables do not apply.
-Wireless SHM, however, bear some challenges that have to be considered. 
-Electricity supply is constrained to battery life or expensive alternative power suppliers.
-The transmitter signal strength has to be optimized to span long distances without disturbing nearby electronic devices or humans.
-Data security may have to be ensured by encrypting the transmitted data and eliminating the possibility of data manipulation.
-When using several different sensor nodes, the timestamps of single measurement values can differ. 
-To assure the relatability of the sensor data, it is therefore necessary to synchronize all sensor timers. 
-
-Over time, sensors can break and become faulty. Faults can be due to either sudden failure or gradually loss of accuracy.
-To ensure the dependability and the accuracy of the structural health monitoring system, these sensor faults must be detected and eliminated in real time. 
-
-To autonomously detect sensor faults, several different approaches have been tested.
-
-...
+Over time, sensors can break and become faulty. Failures can either occur suddenly, or be due to gradual loss of accuracy.
+To ensure the dependability and the accuracy of the SHM system, these sensor faults must be detected and isolated in real time. 
 
 \todo[inline]{Literatur zu anderen Ansätzen zur Fehlererkennung und deren Probleme}
 
@@ -193,13 +232,12 @@ In this case a neural network is implemented in each sensor node and trained to 
 If implemented correctly sensor faults are indicated by deviation of predicted and measured data.
 \todo[inline]{Vorteile gegenüber anderen Ansätzen(wenn die anderen Ansätze beschrieben wurden)}
 
-%This paper shows a wireless structural health monitoring system with autonomous fault detection. 
-%At first, the SHM system is designed and implemented. 
-%Next, a neural network is implemented in each sensor and trained to detect faulty behaviour. 
-%The system is then tested in laboratory experiments. 
-%Finally, the experimental results are analyzed and future research directions proposed.
+This paper presents a wireless structural health monitoring system capable of autonomous fault detection. 
+First, the SHM system is designed and implemented. 
+Next, a neural network is implemented into each sensor node and trained to detect faults. 
+The system is then tested in laboratory experiments. 
+Finally, the experimental results are analyzed and future research directions proposed.
 
-\newpage
 
 %----------------------------------------------------------------------------------------
 
@@ -359,7 +397,6 @@ In our case...
 \section*{Summary and conclusions}
 
 %----------------------------------------------------------------------------------------
-\todo{sie sind da!}
 
 \bibliographystyle{unsrtnat}
 \bibliography{literature}
