@@ -5,11 +5,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-import fft.Complex;
-
 public class GetCSV
 {
-    public static Complex[] Load(String file) throws FileNotFoundException
+    public static double[] Load(String file) throws FileNotFoundException
     {
         //Get scanner instance
         Scanner scanner = new Scanner(new File(file));
@@ -38,14 +36,14 @@ public class GetCSV
         scanner.useDelimiter(",");
                 
         // initialize array of complex numbers
-        Complex[] y = new Complex[i];
+        double[] y = new double[i];
         
         // parse text to double, create complex number, add it to array
         int j = 0;    
         while (scanner2.hasNextLine())
         {
-        	Double a = Double.valueOf(scanner2.nextLine());
-        	y[j]=new Complex(a);
+        	double a = Double.valueOf(scanner2.nextLine());
+        	y[j]=new Double(a);
             //System.out.print(y[j]);
         	j+=1;
         }
