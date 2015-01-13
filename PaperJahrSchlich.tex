@@ -7,7 +7,7 @@
 \usepackage[numbers, square]{natbib}
 
 % used for line numbering
-%\usepackage{lineno}
+\usepackage{lineno}
 
 % The following parameters seem to provide a reasonable page setup.
 \topmargin 0.0cm
@@ -114,9 +114,8 @@ These results indicate that the use of neural networks increases the dependabili
 
 %----------------------------------------------------------------------------------------
 
-%\linenumbers % Schaltet Zeilennummerierung ein
+\linenumbers % Schaltet Zeilennummerierung ein
 %\modulolinenumbers[5] % nur jede 5. Zeile
-
 \section*{Dictionary}
 
 \begin{tabular}{|l|l|}
@@ -223,7 +222,7 @@ When using wireless SHM systems, one has to consider battery life and sensor nod
 Over time, sensors can break and become faulty. Failures can either occur suddenly, or be due to gradual loss of accuracy.
 To ensure the dependability and the accuracy of the SHM system, these sensor faults must be detected and isolated in real time. 
 A simple approach to fault detection is the installation of physically redundant sensors.
-Faulty sensors can then easily be identified through the deviation of their measurements from the measurements of other sensors.
+Faulty sensors can easily be identified through the deviation of their measurements from the measurements of other sensors.
 Physical redundancy, although efficient at sensor fault detection, has the disadvantage of increased installation and maintenance costs. \cite{SmarslyDA}
 
 Another approach, called analytical redundancy, applies knowledge of the structure and the SHM system itself to compute virtual sensor measurements for each sensor.
