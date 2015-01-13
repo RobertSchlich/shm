@@ -86,14 +86,12 @@
 
 \begin{sciabstract}
 
-
 The dependability and the accuracy of structural health monitoring systems are significantly affected by sensor faults. 
 In this paper, the design and implementation of a wireless structural health monitoring system, capable of decentralized autonomous fault detection, are presented. 
 For self-detecting sensor faults, each sensor node predicts its expected sensor data and compares it to the measured sensor data. 
 The predictions are computed using neural networks \textbf{with measured sensor data} of adjacent sensor nodes.
 In laboratory experiments, devised to validate the proposed approach, several simulated sensor faults are detected.
 These results indicate that the use of neural networks increases the dependability and the accuracy of structural health monitoring systems.
-
 
 %1st Draft:
 %The dependability and the accuracy of structural health monitoring systems are significantly affected by sensor faults. Autonomous fault detection can be obtained by comparing sensor data with data predicted by neural networks. In this paper, the design and implementation of a wireless structural health monitoring system capable of autonomous sensor fault detection using a neural network is presented. The system was validated in laboratory experiments showing its efficency.
@@ -111,13 +109,12 @@ These results indicate that the use of neural networks increases the dependabili
 %These predictions are then compared to the measured data.
 %In laboratory experiments, sensor faults were detected, proving that the use of neural networks increases the reliability of structural health monitoring systems.
 
-
-
 \end{sciabstract}
+
+%----------------------------------------------------------------------------------------
 
 \linenumbers % Schaltet Zeilennummerierung ein
 %\modulolinenumbers[5] % nur jede 5. Zeile
-
 
 \section*{Dictionary}
 
@@ -222,12 +219,20 @@ When using wireless SHM systems, one has to consider battery life and sensor nod
 
 Over time, sensors can break and become faulty. Failures can either occur suddenly, or be due to gradual loss of accuracy.
 To ensure the dependability and the accuracy of the SHM system, these sensor faults must be detected and isolated in real time. 
+In order to achieve this goal, physicaly redundant sensors can be installed in the same location.
+Faulty sensor can then easily be identified through the deviation of their meaurements from the measurements of other sensors.
+Physical redundancy, allthough efficient at sensor fault detection, has the disadvantage of increased installation and maintenance costs.
+
+In a technologically more advanced approach, sensor redundancy is provided analytically.
+Using a priori knowledge of the building 
 
 \todo[inline]{Literatur zu anderen Ansätzen zur Fehlererkennung und deren Probleme}
 
 A promising approach to fault detection in structural health monitoring systems is the use of artificial neural networks.
-Artificial neural networks consist of neurons which communicate through weighted connections.
-In an initial learning phase neural networks can be trained to approximate arbitrary functions by shifting the weights of the connections until the desired output is reached with satisfying accuracy.
+Artificial neural networks are algorithms that can be trained to approximate arbitrary functions.
+
+ by changing the weights of the connections until the desired output is reached with satisfying accuracy.
+
 In this case a neural network is implemented in each sensor node and trained to predict the measurements of said node using data from adjacent nodes as input.
 If implemented correctly sensor faults are indicated by deviation of predicted and measured data.
 \todo[inline]{Vorteile gegenüber anderen Ansätzen(wenn die anderen Ansätze beschrieben wurden)}
