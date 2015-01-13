@@ -4,6 +4,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage[color=yellow!15]{todonotes}
 \usepackage{graphicx}
+\usepackage[numbers, square]{natbib}
 
 % used for line numbering
 \usepackage{lineno}
@@ -219,23 +220,25 @@ When using wireless SHM systems, one has to consider battery life and sensor nod
 
 Over time, sensors can break and become faulty. Failures can either occur suddenly, or be due to gradual loss of accuracy.
 To ensure the dependability and the accuracy of the SHM system, these sensor faults must be detected and isolated in real time. 
-In order to achieve this goal, physicaly redundant sensors can be installed in the same location.
-Faulty sensor can then easily be identified through the deviation of their meaurements from the measurements of other sensors.
-Physical redundancy, allthough efficient at sensor fault detection, has the disadvantage of increased installation and maintenance costs.
+A simple approach to fault detection is the installation of physically redundant sensors.
+Faulty sensor can then easily be identified through the deviation of their measurements from the measurements of other sensors.
+Physical redundancy, although efficient at sensor fault detection, has the disadvantage of increased installation and maintenance costs.
 
-In a technologically more advanced approach, sensor redundancy is provided analytically.
-Using a priori knowledge of the building 
+Another approach to provide sensor redundancy applies knowledge of the structure and the SHM system itself to analytically compute virtual sensor measurements for each sensor.
+For example to calculate a virtual measurement of one sensor, data from adjacent sensor nodes could be used in combination with a FEM model.
+If this approach is implemented correctly virtual measurements always represent a correct working sensor and actual measurements deviating from their virtual counterparts indicate faulty sensor.\cite{SmarslyDA}
 
-\todo[inline]{Literatur zu anderen Ansätzen zur Fehlererkennung und deren Probleme}
+In this study analytical redundancy is provided by artificial neural networks.
+Artificial neural networks consist of interconnected basic data processing elements, called neurons. 
+Neurons are grouped in different layers; usually they consist of one input layer, a number of hidden layers and an output layer.
+Artificial neural networks have the distinct ability of learning by adjusting the weights of the inter-neuron connections, until a set of given input variables results in the desired output variables.
+If implemented correctly a neural network can be trained to approximate any mathematical functions with arbitrary accuracy.
 
-A promising approach to fault detection in structural health monitoring systems is the use of artificial neural networks.
-Artificial neural networks are algorithms that can be trained to approximate arbitrary functions.
+In this case a neural network is implemented in each sensor node and trained to predict the measurements of said node using data from adjacent nodes as input. 
+Should the actual measurement deviate from the predicted measurement a warning is given to the operator of the SHM system and eventual sensor faults can be investigated.
+Thus analytical redundancy is provided for each sensor node without the necessity of a priori knowledge of the building or the layout of the SHM system.
 
- by changing the weights of the connections until the desired output is reached with satisfying accuracy.
-
-In this case a neural network is implemented in each sensor node and trained to predict the measurements of said node using data from adjacent nodes as input.
-If implemented correctly sensor faults are indicated by deviation of predicted and measured data.
-\todo[inline]{Vorteile gegenüber anderen Ansätzen(wenn die anderen Ansätze beschrieben wurden)}
+\todo{Der letzte Absatz muss noch angepasst werden, damit der Bezug zum vorhergehenden Absatz wieder hergestellt ist.}
 
 This paper presents a wireless structural health monitoring system capable of autonomous fault detection. 
 First, the SHM system is designed and implemented. 
