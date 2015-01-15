@@ -223,16 +223,16 @@ Over time, sensors can break and become faulty. Failures can either occur sudden
 To ensure the dependability and the accuracy of the SHM system, these sensor faults must be detected and isolated in real time. 
 A simple approach to fault detection is the installation of physically redundant sensors.
 Faulty sensors can easily be identified through the deviation of their measurements from the measurements of other sensors.
-Physical redundancy, although efficient at sensor fault detection, has the disadvantage of increased installation and maintenance costs. \cite{SmarslyDA}
+Physical redundancy, although efficient at sensor fault detection, has the disadvantage of increased installation and maintenance costs. 
 A technologically more advanced approach, called analytical redundancy, applies knowledge of the structure and the SHM system itself to compute virtual sensor measurements for each sensor. 
 For example, a FEM model could be used in combination with data from adjacent sensor nodes to calculate a virtual measurement of one sensor.
-If analytical redundancy is implemented correctly, virtual measurements always simulate a correct working sensor; therefore actual measurements deviating from their virtual counterparts indicate faulty sensors.\cite{SmarslyDA} \todo{andere Quelle}
+If analytical redundancy is implemented correctly, virtual measurements always simulate a correct working sensor; therefore actual measurements deviating from their virtual counterparts indicate faulty sensors.\citep{Smarsly2014}
 
 In this study, analytical redundancy is realized by artificial neural networks.
 Artificial neural networks consist of interconnected data processing elements called neurons. 
 Neurons are grouped in different layers; they consist of one input layer, a number of hidden layers and one output layer.
 Artificial neural networks have the distinct ability of learning by adjusting the weights of the inter-neuron connections, until a set of given input variables results in the desired output variables.
-If implemented correctly, a neural network can be trained to approximate any mathematical functions with arbitrary accuracy. \todo{Zitat Li}
+If implemented correctly, a neural network can be trained to approximate any mathematical functions with arbitrary accuracy \citep{Li2011}.
 
 This paper is organized as follows:
 First, a wireless structural health monitoring system is designed and implemented. 
