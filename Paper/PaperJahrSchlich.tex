@@ -4,6 +4,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage[color=yellow!15]{todonotes}
 \usepackage{graphicx}
+\usepackage[numbers, square]{natbib}
 
 % used for line numbering
 \usepackage{lineno}
@@ -115,7 +116,6 @@ These results indicate that the use of neural networks increases the dependabili
 
 \linenumbers % Schaltet Zeilennummerierung ein
 %\modulolinenumbers[5] % nur jede 5. Zeile
-
 \section*{Dictionary}
 
 \begin{tabular}{|l|l|}
@@ -137,6 +137,8 @@ durch Vorhersage erwartete Werte & expected data \\
 einzelner Messwert & measurement value \\ 
 \hline 
 \end{tabular} 
+
+\todo[inline]{"tatsächliche" / reale; virtuelle Messung?}
 
 %----------------------------------------------------------------------------------------
 
@@ -184,7 +186,7 @@ einzelner Messwert & measurement value \\
 %Wireless SHM, however, bear some challenges that have to be considered. 
 %Electricity supply is constrained to battery life or expensive alternative power suppliers.
 %The transmitter signal strength has to be optimized to span long distances without disturbing nearby electronic devices or humans.
-%Data security may have to be ensured by encrypting the transmitted data and eliminating the possibility of data manipulation.
+%Data security may have to be ensured by encrypting the transmitted data and eliminating the possibility of data manipulation.In this case
 %When using several different sensor nodes, the timestamps of single measurement values can differ. 
 %To assure the relatability of the sensor data, it is therefore necessary to synchronize all sensor timers. 
 %
@@ -212,39 +214,35 @@ The obtained sensor data is "collected, analyzed and stored" over long periods o
 Analysis of the sensor data can reveal abnormal changes in material and geometric behaviour early on.
 
 Traditionally, the sensor nodes are wired with cables and connected to computer systems.
-However, using wired SHM systems has several disadvantages, including expensive wiring, high personnal costs and inaccessibility of optimal positions with wires.
+However, using wired SHM systems has several disadvantages, including expensive wiring, high personnal costs and inaccessibility of optimal positions with wiresIn this case.
 In wireless SHM systems, the sensor nodes communicate with a base station via radio, ruling out wiring-specific problems.
 When using wireless SHM systems, one has to consider battery life and sensor node \textit{sychronization}.
 \todo{wird später darauf eingegangen? Sonst raus.}
 
 Over time, sensors can break and become faulty. Failures can either occur suddenly, or be due to gradual loss of accuracy.
 To ensure the dependability and the accuracy of the SHM system, these sensor faults must be detected and isolated in real time. 
-In order to achieve this goal, physicaly redundant sensors can be installed in the same location.
-Faulty sensor can then easily be identified through the deviation of their meaurements from the measurements of other sensors.
-Physical redundancy, allthough efficient at sensor fault detection, has the disadvantage of increased installation and maintenance costs.
+A simple approach to fault detection is the installation of physically redundant sensors.
+Faulty sensors can easily be identified through the deviation of their measurements from the measurements of other sensors.
+Physical redundancy, although efficient at sensor fault detection, has the disadvantage of increased installation and maintenance costs. 
+A technologically more advanced approach, called analytical redundancy, applies knowledge of the structure and the SHM system itself to compute virtual sensor measurements for each sensor. 
+For example, a FEM model could be used in combination with data from adjacent sensor nodes to calculate a virtual measurement of one sensor.
+If analytical redundancy is implemented correctly, virtual measurements always simulate a correct working sensor; therefore actual measurements deviating from their virtual counterparts indicate faulty sensors.\citep{Smarsly2014}
 
-In a technologically more advanced approach, sensor redundancy is provided analytically.
-Using a priori knowledge of the building 
+In this study, analytical redundancy is realized by artificial neural networks.
+Artificial neural networks consist of interconnected data processing elements called neurons. 
+Neurons are grouped in different layers; they consist of one input layer, a number of hidden layers and one output layer.
+Artificial neural networks have the distinct ability of learning by adjusting the weights of the inter-neuron connections, until a set of given input variables results in the desired output variables.
+If implemented correctly, a neural network can be trained to approximate any mathematical functions with arbitrary accuracy \citep{Li2011}.
 
-\todo[inline]{Literatur zu anderen Ansätzen zur Fehlererkennung und deren Probleme}
-
-A promising approach to fault detection in structural health monitoring systems is the use of artificial neural networks.
-Artificial neural networks are algorithms that can be trained to approximate arbitrary functions.
-
- by changing the weights of the connections until the desired output is reached with satisfying accuracy.
-
-In this case a neural network is implemented in each sensor node and trained to predict the measurements of said node using data from adjacent nodes as input.
-If implemented correctly sensor faults are indicated by deviation of predicted and measured data.
-\todo[inline]{Vorteile gegenüber anderen Ansätzen(wenn die anderen Ansätze beschrieben wurden)}
-
-This paper presents a wireless structural health monitoring system capable of autonomous fault detection. 
-First, the SHM system is designed and implemented. 
-Next, a neural network is implemented into each sensor node and trained to detect faults. 
+This paper is organized as follows:
+First, a wireless structural health monitoring system is designed and implemented. 
+Next, a neural network is implemented in each sensor node and trained to predict the measurements of said node in order to detect faults. 
 The system is then tested in laboratory experiments. 
 Finally, the experimental results are analyzed and future research directions proposed.
 
-
 %----------------------------------------------------------------------------------------
+
+\newpage
 
 \section*{Design and implementation of the wireless structural health monitoring system}
 
@@ -354,12 +352,6 @@ In our case...
 
 %----------------------------------------------------------------------------------------
 
-\section*{FFT}
-
-\begin{itemize}
-\item Frequenzspektrum ermitteln
-\end{itemize}
-
 
 \newpage
 \section*{Laboratory experiments}
@@ -379,7 +371,7 @@ In our case...
 \begin{itemize}
 \item excitation
 \item sensors start measuring
-\item sensor nodes perform fft
+\item sensor nodes \textbf{perform fft} - what is fft
 \item sensor nodes exchange frequencies
 \item neural networks check integrity
 \item if no faults detected, sensor nodes send data to base station
