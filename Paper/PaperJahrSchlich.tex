@@ -19,7 +19,7 @@
 
 %The next command sets up an environment for the abstract to your paper.
 \newenvironment{sciabstract}{%
-\begin{quote} \bf}
+\begin{quote} \bfseries}
 {\end{quote}}
 
 
@@ -94,22 +94,6 @@ The predictions are computed using neural networks \textbf{with measured sensor 
 In laboratory experiments, devised to validate the proposed approach, several simulated sensor faults are detected.
 These results indicate that the use of neural networks increases the dependability and the accuracy of structural health monitoring systems.
 
-%1st Draft:
-%The dependability and the accuracy of structural health monitoring systems are significantly affected by sensor faults. Autonomous fault detection can be obtained by comparing sensor data with data predicted by neural networks. In this paper, the design and implementation of a wireless structural health monitoring system capable of autonomous sensor fault detection using a neural network is presented. The system was validated in laboratory experiments showing its efficency.
-
-%2nd Draft
-%The dependability and the accuracy of structural health monitoring systems are significantly affected by sensor faults. In this paper, the design and implementation of a wireless structural health monitoring system is presented. A neural network is used for autonomous fault detection by comparing the predicted data with measured sensor data. In laboratory experiments, sensor faults were detected reliably, proving that the use of neural networks increases the reliability of structural health monitoring systems.
-
-%3th Draft 
-%The dependability and the accuracy of structural health monitoring systems are significantly affected by sensor faults. In this paper, the design and implementation of a wireless structural health monitoring system, capable of autonomous fault detection, is presented. A neural network is used for self-monitoring of each sensor by predicting data values and comparing these values to measured sensor data. In laboratory experiments, sensor faults were detected reliably, proving that the use of neural networks increases the reliability of structural health monitoring systems.
-
-%4th Draft
-%The dependability and the accuracy of structural health monitoring systems are significantly affected by sensor faults. 
-%In this paper, the design and implementation of a wireless structural health monitoring system, capable of autonomous fault detection, is presented. 
-%A neural network is used for self-monitoring of each sensor node by predicting the measured data with data values submitted by adjacent sensor nodes. 
-%These predictions are then compared to the measured data.
-%In laboratory experiments, sensor faults were detected, proving that the use of neural networks increases the reliability of structural health monitoring systems.
-
 \end{sciabstract}
 
 %----------------------------------------------------------------------------------------
@@ -126,7 +110,7 @@ einzelner Messsensor (Thermometer) & sensor \\
 \hline 
 Knoten im neuronalen Netz & neuron \\ 
 \hline 
-eine abgeschlossene Messung & measurement \\ 
+eine abgeschlossene Messungreihe & test run \\ 
 \hline 
 gemessene Werte & sensor data \\ 
 \hline 
@@ -134,78 +118,20 @@ vorhergesagte Werte & predicted data \\
 \hline 
 durch Vorhersage erwartete Werte & expected data \\ 
 \hline 
-einzelner Messwert & measurement value \\ 
+einzelner Messwert & measurement \\ 
 \hline 
-\end{tabular} 
+Test & laboratory experiments\\ 
+\hline
+tatsächliche, nicht virtuelle Messung & actual measurement \\
+\hline
+Messaufbau & test setup \\
+\hline
 
-\todo[inline]{"tatsächliche" / reale; virtuelle Messung?}
+\end{tabular} 
 
 %----------------------------------------------------------------------------------------
 
 \section*{Introduction}
-
-%\begin{itemize}
-%\item Unfälle gefährden Menschenleben und sind teuer
-%\item SHMS können Unfälle verhindern
-%\item kabellose Sensoren sind besser
-%\item Sensoren sind fehleranfällig
-%\item Lösung: autonome Fehlererkennung 
-%\item Lösungsansätze mit Literaturbelegen
-%\item Ansatz: Neuronales Netz
-%\item Überblick, Vorteile
-%\item Literatur zu neuronalen Netzen
-%\item Überblick über geleistete Arbeit
-%\end{itemize}
-%
-%\newpage
-%
-%Civil engineering structures are designed to resist extensive external impact over several decades. 
-%Over time, the structural stability can decrease to an hazardous level. 
-%To prevent structural failure, demolition and replacement of the building or rehabilitation and repair works have to be considered.
-%From the outside, it is hard to determine whether building structures are damaged.
-%To decide whether cost- and scheduling-intensive strengthening actions are required and to predict failure in advance, structural health monitoring (SHM) is used.
-%
-%\cite[4]{BisbySHM} defines SHM as "a non-destructive \textit{in-situ} structural evaluation method that uses any of several sensors which are attached to, or embedded in, a structure". 
-%The obtained sensor data is "collected, analyzed and stored".
-%The structure is observed over long periods of time - up to several years - using data obtained by sensor nodes attached to the \textbf{construction}.
-%Via analyzing the measured data, such as acceleration or strain, changes in material and geometric behaviour can be recognized early on.
-%
-%
-%((((
-%
-%Traditionally, the used sensor nodes are wired with optical fiber cables. 
-%However, using wired SHM systems has several disadvantages: 
-%For monitoring large constructions like bridges or high-rise buildings, many sensor nodes and therefore a big amount of wire is needed, raising material and personnel expenses.
-%Optimal positions for sensor nodes can be impossible to wire and clamps can damage the facade. 
-%Visible wires compromise the aesthetic view of a construction and draw interest to vandalism.
-%
-%))))
-%
-%Wireless SHM systems are composed of a several sensor nodes, a base station and a personal computer, that communicate by radio. 
-%Therefore, the named disadvantages of cables do not apply.
-%Wireless SHM, however, bear some challenges that have to be considered. 
-%Electricity supply is constrained to battery life or expensive alternative power suppliers.
-%The transmitter signal strength has to be optimized to span long distances without disturbing nearby electronic devices or humans.
-%Data security may have to be ensured by encrypting the transmitted data and eliminating the possibility of data manipulation.In this case
-%When using several different sensor nodes, the timestamps of single measurement values can differ. 
-%To assure the relatability of the sensor data, it is therefore necessary to synchronize all sensor timers. 
-%
-%Over time, sensors can break and become faulty. Faults can be due to either sudden failure or gradually loss of accuracy.
-%To ensure the dependability and the accuracy of the structural health monitoring system, these sensor faults must be detected and eliminated in real time. 
-%
-%To autonomously detect sensor faults, several different approaches have been tested.
-%
-%...
-%
-%\todo[inline]{Literatur zu nicht neuronalen netzwerken und deren Probleme}
-%
-%\todo[inline]{neuronale Netze. später Abgleich mit Abschnitt.}
-%
-%This paper shows a wireless structural health monitoring system with autonomous fault detection. 
-%At first, the SHM system is designed and implemented. 
-%Next, a neural network is implemented in each sensor and trained to detect faulty behaviour. 
-%The system is then tested in laboratory experiments. 
-%Finally, the experimental results are analyzed and future research directions proposed.
 
 Civil engineering structures are exposed to external impacts over several decades. 
 To ensure the structural stability and evaluate the conditions of civil engineering structures, structural health monitoring (SHM) systems can be installed.
@@ -284,19 +210,7 @@ At the computer, the data gets stored accessible and save, e. g. in a database f
 \item base station
 \end{itemize}
 
-
-
 \textbf{3. paragraph: UML / Java implementaion}
-
-%According to [3], a structural health monitoring system basically consists of the following components:
-%1. data acquisition, 2. data communication, 3. data processing, 4. data storage, 5. diagnostics and 6. data retrieval.
-%
-%
-%
-%For autonomous fault detection in wireless SHM systems, an integrated fault detection and synchronization strategy is implemented into a wireless SHM system. The SHM system consists of wireless sensor nodes and a base station. The sensor nodes are installed on the monitored structure and the base station links the wireless SHM system and a local computer.
-%
-%
-%In the present study, wireless sensor nodes of the type “Oracle Sun SPOTs” are used. The sensor nodes are Java-programmable enabling embedded analyses and the sensor nodes include a 3-dimensional accelerometer, temperature and other sensors (Oracle Lab, 2014). In this study, acceleration measurements taken from the structure are used for analyzing the structural condition. Furthermore, the radios of the sensor nodes ensure wireless communications between the sensor nodes as well as between the sensor nodes and the base station in order to transmit monitoring data or control commands. The base station is able to receive monitoring data measured by the sensor nodes, and the base station can store the data in a database installed on the local computer. The main Java classes are shown in an Unified Modelling Language diagram (UML diagram), which is a standard way to visualize the implementation of a application. The following UML diagrams (cp. Figure 1 and Figure 2) show just the main classes embedded into the base station and the sensor nodes. In the following subsection, the implementation of the main components of the fault detection strategy, including synchronization and fault detection, are shown.
 
 \newpage
 
@@ -319,7 +233,7 @@ A neural network learns, most commonly, by adjusting its connection weights unti
 In our case...
 \todo[inline]{Weiteres zur Gewichtsveränderung in der Lernphase später im Abschnitt}
 
-\begin{figure}[h]
+\begin{figure}[ht]
     \centering
     \includegraphics{figures/neuralnetworks.pdf}
     \caption{Schematic drawing of an artificial neural network with three layers}
@@ -356,19 +270,20 @@ In our case...
 \newpage
 \section*{Laboratory experiments}
 
-\textbf{1. paragraph: test setting}
+\textbf{1. paragraph: test setup}
 
 \begin{itemize}
 \item test structure, picture
 \item sensor installation
 \item type of excitation, acceleration is measured
 
-\item learning phase
+
 \end{itemize}
 
 \textbf{2. paragraph: data measurement and processing}
 
 \begin{itemize}
+\item learning phase
 \item excitation
 \item sensors start measuring
 \item sensor nodes \textbf{perform fft} - what is fft
@@ -377,7 +292,7 @@ In our case...
 \item if no faults detected, sensor nodes send data to base station
 \end{itemize}
 
-\textbf{3. paragraph: sensor fault}
+\textbf{3. paragraph: sensor fault detection}
 
 \begin{itemize}
 \item simulation of sensor fault
@@ -399,23 +314,3 @@ In our case...
 \bibliography{literature}
 
 \end{document}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
