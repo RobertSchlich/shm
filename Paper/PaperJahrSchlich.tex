@@ -1,4 +1,4 @@
-\documentclass[12pt]{scrartcl}
+\documentclass[12pt,a4paper]{scrartcl}
 \usepackage[ngerman, english]{babel}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
@@ -7,7 +7,7 @@
 \usepackage[numbers, square]{natbib}
 
 % used for line numbering
-\usepackage{lineno}
+%\usepackage{lineno}
 
 % The following parameters seem to provide a reasonable page setup.
 \topmargin 0.0cm
@@ -75,7 +75,7 @@
 
 % Double-space the manuscript.
 
-\baselineskip24pt
+\baselineskip32pt
 
 % Make the title.
 
@@ -98,7 +98,7 @@ These results indicate that the use of neural networks increases the dependabili
 
 %----------------------------------------------------------------------------------------
 
-\linenumbers % Schaltet Zeilennummerierung ein
+%\linenumbers % Schaltet Zeilennummerierung ein
 %\modulolinenumbers[5] % nur jede 5. Zeile
 \section*{Dictionary}
 
@@ -214,28 +214,15 @@ On the computer, the data is stored in a MySQL database.
 
 \section*{Implementation and training of neural networks}
 
-\textbf{1. paragraph: neural networks general}
-
-\todo[inline]{Die Vorteile von neuronalen Netzwerken müssen m.E. noch in der Einleitung heruasgearbeitet werden}
-
-Artificial neural networks were developed, driven by the desire to enable computer systems to learn autonomously.
-This development is based on the attempt to emulate the data processing mechanics of the human brain. %(and is therefore inherently interwoven with advances in neuroscience)
-In an artificial neural network \emph{neurons} are grouped in different \emph{layers}, as depicted in figure~\ref{fig:neuralnetwork}. 
-Each neuron sends data exclusively to neurons from neighbouring layers through weighted \emph{connections}.
-For each neuron a \emph{propagation function} processes incoming data, in consideration of the connection weights, to the net input.
-An \emph{activation function} then processes the net input to calculate the activation of the neuron, which subsequently determines its output. \cite{KrieselNN}
-
-A neural network learns, most commonly, by adjusting its connection weights until it recreates the results of a desired transfer function with sufficient accuracy.
-In our case...
-\todo[inline]{Weiteres zur Gewichtsveränderung in der Lernphase später im Abschnitt}
-
+Neural networks are implemented into the sensor nodes using SNIPE\footnote{}, a open source Java Library.
 \begin{figure}[ht]
     \centering
-    \includegraphics{figures/neuralnetworks.pdf}
+    \includegraphics{figures/neuralnetwork.pdf}
     \caption{Schematic drawing of an artificial neural network with three layers}
     \label{fig:neuralnetwork}
 \end{figure}
 \todo[inline]{Grafik kann nacher noch an unser neuronales Netz angepasst werden}
+
 
 %\begin{itemize}
 %\item neurons
@@ -266,15 +253,29 @@ In our case...
 \newpage
 \section*{Laboratory experiments}
 
-\textbf{1. paragraph: test setup}
+%\begin{itemize}
+%\item test structure
+%\item sensor installation
+%\item type of excitation, acceleration is measured
+%\end{itemize}
 
-\begin{itemize}
-\item test structure, picture
-\item sensor installation
-\item type of excitation, acceleration is measured
+To validate the proposed approach, the SHM system was installed on a test structure in order to conduct laboratory experiments.
+The test structure consists of four metal sheets with an area of 20~cm by 60~cm and 4~mm of thickness.
+Those metal sheets are mounted on threaded rods with a vertical clearance of approximately 40~cm.
+At the bottom, the threaded rods are fixed into a block of solid wood with an area of 40~cm by 60~cm and a height of 50~cm.
+The SHM system is installed onto the test structure by strapping a SunSPOT to each of the metal sheets.
+The finished laboratory setup is shown in figure~\ref{fig:teststructure}.
+\todo{Bild ersetzen durch ein Bild mit den fertig installierten SPOTS}
+The structure is excited by pulling one of the metal sheets a few centimeters to the side and releasing it.
+This method of excitation ensures, that the structure vibrates in its Eigenfrequency with little interferences.
 
+\begin{figure}[h!]
+    \centering
+    \includegraphics[scale=0.3]{figures/teststructure.jpg}
+    \caption{Picture of the laboratory setup}
+    \label{fig:teststructure}
+\end{figure}
 
-\end{itemize}
 
 \textbf{2. paragraph: data measurement and processing}
 
@@ -298,12 +299,13 @@ In our case...
 
 %----------------------------------------------------------------------------------------
 
-\section*{Discussion of the experimental results}
+%\section*{Discussion of the experimental results}
 
 %----------------------------------------------------------------------------------------
 
 \section*{Summary and conclusions}
 
+Everything went better than expected!
 %----------------------------------------------------------------------------------------
 
 \bibliographystyle{unsrtnat}
