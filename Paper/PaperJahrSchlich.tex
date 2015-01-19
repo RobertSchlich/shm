@@ -4,7 +4,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage[color=yellow!15]{todonotes}
 \usepackage{graphicx}
-\usepackage[authorname, square]{natbib}
+\usepackage[authoryear, square]{natbib}
 
 % used for line numbering
 %\usepackage{lineno}
@@ -48,13 +48,13 @@
 
 % Include your paper's title here
 
-\title{\textbf{ \Large{Decentralized, autonomous sensor fault detection using neural networks}} }
+\title{\textbf{ \Large{Decentralized autonomous sensor fault detection using neural networks}} }
 
 
 \author
-{Katrin Jahr, Robert Schlich$^{1}$\\
+{Katrin Jahr, Robert Schlich\\
 \\
-\normalsize{$^{1}$Degree program “Civil Engineering” (M.Sc.)}\\
+\normalsize{Degree program “Civil Engineering” (M.Sc.)}\\
 \normalsize{Bauhaus-Universität Weimar, Germany}\\
 \\
 \normalsize{katrin.jahr@uni-weimar.de}\\
@@ -75,7 +75,7 @@
 
 % Double-space the manuscript.
 
-\baselineskip32pt
+\baselineskip24pt
 
 % Make the title.
 
@@ -87,12 +87,12 @@
 
 \begin{sciabstract}
 
-The dependability and the accuracy of structural health monitoring systems are significantly affected by sensor faults. 
+The dependability and the accuracy of structural health monitoring systems can be affected significantly by sensor faults. 
 In this paper, the design and implementation of a wireless structural health monitoring system, capable of decentralized autonomous fault detection, are presented. 
-For self-detecting sensor faults, each sensor node predicts its expected sensor data and compares it to the measured sensor data. 
-The predictions are computed using neural networks \textbf{with measured sensor data} of adjacent sensor nodes.
+For self-detecting sensor faults, each sensor node predicts expected sensor data and compares it to the measured sensor data. 
+The predictions are computed using neural networks based on measured sensor data of adjacent sensor nodes.
 In laboratory experiments, devised to validate the proposed approach, several simulated sensor faults are detected.
-These results indicate that the use of neural networks increases the dependability and the accuracy of structural health monitoring systems.
+These results indicate that the use of neural networks for fault detection increases the dependability and the accuracy of structural health monitoring systems.
 
 \end{sciabstract}
 
@@ -133,45 +133,42 @@ Messaufbau & test setup \\
 
 \section*{Introduction}
 
-Civil engineering structures are exposed to external impacts over several decades. 
-To ensure the structural stability and evaluate the conditions of civil engineering structures, structural health monitoring (SHM) systems can be installed.
-\cite[4]{BisbySHM} defines SHM as "a non-destructive \textit{in-situ} structural evaluation method that uses any of several sensors which are attached to, or embedded in, a structure". 
-The obtained sensor data is "collected, analyzed and stored" over long periods of time.
+Civil engineering structures are exposed to various external impacts during their lifetime. 
+Structural health monitoring (SHM) systems can be deployed to evaluate the conditions and to ensure the structural stability of civil engineering structures.
+\cite[4]{BisbySHM} defines SHM as "a non-destructive \textit{in-situ} structural evaluation method that uses any of several sensors which are attached to, or embedded in, a structure".
+The obtained sensor data is collected by sensor nodes, and then analyzed and stored on a computer system over long periods of time. 
 Analysis of the sensor data can reveal abnormal changes in material and geometric behaviour early on.
 
 Traditionally, the sensor nodes are wired with cables and connected to computer systems.
-However, using wired SHM systems has several disadvantages, including expensive wiring, high personnal costs and inaccessibility of optimal positions with wiresIn this case.
-In wireless SHM systems, the sensor nodes communicate with a base station via radio, ruling out wiring-specific problems.
-When using wireless SHM systems, one has to consider battery life and sensor node \textit{sychronization}.
-\todo{wird später darauf eingegangen? Sonst raus.}
+However, using wired SHM systems has several disadvantages, including expensive wiring, high installation and labor costs and inaccessibility of optimal sensor location with wires.
+In wireless SHM systems, the sensor nodes communicate---through a basestation with each other and with computer systems--- via wireless transceivers, eradicating wiring-specific problems.
 
-Over time, sensors can break and become faulty. Failures can either occur suddenly, or be due to gradual loss of accuracy.
-To ensure the dependability and the accuracy of the SHM system, these sensor faults must be detected and isolated in real time. 
-A simple approach to fault detection is the installation of physically redundant sensors.
-Faulty sensors can easily be identified through the deviation of their measurements from the measurements of other sensors.
-Physical redundancy, although efficient at sensor fault detection, has the disadvantage of increased installation and maintenance costs. 
-A technologically more advanced approach, called analytical redundancy, applies knowledge of the structure and the SHM system itself to compute virtual sensor measurements for each sensor. 
-For example, a FEM model could be used in combination with data from adjacent sensor nodes to calculate a virtual measurement of one sensor.
-If analytical redundancy is implemented correctly, virtual measurements always simulate a correct working sensor; therefore actual measurements deviating from their virtual counterparts indicate faulty sensors.\citep{Smarsly2014}
+Over their lifetime, sensors can become inaccurate, faulty, or may even break.
+To ensure the dependability and the accuracy of the SHM system, sensor faults must be detected and isolated in real time. 
+The traditional approach to fault detection is the installation of physically redundant sensors.
+Faulty sensors can easily be identified through the deviation of their measurements from the measurements of correlated sensors.
+Physical redundancy, although efficient for sensor fault detection, shows the disadvantage of increased installation and maintenance costs. 
+Representing a more efficient approach, analytical redundancy applies knowledge of the structure and the SHM system itself to compute virtual sensor measurements for each sensor. 
+For example, finite element models can be used in combination with data from adjacent sensor nodes to calculate virtual measurements of a sensor.
+\citep{Smarsly2014}
 
-In this study, analytical redundancy is realized by artificial neural networks.
-Artificial neural networks consist of interconnected data processing elements called neurons. 
-Neurons are grouped in different layers; they consist of one input layer, a number of hidden layers and one output layer.
-Artificial neural networks have the distinct ability of learning by adjusting the weights of the inter-neuron connections, until a set of given input variables results in the desired output variables.
-If implemented correctly, a neural network can be trained to approximate any mathematical functions with arbitrary accuracy \citep{Li2011}.
+In this study, analytical redundancy is implemented into wireless sensor nodes based on artificial neural networks.
+Artificial neural networks essentially consist of interconnected data processing units called neurons. 
+Neurons are grouped in different layers; usually one input layer, a number of hidden layers and one output layer.
+Artificial neural networks have the distinct ability of learning, which is achieved by adjusting the weights of the inter-neuron connections until a set of given input variables results in the desired output variables; for example, a neural network can be trained to approximate any mathematical functions with arbitrary accuracy \citep{Li2011}.
 
 This paper is organized as follows:
 First, a wireless structural health monitoring system is designed and implemented. 
-Next, a neural network is implemented in each sensor node and trained to predict the measurements of said node in order to detect faults. 
-The system is then tested in laboratory experiments. 
-Finally, the experimental results are analyzed and future research directions proposed.
+Next, a neural network is implemented into each sensor node and trained to predict the sensor measurements of said node in order to detect sensor faults in a decentralized manner. 
+Then, the system is tested in laboratory experiments. 
+Finally, the experimental results are discussed and future research directions are proposed.
 
 %----------------------------------------------------------------------------------------
 
 \newpage
 
 \section*{Design and implementation of the wireless structural health monitoring system}
-In the following section, a brief descriptions of SHM systems general is given. Furthermore, the used wireless SHM system is introduced and the Java implementation is described.
+In the following section, a brief description of SHM systems in general is given. Furthermore, the used wireless SHM system is introduced and the Java implementation is described.
 
 According to \cite[5]{BisbySHM}, a structural health monitoring system commonly consists of the following components:
 1. data acquisition,
@@ -259,14 +256,14 @@ Neural networks are implemented into the sensor nodes using SNIPE\footnote{}, a 
 %\item type of excitation, acceleration is measured
 %\end{itemize}
 
-To validate the proposed approach, the SHM system was installed on a test structure in order to conduct laboratory experiments.
-The test structure consists of four metal sheets with an area of 20~cm by 60~cm and 4~mm of thickness.
-Those metal sheets are mounted on threaded rods with a vertical clearance of approximately 40~cm.
-At the bottom, the threaded rods are fixed into a block of solid wood with an area of 40~cm by 60~cm and a height of 50~cm.
-The SHM system is installed onto the test structure by strapping a SunSPOT to each of the metal sheets.
+To validate the proposed approach, the SHM system is installed on a test structure in order to conduct laboratory experiments.
+The test structure consists of four metal sheets with an area of 20\,cm by 60\,cm and 4\,mm of thickness.
+Those metal sheets are mounted on threaded rods with a vertical clearance of approximately 40\,cm.
+At the bottom, the threaded rods are fixed into a block of solid wood with an area of 40\,cm by 60\,cm and a height of 50\,cm.
+The SHM system is installed onto the test structure by fastening a SunSPOT to each of the metal sheets.
 The finished laboratory setup is shown in figure~\ref{fig:teststructure}.
 \todo{Bild ersetzen durch ein Bild mit den fertig installierten SPOTS}
-The structure is excited by pulling one of the metal sheets a few centimeters to the side and releasing it.
+The structure is excited by displacing one of the metal sheets to the side and releasing it.
 This method of excitation ensures, that the structure vibrates in its Eigenfrequency with little interferences.
 
 \begin{figure}[h!]
@@ -303,9 +300,14 @@ This method of excitation ensures, that the structure vibrates in its Eigenfrequ
 
 %----------------------------------------------------------------------------------------
 
-\section*{Summary and conclusions}
+\section*{Summary}
 
-Everything went better than expected!
+This paper presents a decentralized autonomous sensor fault detection strategy for structural health monitoring systems using neural networks. 
+By implementing the neural networks into the sensor nodes, sensor faults can be detected by individual sensor nodes.
+
+
+
+
 %----------------------------------------------------------------------------------------
 
 \bibliographystyle{unsrtnat}
