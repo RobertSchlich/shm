@@ -10,10 +10,10 @@
 %\usepackage{lineno}
 
 % The following parameters seem to provide a reasonable page setup.
-\topmargin 0.0cm
+\topmargin -1.0cm
 \oddsidemargin 0.2cm
-\textwidth 16cm 
-\textheight 21cm
+\textwidth 15cm 
+\textheight 23cm
 \footskip 1.0cm
 
 
@@ -75,7 +75,7 @@
 
 % Double-space the manuscript.
 
-\baselineskip24pt
+\baselineskip36pt
 
 % Make the title.
 
@@ -144,11 +144,12 @@ However, using wired SHM systems has several disadvantages, including expensive 
 In wireless SHM systems, the sensor nodes communicate---through a basestation with each other and with computer systems--- via wireless transceivers, eradicating wiring-specific problems.
 
 Over their lifetime, sensors can become inaccurate, faulty, or may even break.
+A fault can be defined as a defect of a sensor, that leads to an error. An error is the manifestation of a fault---an incorrect system state---that may result in a failure.
 To ensure the dependability and the accuracy of the SHM system, sensor faults must be detected and isolated in real time. 
 The traditional approach to fault detection is the installation of physically redundant sensors.
 Faulty sensors can easily be identified through the deviation of their measurements from the measurements of correlated sensors.
 Physical redundancy, although efficient for sensor fault detection, shows the disadvantage of increased installation and maintenance costs. 
-Representing a more efficient approach, analytical redundancy applies knowledge of the structure and the SHM system itself to compute virtual sensor measurements for each sensor. 
+Representing a more efficient approach, analytical redundancy typically uses mathematical functions mapping the characteristics of the structure and the correlations of the installed sensors. Virtual sensor measurements are computed for each sensor and then compared to the actual measurements. 
 For example, finite element models can be used in combination with data from adjacent sensor nodes to calculate virtual measurements of a sensor.
 \citep{Smarsly2014}
 
@@ -218,7 +219,7 @@ Neural networks are implemented into the sensor nodes using SNIPE\footnote{}, a 
     \caption{Schematic drawing of an artificial neural network with three layers}
     \label{fig:neuralnetwork}
 \end{figure}
-\todo[inline]{Grafik kann nacher noch an unser neuronales Netz angepasst werden}
+\todo[inline]{Grafik wird an unser neuronales Netz angepasst}
 
 
 %\begin{itemize}
@@ -303,10 +304,9 @@ This method of excitation ensures, that the structure vibrates in its Eigenfrequ
 \section*{Summary}
 
 This paper presents a decentralized autonomous sensor fault detection strategy for structural health monitoring systems using neural networks. 
-By implementing the neural networks into the sensor nodes, sensor faults can be detected by individual sensor nodes.
-
-
-
+We realized the autonomous sensor fault detection by implementing a neural network into each sensor node.
+The neural networks are trained to predict the expected sensor measurement, which is then compared to the actual measurment, revealing potential sensor faults.
+The SHM system has been verified with laboratory experiments, proving that sensor fault detection using neural networks can, in fact, improve the dependability and the accuracy of structural health monitoring systems.
 
 %----------------------------------------------------------------------------------------
 
