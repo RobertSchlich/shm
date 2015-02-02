@@ -4,10 +4,11 @@
 \usepackage[utf8]{inputenc}
 \usepackage[color=yellow!15]{todonotes}
 \usepackage{graphicx}
-\usepackage[authoryear, square]{natbib}
+\usepackage[numbers, sort&compress, square]{natbib}
+\usepackage[colorlinks, linkcolor=black, citecolor=blue, urlcolor=blue]{hyperref}
 
 % used for line numbering
-%\usepackage{lineno}
+\usepackage{lineno}
 
 % The following parameters seem to provide a reasonable page setup.
 \topmargin -1.0cm
@@ -75,7 +76,7 @@
 
 % Double-space the manuscript.
 
-\baselineskip36pt
+\baselineskip24pt
 
 % Make the title.
 
@@ -98,8 +99,8 @@ These results indicate that the use of neural networks for fault detection incre
 
 %----------------------------------------------------------------------------------------
 
-%\linenumbers % Schaltet Zeilennummerierung ein
-%\modulolinenumbers[5] % nur jede 5. Zeile
+\linenumbers % Schaltet Zeilennummerierung ein
+\modulolinenumbers[5] % nur jede 5. Zeile
 \section*{Dictionary}
 
 \begin{tabular}{|l|l|}
@@ -135,7 +136,7 @@ Messaufbau & test setup \\
 
 Civil engineering structures are exposed to various external impacts during their lifetime. 
 Structural health monitoring (SHM) systems can be deployed to evaluate the conditions and to ensure the structural stability of civil engineering structures.
-\cite[4]{BisbySHM} defines SHM as "a non-destructive \textit{in-situ} structural evaluation method that uses any of several sensors which are attached to, or embedded in, a structure".
+\citet{BisbySHM} defines SHM as "a non-destructive \textit{in-situ} structural evaluation method that uses any of several sensors which are attached to, or embedded in, a structure".
 The obtained sensor data is collected by sensor nodes, and then analyzed and stored on a computer system over long periods of time. 
 The analysis of the sensor data can reveal abnormal changes in material and geometric behaviour early on.
 
@@ -150,8 +151,8 @@ The traditional approach to fault detection is the installation of physically re
 Faulty sensors can be identified through the deviation of their measurements from the measurements of correlated sensors.
 Physical redundancy, although efficient for sensor fault detection, causes increased installation and maintenance costs due to the multiple installation of sensors. 
 Representing a more efficient approach, analytical redundancy typically uses mathematical functions mapping the characteristics of the structure and the correlations of the installed sensors. Virtual sensor measurements are computed for each sensor and then compared to the actual measurements. 
-For example, finite element models can be used in combination with data from adjacent sensor nodes to calculate virtual measurements of a sensor.
-\citep{Smarsly2014}
+For example, finite element models can be used in combination with data from adjacent sensor nodes to calculate virtual measurements of a sensor
+\citep{Smarsly2014}.
 
 In this study, analytical redundancy is implemented into wireless sensor nodes based on artificial neural networks.
 Artificial neural networks essentially consist of interconnected data processing units called neurons. 
@@ -169,9 +170,9 @@ Finally, the experimental results are discussed and future research directions a
 \newpage
 
 \section*{Design and implementation of the wireless structural health monitoring system}
-In the following section, a brief description of SHM systems in general is given. Furthermore, the used wireless SHM system is introduced and the Java implementation is described.
+In the following section, the wireless SHM system is introduced and the Java implementation is described.
 
-According to \cite[5]{BisbySHM}, a structural health monitoring system commonly consists of the following components:
+According to \citet{BisbySHM}, a structural health monitoring system commonly consists of the following tasks:
 1. data acquisition,
 2. data transmission, 
 3. data processing,
@@ -180,29 +181,48 @@ According to \cite[5]{BisbySHM}, a structural health monitoring system commonly 
 6. information retrieval.
 
 Tasks 1 to 3 are usually implemented on site, while tasks 4 to 6 are usually implemented on computer systems off site.
-A wireless SHM system installed on the building site consists of sensor nodes attached to the construction, a base station, and a local computer. 
-The base station, which can be an external device or a computer program, links the individual sensor nodes with each other and the local computer.
+A wireless SHM system installed on the building site consists of sensor nodes attached to the construction, a basestation, and a local computer. 
+The basestation, which can be an external device or a computer program, links the individual sensor nodes with each other and the local computer.
 To each sensor node, several sensors measuring different physical quantities may be connected. 
 In this project, the acceleration is measured using wireless sensor nodes and a basestation of the type "Oracle Sun SPOT". 
-The 3-axis digital output accelerometer with sensitivity ranging between $ \pm 2\,$g and $\pm 8\,$g has a maximum sample rate of 125Hz. \cite[9]{eDemo2010}
+The 3-axis digital output accelerometer with sensitivity ranging between $\pm$\,2\,g and $\pm$\,8\,g has a maximum sample rate of 125Hz \citep{eDemo2010}.
 
 In operation, the sensor nodes acquire sensor data and may perform initial processing.
 The processed data is then transmitted via radio to the local computer, where it is stored for analysis and diagnosis.
 In this project, the data is transmitted from the sensor nodes to the basestation by radio, and from the basestation to the local computer via USB cable.
 On the computer, the data is stored in a MySQL database.
+\todo{Abb}
 
-\todo[inline]{vielleicht eine Abbildung? SunSPOTs? Aufbau SHM?}
+\begin{figure}[ht]
+    \centering
+    \fbox{\includegraphics{figures/missing.jpeg}}
+    \caption{class diagram describing the structure of the implemented SHM system}
+    \label{fig:UML}
+\end{figure}
+
+\autoref{fig:UML} describes the classes of the SHM system code, programmed in Java Platform, Micro Edition. 
+The SHM system consists of two packages---\texttt{SensorNode} and \texttt{Basestation}.
+
+The package \texttt{SensorNode} consits of the four classes \texttt{Acceleration\-Sampler}, \texttt{FFT}, \texttt{Communication} and \texttt{MainSpot}, that are embedded directly into the sensor nodes.
+The \texttt{AccelerationSampler} class is responsible for measuring the acceleration.
+There are two phases: At first, the acceleration is measured with a low samplerate.
+Once the acceleration exceeds a threshold, the samplerate is increased and the measured values are stored into an array.
+The different phases are indicatad by lighting different LEDs.
+The \texttt{FFT} class performs a fast Fourier transform on the measured accelerations. 
+With the transformed data, the magnitudes and the correlating frequencies of the oscillation can be calculated.
+Finally, the natural frequency can be determined by extracting the maximal magnitude.
+\todo{FFT, Magnitude, Frequenz?}
+The \texttt{Communication} class opens a radio connection between the sensor node and the basestation and transfers data from the sensor node to the basestation.
+The entry point of the programm is the \texttt{startApp()} method in the \texttt{MainSpot} class. 
+Within the \texttt{MainSpot} class, instances of the \texttt{Acceleration\-Sampler} class, the \texttt{FFT} class and the \texttt{Communication} class are created to perform the measurement.
+
+The package \texttt{Basestation} runs on the host computer and operates the basestation.
+It consists of the classes \texttt{Database\-Handler} and \texttt{MainBase}.
+The \texttt{Database\-Handler} class establishes a connection to a database, creates a database table, if none with the specified name is available, and inserts data into the database table.
+The entry point of the programm is the \texttt{run()} method in the \texttt{MainBase} class. The \texttt{MainBase} class opens a radio connection between the basestation and the sensor nodes, receives data sent by the sensor nodes and creates an instance of \texttt{Database\-Handler} to insert the data into the database.
 
 
-\textbf{3. paragraph: UML / Java implementaion}
 
-%According to [3], a structural health monitoring system basically consists of the following components:
-%1. data acquisition, 2. data communication, 3. data processing, 4. data storage, 5. diagnostics and 6. data retrieval.
-%
-%
-%
-%For autonomous fault detection in wireless SHM systems, an integrated fault detection and synchronization strategy is implemented into a wireless SHM system. The SHM system consists of wireless sensor nodes and a base station. The sensor nodes are installed on the monitored structure and the base station links the wireless SHM system and a local computer.
-%
 %
 %In the present study, wireless sensor nodes of the type “Oracle Sun SPOTs” are used. The sensor nodes are Java-programmable enabling embedded analyses and the sensor nodes include a 3-dimensional accelerometer, temperature and other sensors (Oracle Lab, 2014). In this study, acceleration measurements taken from the structure are used for analyzing the structural condition. Furthermore, the radios of the sensor nodes ensure wireless communications between the sensor nodes as well as between the sensor nodes and the base station in order to transmit monitoring data or control commands. The base station is able to receive monitoring data measured by the sensor nodes, and the base station can store the data in a database installed on the local computer. The main Java classes are shown in an Unified Modelling Language diagram (UML diagram), which is a standard way to visualize the implementation of a application. The following UML diagrams (cp. Figure 1 and Figure 2) show just the main classes embedded into the base station and the sensor nodes. In the following subsection, the implementation of the main components of the fault detection strategy, including synchronization and fault detection, are shown.
 
@@ -284,7 +304,7 @@ This method of excitation ensures, that the structure vibrates in its Eigenfrequ
 \item sensor nodes \textbf{perform fft} - what is fft
 \item sensor nodes exchange frequencies
 \item neural networks check integrity
-\item if no faults detected, sensor nodes send data to base station
+\item if no faults detected, sensor nodes send data to basestation
 \end{itemize}
 
 \textbf{3. paragraph: sensor fault detection}
@@ -292,13 +312,18 @@ This method of excitation ensures, that the structure vibrates in its Eigenfrequ
 \begin{itemize}
 \item simulation of sensor fault
 \item neural networks check integrity -> error!
-\item sensor node sends alert to base station
+\item sensor node sends alert to basestation
 \end{itemize}
 
 %----------------------------------------------------------------------------------------
 
-%\section*{Discussion of the experimental results}
+\section*{Notes}
 
+package hyperref eingebunden: klickbare links, autoref
+
+package SPOT in SensorNode umbenennen?!
+
+citep, citet, see
 %----------------------------------------------------------------------------------------
 
 \section*{Summary}
