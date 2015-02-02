@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<deployment name="SendDataDemo" divider="541" width="552" height="696" zoom="1.0" scroll-x="0" scroll-y="0" expand-description="false">
+  <description>
+    <![CDATA[This demo application sends periodic sensor readings measured on one
+or more Sun SPOTs to an application on your laptop or PC that displays
+the values. ]]>
+  </description>
+  <spots>
+    <role name="send sensor readings to host" show-role="true" expand-description="false">
+      <project file="SendDataDemo-onSPOT/build.xml"/>
+      <description>
+        <![CDATA[This application runs on a Sun SPOT periodically sampling
+the built-in light sensor and broadcasting those readings
+over the radio.]]>
+      </description>
+    <spot address="VirtualSPOT" collapsed="false" show-status="false">
+        <map-position x="200" y="300"/>
+        <location value="in emulator"/>
+      </spot>
+    </role>
+  </spots>
+  <host-apps>
+    <host-app  name="SendDataDemo" collapsed="false">
+      <role name="print sensor readings" show-role="true" expand-description="false">
+        <project file="SendDataDemo-onDesktop/build.xml"/>
+        <description>
+          <![CDATA[This application runs on a host computer, listens for 
+sensor sample broadcasts and prints them.   ]]>
+        </description>
+      </role>
+      <map-position x="200" y="300"/>
+      <command name="ant host-run -Dbasestation.shared=true -Dbasestation.not.required=true"/>
+    </host-app>
+    <host-app  name="SendDataDemo-GUI" collapsed="false">
+      <role name="graph sensor readings" show-role="true" expand-description="false">
+        <project file="SendDataDemo-GUIonDesktop/build.xml"/>
+        <description>
+          <![CDATA[This application runs on a host computer, listens for 
+sensor sample broadcasts and graphically displays them. ]]>
+        </description>
+      </role>
+      <map-position x="200" y="300"/>
+      <command name="ant host-run -Dbasestation.shared=true -Dbasestation.not.required=true"/>
+    </host-app>
+  </host-apps>
+</deployment>
