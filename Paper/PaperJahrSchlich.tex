@@ -277,15 +277,13 @@ Neural networks are implemented into the sensor nodes using SNIPE\footnote{}, a 
 %\item type of excitation, acceleration is measured
 %\end{itemize}
 
-To validate the proposed approach, the SHM system is installed on a test structure in order to conduct laboratory experiments.
-The test structure consists of four metal sheets with an area of 20\,cm by 60\,cm and 4\,mm of thickness.
-Those metal sheets are mounted on threaded rods with a vertical clearance of approximately 40\,cm.
-At the bottom, the threaded rods are fixed into a block of solid wood with an area of 40\,cm by 60\,cm and a height of 50\,cm.
-The SHM system is installed onto the test structure by fastening a SunSPOT to each of the metal sheets.
-The finished laboratory setup is shown in figure~\ref{fig:teststructure}.
+To validate the proposed approach in laboratory experiments, the wireless SHM system is installed on a test structure.
+The test structure is a 4-story shear-frame consisting of four steel plates with an area of 25\,cm\,$\times$\,50\,cm and a thickness of 0.8\,mm.
+Those plates are mounted on threaded rods with a vertical clearance of 23\,cm.
+At the bottom, the rods are fixed into a solid block of wood with an area of 40\,cm\,$\times$\,60\,cm and a height of 30\,cm.
+The SHM system is installed on the test structure by fastening wireless sensor nodes to each story.
+The laboratory setup is shown in figure~\ref{fig:teststructure}.
 \todo{Bild ersetzen durch ein Bild mit den fertig installierten SPOTS}
-The structure is excited by displacing one of the metal sheets to the side and releasing it.
-This method of excitation ensures, that the structure vibrates in its Eigenfrequency with little interferences.
 
 \begin{figure}[h!]
     \centering
@@ -293,6 +291,17 @@ This method of excitation ensures, that the structure vibrates in its Eigenfrequ
     \caption{Picture of the laboratory setup}
     \label{fig:teststructure}
 \end{figure}
+
+The structure is excited by deflecting and releasing the top of the structure.
+This excitation method ensures that the structure vibrates in its Eigenfrequency with little interferences.
+After excitation the sensor nodes automatically start measuring acceleration values with a sampling rate of 40\,Hz.
+To minimize data traffic between the sensor nodes, each node performs a fast Fourier transform (FFT) algorithm after sufficient acceleration samples have been collected.
+Generally FFTs are used to convert equidistant samples of a function into a combination of frequencies, and the corresponding magnitudes, that has the same sample values.
+In this case the acceleration samples are converted into the vibration frequencies, and the corresponding magnitudes, of the building.
+Each sensor node sends only the values of the predominating frequency, i.e. the frequency with the biggest magnitude, to the other nodes.
+
+
+
 
 
 \textbf{2. paragraph: data measurement and processing}
