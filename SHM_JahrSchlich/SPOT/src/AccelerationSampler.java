@@ -1,7 +1,5 @@
 package spot;
 
-// author Jahr&Schlich
-
 import com.sun.spot.resources.Resources;
 import com.sun.spot.resources.transducers.IAccelerometer3D;
 import com.sun.spot.util.Utils;

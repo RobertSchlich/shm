@@ -1,7 +1,7 @@
 package spot;
 /**
  * @author Orlando Selenu
-// author Jahr&Schlich
+ * modified by Jahr&Schlich
  * 
  */
 
