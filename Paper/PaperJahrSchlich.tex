@@ -199,14 +199,12 @@ Tasks 1 to 3 are executed by the sensor nodes: During system operation, the sens
 On the host computer, tasks 4 is conducted by storing the data in a MySQL database.
 Task 5 and 6---additional analysis and diagnosis---are conducted on the host computer in further steps.
 
-\todo[inline]{objektorientierung}
-The implementation is object oriented, using classes. Classes are small pieces of code.
-Da werden am Ende Programme draus gemacht und gestartet.
+\colorbox{cyan}{neuer Absatz:}
 
-\autoref{fig:UML} describes the classes of the SHM system code, programmed in Java.
+The SHM system is programmed object-oriented in Java. Object orientation uses objects, that are instanciated using classes as paradigm. A class includes methods, allowing the objects to perform actions, and attributes, specific data.
+\autoref{fig:UML} describes the classes of the SHM system code.
 The SHM system consists of two packages---\texttt{sensornode} and \texttt{basestation}.
-
-...
+A package organizes several Java classes that build a program.
 
 The package \texttt{sensornode} consists of the classes \texttt{Acceleration\-Sampler}, \texttt{FFT}, \texttt{Communication} and \texttt{MainSpot}, which are embedded directly into the sensor nodes.
 The \texttt{AccelerationSampler} class is responsible for measuring the acceleration.
@@ -289,7 +287,7 @@ The laboratory setup is shown in \autoref{fig:teststructure}.
 \begin{figure}[h!]
     \centering
     \includegraphics[scale=0.3]{figures/teststructure.jpg}
-    \caption{Picture of the laboratory setup}
+    \caption{Laboratory setup}
     \label{fig:teststructure}
 \end{figure}
 
@@ -299,8 +297,7 @@ After excitation, the sensor nodes automatically start the acceleration with a s
 To minimize the wireless data communication, each node performs a fast Fourier transform algorithm once sufficient acceleration measurements have been collected.
 %Generally FFTs are used to convert equidistant samples of a function into a combination of frequencies, and the corresponding magnitudes, that has the same sample values. 
 The acceleration measurements are converted into the vibration frequencies and the corresponding magnitudes of the building.
-Each sensor node sends only the values of the predominating frequency, i.e. the frequency with the biggest magnitude.
-The values are then stored in the MySQL database at the host computer.
+Each sensor node transfers only the values of the predominating frequency---i.e. the frequency with the biggest magnitude--- \colorbox{cyan}{to the basestation}. The values are then stored in the MySQL database at the host computer.
 
 
 
@@ -329,9 +326,9 @@ The values are then stored in the MySQL database at the host computer.
 \section*{Summary}
 
 This paper presents a decentralized autonomous sensor fault detection strategy for structural health monitoring systems using neural networks. 
-We realized the autonomous sensor fault detection by implementing a neural network into each sensor node.
-The neural networks are trained to predict the expected sensor measurement, which is then compared to the actual measurment, revealing potential sensor faults.
-The SHM system has been verified with laboratory experiments, proving that sensor fault detection using neural networks can, in fact, improve the dependability and the accuracy of structural health monitoring systems.
+Autonomous sensor fault detection has been realized by implementing a neural network into each sensor node.
+The neural networks have been trained to predict expected sensor measurements to be compared to actual measurments, in oreder to detect sensor faults.
+The SHM system has been verified with laboratory experiments, proving that sensor fault detection using neural networks can, improve the dependability and the accuracy of structural health monitoring systems.
 
 %----------------------------------------------------------------------------------------
 
