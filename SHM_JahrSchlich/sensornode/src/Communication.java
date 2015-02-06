@@ -8,7 +8,8 @@ import com.sun.spot.util.Utils;
 import javax.microedition.io.*;
 
 public class Communication {
-
+		
+		// open radiogramm connection
         RadiogramConnection rCon = null;
         Datagram dg = null;
         String ourAddress = System.getProperty("IEEE_ADDRESS");
