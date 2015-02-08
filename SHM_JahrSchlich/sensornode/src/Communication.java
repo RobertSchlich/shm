@@ -1,4 +1,4 @@
-package spot;
+package sensornode;
 
 import com.sun.spot.io.j2me.radiogram.*;
 import com.sun.spot.resources.Resources;

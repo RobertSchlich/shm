@@ -1,4 +1,4 @@
-package spot;
+package sensornode;
 /**
  * @author Orlando Selenu
  * modified by Jahr&Schlich
@@ -173,6 +173,12 @@ public class FFT {
 	//get maximal magnitude -> natural frequency
     public static double[] calcNaturalFreq(double[] magnitude, double[] frequency)
     {
+    	// split array in half to get rid of double frequencies
+    	double[] newMagnitude = new double[magnitude.length/2];
+    	for(int i =0;i < newMagnitude.length;i++)
+    		newMagnitude[i] = magnitude[i];
+    	
+    	// determine maximal magnitude
 		double maxMagnitude = magnitude[0];
 		int indexMax = 0;
 		for ( int i = 1; i < magnitude.length; i++) {
@@ -181,6 +187,7 @@ public class FFT {
 		    	indexMax = i;
 		    }
 		}
+		
 		//get frequency for maximal  magnitude
 		double maxFrequency = frequency[indexMax];
 		System.out.println("maxMagnitude= "+ maxMagnitude+
