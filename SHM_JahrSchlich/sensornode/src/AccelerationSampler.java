@@ -1,4 +1,4 @@
-package spot;
+package sensornode;
 
 import com.sun.spot.resources.Resources;
 import com.sun.spot.resources.transducers.IAccelerometer3D;
@@ -30,7 +30,7 @@ public class AccelerationSampler
         	double accely = accelerometer.getAccelY();
         	
             // Flash an LED to indicate a sampling event
-            led.setRGB(255, 255, 255);
+            led.setRGB(255, 255, 0);
             led.setOn();
         	
         	// measure acceleration with low samplerate, until acceleration 
@@ -41,7 +41,6 @@ public class AccelerationSampler
 			}
             led.setOff();
             
-            
             // light an LED to indicate a sampling event
             led2.setRGB(0, 255, 255);
             led2.setOn();
@@ -50,7 +49,7 @@ public class AccelerationSampler
 			for (int i = 0; i < arrayLength; i++) {
 				long start = System.currentTimeMillis();
 				accelerationArray[i] = accelerometer.getAccelY();
-				System.out.println("accY=  " + accelerationArray[i]);
+				//System.out.println("accY=  " + accelerationArray[i]);
 				Utils.sleep(samplePeriodIfMeasuring - 
 										(System.currentTimeMillis() - start));
 				

@@ -1,4 +1,4 @@
-package spot;
+package sensornode;
 
 import com.sun.spot.io.j2me.radiogram.*;
 import com.sun.spot.resources.Resources;
@@ -15,10 +15,10 @@ public class MainSpot extends MIDlet {
 
     private int HOST_PORT = 67;
     private int SAMPLE_PERIOD_LISTENING = 1 * 1000;  // in milliseconds
-    private int SAMPLE_PERIOD_MEASURING = 25;  // in milliseconds
-    private int ARRAY_LENGTH = 512;
+    private int SAMPLE_PERIOD_MEASURING = 100;  // in milliseconds
+    private int ARRAY_LENGTH = 128;
     private double SAMPLERATE = 1000. / (double)SAMPLE_PERIOD_MEASURING;
-    private double THRESHOLD = 0.5;
+    private double THRESHOLD = 0.1;
     
     protected void startApp() throws MIDletStateChangeException {
 
@@ -45,9 +45,18 @@ public class MainSpot extends MIDlet {
 			double[] frequency = FFT.calcFreq(transform, SAMPLERATE);
 			double[] naturalFreq =  FFT.calcNaturalFreq(magnitude, frequency);
 			
+			// print frequency and magnitude array on console
+			System.out.println("Magnitude");
+			for (int i = 0 ; i < ARRAY_LENGTH; i++){
+				System.out.println(magnitude[i]);
+			}			
+			System.out.println("Frequency");
+			for (int i = 0 ; i < ARRAY_LENGTH; i++){
+				System.out.println(frequency[i]);
+			}
+
 			//send processed data to database
 			communication.SendMeasurement(naturalFreq[0], naturalFreq[1]);
-			
 			Utils.sleep(2000);
 		}   
     }
