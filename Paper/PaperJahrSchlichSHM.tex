@@ -91,13 +91,12 @@
 
 \begin{sciabstract}
 
-Structural health monitoring systems
-shm systems produce a lot of data
-we reduce the data with fft
-The dependability and the accuracy of structural health monitoring systems can be affected by sensor faults. 
-In this paper, the design and implementation of a wireless structural health monitoring system, capable of decentralized autonomous fault detection, are presented. 
-For self-detecting sensor faults, each sensor node predicts expected sensor data and compares it to the measured sensor data. 
-In laboratory experiments, devised to validate the proposed approach, the data traffic is reduced.
+The dependability and accuracy of wireless structural health monitoring systems can be affected by data loss during wireless data transmission.
+Applying adequate data compression methods can significantly reduce the amount of data that has to be transmitted and lower the occurrence of data loss.
+In this paper, the design and implementation of a wireless structural health monitoring system, capable of data compression is presented. 
+A fast Fourier transform is used on every sensor node to analyze oscillation frequencies. 
+Only the first natural frequency of the oscillation and the correlated magnitude are transmitted to the base station.
+In laboratory experiments, devised to validate the proposed approach, the data traffic is reduced by xx %.
 
 \end{sciabstract}
 
@@ -105,6 +104,7 @@ In laboratory experiments, devised to validate the proposed approach, the data t
 
 \linenumbers % Schaltet Zeilennummerierung ein
 \modulolinenumbers[5] % nur jede 5. Zeile
+
 \section*{Dictionary}
 
 \begin{tabular}{|l|l|}
@@ -131,7 +131,6 @@ tatsächliche, nicht virtuelle Messung & actual measurement \\
 \hline
 Messaufbau & test setup \\
 \hline
-
 \end{tabular} 
 
 %----------------------------------------------------------------------------------------
@@ -173,11 +172,10 @@ The Sun SPOTS are equipped with several components, see \autoref{fig:SPOT}.
 Among others, the sensor board includes an accelerometer and eight independent RGB-LEDs.
 The 3-axis digital output accelerometer with sensitivity ranging between $\pm$\,2\,g and $\pm$\,8\,g has a maximum sampling rate of 125Hz \citep{eDemo2010}.
 
-\todo{citation BILD!}
 \begin{figure}[ht]
     \centering
     \includegraphics[scale=0.5]{figures/eDemoboard.png}
-    \caption{Layout of the Sun SPOT sensor board}
+    \caption{Layout of the Sun SPOT sensor board \cite{spotToO}}
     \label{fig:SPOT}
 \end{figure}
 
@@ -201,7 +199,7 @@ A class includes methods, allowing the objects to perform actions, and attribute
 The SHM system consists of two packages---\texttt{sensornode} and \texttt{basestation}.
 A package organizes several Java classes that build a program.
 
-\autoref{fig:UML} describes the classes of the \texttt{sensornode} package.
+\autoref{fig:UML-sn} describes the classes of the \texttt{sensornode} package.
 The package \texttt{sensornode} consists of the classes \texttt{Acceleration\-Sampler}, \texttt{FFT}, \texttt{Communication} and \texttt{MainSpot}, which are embedded directly into the sensor nodes.
 The \texttt{AccelerationSampler} class is responsible for measuring the acceleration.
 There are two phases: \colorbox{cyan}{At} first, the acceleration is measured with a low sampling rate.
@@ -214,9 +212,15 @@ Finally, the natural frequency \colorbox{cyan}{is} determined by extracting the 
 The \texttt{Communication} class opens a radio connection between the sensor node and the basestation to transfer data from the sensor node to the basestation.
 For starting the operation of \colorbox{cyan}{the sensor node}, the entry point of the programm is the \texttt{startApp()} method in the \texttt{MainSpot} class. 
 Within the \texttt{MainSpot} class, instances of the \texttt{Acceleration\-Sampler} class, the \texttt{FFT} class and the \texttt{Communication} class are created to perform the measurement.
-\todo{Grafik zweitteilen - hier package sensornode}
 
-\autoref{fig:UML} describes the classes of the \texttt{basestation} package.
+\begin{figure}[h!]
+    \centering
+    \includegraphics{figures/uml-sensornode.pdf}
+    \caption{class diagram of the sensornode package}
+    \label{fig:UML-sn}
+\end{figure}
+
+\autoref{fig:UML-bs} describes the classes of the \texttt{basestation} package.
 The package \texttt{basestation} runs on the host computer and operates the basestation.
 It consists of the classes \texttt{Database\-Handler} and \texttt{MainBase}.
 The \texttt{Database\-Handler} class establishes a connection to a MySQL database, creates a database table, if none with the specified name is available, and inserts data into the database table.
@@ -225,9 +229,9 @@ The entry point of the program is the \texttt{run()} method in the \texttt{MainB
 
 \begin{figure}[h!]
     \centering
-    \includegraphics{figures/uml.pdf}
-    \caption{class diagram describing the structure of the implemented SHM system}
-    \label{fig:UML}
+    \includegraphics{figures/uml-basestation.pdf}
+    \caption{class diagram of the basestation package}
+    \label{fig:UML-bs}
 \end{figure}
 
 \newpage
@@ -250,15 +254,15 @@ The laboratory setup after system installation is shown in \autoref{fig:teststru
 
 \begin{figure}[h!]
     \centering
-    \includegraphics[scale=0.3]{figures/teststructure.jpg}
+    \includegraphics[scale=0.4]{figures/teststructure.jpg}
     \caption{Laboratory setup}
     \label{fig:teststructure}
 \end{figure}
 
 This excitation method ensures a free vibration in natural frequency with little interferences.
-After excitation, the sensor nodes automatically start the acceleration with a sampling rate of 40\,Hz.
+After excitation, the sensor nodes automatically start measuring acceleration with a sampling rate of 40\,Hz.
 To minimize the wireless data communication, each node performs a fast Fourier transform algorithm once sufficient acceleration measurements have been collected.
-%Generally FFTs are used to convert equidistant samples of a function into a combination of frequencies, and the corresponding magnitudes, that has the same sample values. 
+
 The acceleration measurements are converted into the vibration frequencies and the corresponding magnitudes of the building.
 Each sensor node transfers only the values of the predominating frequency---i.e. the frequency with the biggest magnitude--- \colorbox{cyan}{to the basestation}. 
 The values are then stored in the MySQL database at the host computer.
@@ -267,27 +271,6 @@ The values are then stored in the MySQL database at the host computer.
 	\item 
 	\item that means our paper is also wireless and very very good
 \end{itemize}
-
-
-%\textbf{2. paragraph: data measurement and processing}
-%
-%\emph{\begin{itemize}
-%\item learning phase
-%\item excitation
-%\item sensors start measuring
-%\item sensor nodes \textbf{perform fft} - what is fft
-%\item sensor nodes exchange frequencies
-%\item neural networks check integrity
-%\item if no faults detected, sensor nodes send data to basestation
-%\end{itemize}}
-%
-%\textbf{3. paragraph: sensor fault detection}
-%
-%\begin{itemize}
-%\item simulation of sensor fault
-%\item neural networks check integrity -> error!
-%\item sensor node sends alert to basestation
-%\end{itemize}
 
 %----------------------------------------------------------------------------------------
 
