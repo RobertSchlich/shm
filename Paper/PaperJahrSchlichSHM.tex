@@ -6,7 +6,7 @@
 \usepackage{graphicx}
 \usepackage[numbers, sort&compress, square]{natbib}
 \usepackage[colorlinks, linkcolor=black, citecolor=blue, urlcolor=blue]{hyperref}
-
+\usepackage{titlesec}
 \usepackage{color}
 
 % used for line numbering
@@ -267,13 +267,29 @@ The laboratory setup after system installation is shown in \autoref{fig:teststru
     \label{fig:teststructure}
 \end{figure}
 
+The structure is excited by deflecting and releasing the top of the structure.
 This excitation method ensures a free vibration in natural frequency with little interferences.
-After excitation, the sensor nodes automatically start measuring acceleration with a sampling rate of 40\,Hz.
+After excitation, the sensor nodes automatically start measuring acceleration with an increased sampling rate of 50\,Hz.
 To minimize the wireless data communication, each node performs a fast Fourier transform algorithm once sufficient acceleration measurements have been collected.
-
 The acceleration measurements are converted into the vibration frequencies and the corresponding magnitudes of the building.
 Each sensor node transfers only the values of the predominating frequency---i.e. the frequency with the biggest magnitude--- \colorbox{cyan}{to the basestation}. 
 The values are then stored in the MySQL database at the host computer.
+
+The correct implementation of the FFT has been verified beforehand by plotting the frequency domain of various oscillation events.
+\autoref{fig:fft-diagram} shows  one of the results as an example.
+The natural frequencies are readily identifiable by the peaks in the diagram.
+The first three natural frequencies are located at approximately 2.3\,Hz (first natural frequency), 8\,Hz (second natural frequency),and 16\,Hz (third natural frequency).
+The same natural frequencies appeared throughout repeated tests with varying excitation forces, sampling rates, and number of measurements.
+
+\begin{table}[ht]
+	\centering
+	\begin{tabular}{c c c}
+		1\textsuperscript{st} natural frequency & 2\textsuperscript{nd} natural frequency & 3\textsuperscript{rd} natural frequency \\ 
+		2,3 & 8 & 16 \\
+	\end{tabular}
+	\caption{Natural frequencies of the test structure}
+	\label{tab:nat-freqs}
+\end{table}
 
 \begin{itemize}
 	\item 
