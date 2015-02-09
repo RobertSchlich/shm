@@ -8,6 +8,7 @@
 \usepackage[colorlinks, linkcolor=black, citecolor=blue, urlcolor=blue]{hyperref}
 \usepackage{titlesec}
 \usepackage{color}
+\usepackage{booktabs}
 
 % used for line numbering
 \usepackage{lineno}
@@ -283,9 +284,9 @@ The laboratory setup after system installation is shown in \autoref{fig:teststru
 
 %\todo{Bild ersetzen durch ein Bild mit den fertig installierten SPOTS}
 
-\begin{figure}[h!]
+\begin{figure}[ht]
     \centering
-    \includegraphics[scale=0.4]{figures/teststructure.jpg}
+    \includegraphics[scale=0.6]{figures/testsetup.png}
     \caption{Laboratory setup}
     \label{fig:teststructure}
 \end{figure}
@@ -299,25 +300,34 @@ Each sensor node transfers only the values of the predominating frequency---i.e.
 The values are then stored in the MySQL database at the host computer.
 
 The correct implementation of the FFT has been verified beforehand by plotting the frequency domain of various oscillation events.
-\autoref{fig:fft-diagram} shows  one of the results as an example.
+\autoref{fig:50hzfft} shows  one of the results as an example.
 The natural frequencies are readily identifiable by the peaks in the diagram.
-The first three natural frequencies are located at approximately 2.3\,Hz (first natural frequency), 8\,Hz (second natural frequency),and 16\,Hz (third natural frequency).
-The same natural frequencies appeared throughout repeated tests with varying excitation forces, sampling rates, and number of measurements.
+The first three natural frequencies are located at approximately 2.3\,Hz (1\textsuperscript{st} natural frequency), 8\,Hz (2\textsuperscript{nd} natural frequency),and 18\,Hz (3\textsuperscript{rd} natural frequency).
+The same natural frequencies appeared throughout repeated tests with varying excitation forces, sampling rates, and number of measured acceleration values.
 
-\begin{table}[ht]
-	\centering
-	\begin{tabular}{c c c}
-		1\textsuperscript{st} natural frequency & 2\textsuperscript{nd} natural frequency & 3\textsuperscript{rd} natural frequency \\ 
-		2,3 & 8 & 16 \\
-	\end{tabular}
-	\caption{Natural frequencies of the test structure}
-	\label{tab:nat-freqs}
-\end{table}
+\begin{figure}[ht]
+    \centering
+    \includegraphics{figures/50Hz.pdf}
+    \caption{frequency domain graph of the oscillation}
+    \label{fig:50hzfft}
+\end{figure}
 
-\begin{itemize}
-	\item 
-	\item that means our paper is also wireless and very very good
-\end{itemize}
+After the 
+
+%\begin{table}[ht]
+%	\centering
+%	\begin{tabular}{c c c}
+%		\toprule
+%		1\textsuperscript{st} natural frequency & 2\textsuperscript{nd} natural frequency & 3\textsuperscript{rd} natural frequency \\ 
+%		\midrule
+%		2,3 & 8 & 16 \\
+%		\bottomrule
+%	\end{tabular}
+%	\caption{Natural frequencies of the test structure}
+%	\label{tab:nat-freqs}
+%\end{table}
+
+
 
 %----------------------------------------------------------------------------------------
 
