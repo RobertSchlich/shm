@@ -32,6 +32,10 @@
 \footskip 1.0cm
 
 
+\clubpenalty = 10000 % schliesst Schusterjungen aus
+\widowpenalty = 10000 \displaywidowpenalty = 10000% schliesst Hurenkinder aus 
+
+
 %The next command sets up an environment for the abstract to your paper.
 \newenvironment{sciabstract}{%
 \begin{quote} \bfseries}
@@ -57,7 +61,8 @@
 \begin{list}%
 {\arabic{lastnote}.}
 {\setlength{\leftmargin}{.22in}}
-{\setlength{\labelsep}{.5em}}}
+%{\setlength{\labelsep}{.5em}}
+}
 {\end{list}}
 
 
@@ -107,7 +112,7 @@ Immense amounts of data incure during wireless structural health monitoring.
 Applying adequate data compression methods can significantly reduce the amount of data that has to be transmitted and stored.
 In this paper, the design and implementation of a wireless structural health monitoring system, capable of dezentralized data compression, is presented. 
 A fast Fourier transform is embedded into each sensor node to analyze oscillation frequencies. 
-By only transmitting the first natural frequency and the correlating magnitude, the data stream is reduced to two values.
+By only transmitting the first natural frequency and the correlating magnitude, the data stream is reduced to two values per sampling event.
 The proposed approach was validated in laboratory experiments.
 
 
@@ -169,13 +174,14 @@ In wireless SHM systems, the sensor nodes communicate---through a basestation wi
 
 However, when using wireless SHM systems, special attention has to be paid to data transfer.
 Immense amounts of raw data incure and have to be transmitted.
-Over the air transmission is error-prone and may lead to irreparable data loss.  (klingt das zu stark? Warum ist das mit FFT nicht mehr so schlimm?)
-To save transmission time and storage space, and to decrease data loss, the transmitted data can be reduced using embedded computing.
+Over the air transmission is error-prone and may lead to data loss.
+To save transmission time and storage space, and to decrease the probability data loss, the transmitted data can be reduced using embedded computing.
 Depending on the measuring objective, first steps of data processing can be conducted decentralized directly on the sensor nodes.
 Transmitting analysis results instead of raw data can reduce the amount of transmitted data exponentially.
 
 In this paper, the natural frequency of a building structure is determined using a fast Fourier transform.
 Deviations from the natural frequency indicate changes in the vibration behavior, which may be caused by structural failures.
+\todo[inline]{noch ein Satz wäre schön: nur übertragung von einem Wert...}
 
 %\begin{itemize}
 %	\item problem: viel data traffic
@@ -200,7 +206,7 @@ The Sun SPOTS are equipped with several components, see \autoref{fig:SPOT}.
 Among others, the sensor board includes an accelerometer and eight independent RGB-LEDs.
 The 3-axis digital output accelerometer with sensitivity ranging between $\pm$\,2\,g and $\pm$\,8\,g has a maximum sampling rate of 125Hz \citep{eDemo2010}.
 
-\begin{figure}[ht]
+\begin{figure}[htb]
     \centering
     \includegraphics[scale=0.5]{figures/eDemoboard.png}
     \caption{Layout of the Sun SPOT sensor board \cite{spotToO}}
@@ -219,8 +225,6 @@ The processed data is then transmitted via radio to the basestation and, finally
 On the host computer, tasks 4 is conducted by storing the data in a MySQL database.
 Task 5 and 6---additional analysis and diagnosis---are conducted on the host computer in further steps.
 
-\colorbox{cyan}{neuer Absatz:}
-
 The SHM system is programmed object-oriented in Java. 
 Object orientation uses objects which are instanciated using classes as paradigm. 
 A class includes methods, allowing the objects to perform actions, and attributes, storing object-specific data.
@@ -230,15 +234,15 @@ A package organizes several Java classes that build a program.
 \autoref{fig:UML-sn} describes the classes of the \texttt{sensor\-node} package.
 The package \texttt{sensor\-node} consists of the classes \texttt{Acceleration\-Sampler}, \texttt{FFT}, \texttt{Communi\-cation} and \texttt{Main\-Spot}, which are embedded directly into the sensor nodes.
 The \texttt{Acceleration\-Sampler} class is responsible for measuring the acceleration.
-There are two phases: \colorbox{cyan}{At} first, the acceleration is measured with a low sampling rate.
-Once the acceleration exceeds a threshold, the \colorbox{cyan}{second phase is entered} by increasing the sampling rate. 
+There are two phases: At first, the acceleration is measured with a low sampling rate.
+Once the acceleration exceeds a threshold, the second phase is entered by increasing the sampling rate. 
 The measured values are stored into an array.
 The different phases are indicatad by lighting different LEDs.
 The \texttt{FFT} class performs a fast Fourier transform on the measured accelerations. 
 With the transformed data, the magnitudes and the correlating frequencies of the measured oscillation are calculated.
-Finally, the natural frequency \colorbox{cyan}{is} determined by extracting the maximal magnitude.
+Finally, the natural frequency is determined by extracting the maximal magnitude.
 The \texttt{Communi\-cation} class opens a radio connection between the sensor node and the basestation to transfer data from the sensor node to the basestation.
-For starting the operation of \colorbox{cyan}{the sensor node}, the entry point of the programm is the \texttt{start\-App()} method in the \texttt{Main\-Spot} class. 
+For starting the operation of the sensor node, the entry point of the programm is the \texttt{start\-App()} method in the \texttt{Main\-Spot} class. 
 Within the \texttt{Main\-Spot} class, instances of the \texttt{Acceleration\-Sampler} class, the \texttt{FFT} class and the \texttt{Communication} class are created to perform the measurement.
 
 \begin{figure}[ht]
@@ -251,7 +255,6 @@ Within the \texttt{Main\-Spot} class, instances of the \texttt{Acceleration\-Sam
 \autoref{fig:UML-bs} describes the classes of the \texttt{base\-station} package.
 The package \texttt{base\-station} runs on the host computer and operates the basestation.
 It consists of the classes \texttt{Database\-Handler} and \texttt{Main\-Base}.
-
 The \texttt{Database\-Handler} class establishes a connection to a MySQL database, creates a database table, if none with the specified name is available, and inserts data into the database table.
 The entry point of the program is the \texttt{run()} method in the \texttt{Main\-Base} class. The \texttt{Main\-Base} class opens a radio connection between the basestation and the sensor nodes, receives data sent by the sensor nodes and creates an instance of \texttt{Database\-Handler} to insert the data into the database.
 
@@ -278,7 +281,7 @@ At the bottom, the rods are fixed into a solid block of 40\,cm\,$\times$\,60\,cm
 The SHM system is installed on the test structure by fastening a wireless sensor node to each story.
 The laboratory setup after system installation is shown in \autoref{fig:teststructure}.
 
-\todo{Bild ersetzen durch ein Bild mit den fertig installierten SPOTS}
+%\todo{Bild ersetzen durch ein Bild mit den fertig installierten SPOTS}
 
 \begin{figure}[h!]
     \centering
@@ -292,7 +295,7 @@ This excitation method ensures a free vibration in natural frequency with little
 After excitation, the sensor nodes automatically start measuring acceleration with an increased sampling rate of 50\,Hz.
 To minimize the wireless data communication, each node performs a fast Fourier transform algorithm once sufficient acceleration measurements have been collected.
 The acceleration measurements are converted into the vibration frequencies and the corresponding magnitudes of the building.
-Each sensor node transfers only the values of the predominating frequency---i.e. the frequency with the biggest magnitude--- \colorbox{cyan}{to the basestation}. 
+Each sensor node transfers only the values of the predominating frequency---i.e. the frequency with the biggest magnitude---to the basestation. 
 The values are then stored in the MySQL database at the host computer.
 
 The correct implementation of the FFT has been verified beforehand by plotting the frequency domain of various oscillation events.
