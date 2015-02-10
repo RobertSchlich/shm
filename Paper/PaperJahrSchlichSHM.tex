@@ -198,7 +198,7 @@ The structure is excited by deflecting and releasing the top of the structure.
 This excitation method ensures a free vibration in natural frequency with little interferences.
 After excitation, when the acceleration threshold is exceeded, the sensor nodes automatically start measuring the acceleration.
 To minimize the wireless data traffic, each sensor node performs a FFT, once sufficient acceleration measurements have been collected.
-By the use of the FFT, the acceleration measurements are converted into the oscillation frequencies and the corresponding magnitudes of the building.
+By the use of the FFT, the acceleration measurements are converted into the oscillation frequencies and the corresponding magnitudes of the building \cite{rao2011fast}.
 
 The implementation of the FFT has been verified by plotting the frequency domain of various oscillation events, see \autoref{fig:76hzfft}.
 The natural frequencies can be identified by the peaks in the magnitude graph.
@@ -208,9 +208,9 @@ The values are stored in the MySQL database and analyzed.
 
 \begin{figure}[htb]
     \centering
-    \includegraphics[scale=0.9]{figures/50Hz.pdf}
+    \includegraphics[scale=0.9]{figures/76HzHalf.pdf}
     \caption{frequency domain graph of the oscillation}
-    \label{fig:50hzfft}
+    \label{fig:76hzfft}
 \end{figure}
 
 The natural frequencies have been validated by repeated tests---using varying excitation forces, varying sampling rates, and varying quantities of measured values---and the results of a FE analysis.
