@@ -190,8 +190,8 @@ public class FFT {
 		
 		//get frequency for maximal  magnitude
 		double maxFrequency = frequency[indexMax];
-		System.out.println("maxMagnitude= "+ maxMagnitude+
-											", maxFrequency= " + maxFrequency);
+		//System.out.println("maxMagnitude= "+ maxMagnitude+
+		//									", maxFrequency= " + maxFrequency);
 		
 		double naturalFreq[] = {maxMagnitude, maxFrequency};
     		

@@ -9,16 +9,17 @@ import javax.microedition.midlet.MIDlet;
 import javax.microedition.midlet.MIDletStateChangeException;
 import com.sun.spot.resources.transducers.IAccelerometer3D;
 import com.sun.spot.service.BootloaderListenerService;
+//import java.io.Writer;
 
 
 public class MainSpot extends MIDlet {
 
     private int HOST_PORT = 67;
-    private int SAMPLE_PERIOD_LISTENING = 1 * 1000;  // in milliseconds
-    private int SAMPLE_PERIOD_MEASURING = 100;  // in milliseconds
-    private int ARRAY_LENGTH = 128;
+    private int SAMPLE_PERIOD_LISTENING = 1 * 500;  // in milliseconds
+    private int SAMPLE_PERIOD_MEASURING = 13;  // in milliseconds
+    private int ARRAY_LENGTH = 512;
     private double SAMPLERATE = 1000. / (double)SAMPLE_PERIOD_MEASURING;
-    private double THRESHOLD = 0.1;
+    private double THRESHOLD = 0.2;
     
     protected void startApp() throws MIDletStateChangeException {
 
@@ -45,6 +46,7 @@ public class MainSpot extends MIDlet {
 			double[] frequency = FFT.calcFreq(transform, SAMPLERATE);
 			double[] naturalFreq =  FFT.calcNaturalFreq(magnitude, frequency);
 			
+			
 			// print frequency and magnitude array on console
 			System.out.println("Magnitude");
 			for (int i = 0 ; i < ARRAY_LENGTH; i++){
@@ -54,8 +56,30 @@ public class MainSpot extends MIDlet {
 			for (int i = 0 ; i < ARRAY_LENGTH; i++){
 				System.out.println(frequency[i]);
 			}
-
-			//send processed data to database
+			System.out.println("natural magnitude: " + naturalFreq[0]);
+			System.out.println("natural Frequency: " + naturalFreq[1]);
+			
+			
+			/*
+			
+			// print data to file
+			Writer.PrintWriter writer = new Writer.PrintWriter("measurement.txt", "UTF-8");
+			
+			writer.println("Magnitude");
+			for (int i = 0 ; i < ARRAY_LENGTH; i++){
+				writer.println(magnitude[i]);
+			}	
+			writer.println("Frequency");
+			for (int i = 0 ; i < ARRAY_LENGTH; i++){
+				writer.println(frequency[i]);
+			}
+			writer.println("natural magnitude: " + naturalFreq[0]);
+			writer.println("natural Frequency: " + naturalFreq[1]);
+			writer.close();
+			
+			*/
+			
+			//send processed data to basestation
 			communication.SendMeasurement(naturalFreq[0], naturalFreq[1]);
 			Utils.sleep(2000);
 		}   

@@ -26,6 +26,7 @@ public class MainBase {
     private static final String DATABASE_USER = "shm";
     private static final String DATABASE_PASSWORD = "pass";
     private static final String TABLE_NAME = "measurements";
+    private int samplerate = 76;  // in milliseconds
     
     private void run() throws Exception {
     	
@@ -64,7 +65,7 @@ public class MainBase {
                 double magnitude = dg.readDouble();      // read the magnitude
                 float frequency = dg.readFloat();        // read the frequency
                 // Write measurement to Database
-                dbHandler.writeMeasurement(TABLE_NAME, addr, magnitude, frequency);
+                dbHandler.writeMeasurement(TABLE_NAME, addr, magnitude, frequency, samplerate);
             } catch (Exception e) {
                 System.err.println("Caught " + e +  " while reading sensor samples.");
                 throw e;
