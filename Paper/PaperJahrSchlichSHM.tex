@@ -25,14 +25,6 @@
 \geometry{a4paper, top=30mm, left=30mm, right=30mm, bottom=40mm,
 headsep=10mm, footskip=12mm}
 
-
-%% The following parameters seem to provide a reasonable page setup.
-%\topmargin -1.0cm
-%\oddsidemargin 0.2cm
-%\textwidth 15cm 
-%\textheight 23cm
-%\footskip 1.0cm
-
 \title{\textbf{ \Large {Reducing data traffic in wireless structural health monitoring systems using embedded computing}}}
 \author
 {\large Katrin Jahr, Robert Schlich\\
@@ -210,8 +202,6 @@ At the bottom, the rods are fixed into a solid block of 40\,cm\,$\times$\,60\,cm
 The SHM system is installed on the test structure by fastening a wireless sensor node to each story.
 The laboratory setup after system installation is shown in \autoref{fig:teststructure}.
 
-%\todo{Bild ersetzen durch ein Bild mit den fertig installierten SPOTS}
-
 \begin{figure}[ht]
     \centering
     \includegraphics[scale=0.6]{figures/testsetup.png}
@@ -221,17 +211,20 @@ The laboratory setup after system installation is shown in \autoref{fig:teststru
 
 The structure is excited by deflecting and releasing the top of the structure.
 This excitation method ensures a free vibration in natural frequency with little interferences.
-After excitation, the sensor nodes automatically start measuring acceleration with an increased sampling rate of 50\,Hz.
+After excitation, the sensor nodes automatically start measuring acceleration with an increased sampling rate.
 To minimize the wireless data communication, each node performs a fast Fourier transform algorithm once sufficient acceleration measurements have been collected.
 The acceleration measurements are converted into the vibration frequencies and the corresponding magnitudes of the building.
-Each sensor node transfers only the values of the predominating frequency---i.e. the frequency with the biggest magnitude---to the basestation. 
+Each sensor node transfers only the values of the first natural frequency---i.e. the frequency with the biggest magnitude---to the basestation. 
 The values are then stored in the MySQL database at the host computer.
 
 The correct implementation of the FFT has been verified beforehand by plotting the frequency domain of various oscillation events.
 \autoref{fig:50hzfft} shows  one of the results as an example.
-The natural frequencies are readily identifiable by the peaks in the diagram.
+The natural frequencies are readily identifiable by the peaks in the graph.
 The first three natural frequencies are located at approximately 2.3\,Hz (1\textsuperscript{st} natural frequency), 8\,Hz (2\textsuperscript{nd} natural frequency),and 18\,Hz (3\textsuperscript{rd} natural frequency).
 The same natural frequencies appeared throughout repeated tests with varying excitation forces, sampling rates, and number of measured acceleration values.
+The chosen sensor nodes were unable to handle sampling rates above 76\,Hz.
+Furthermore test runs with more than 512 measured values showed no significant increase in precision.
+Therefore a sampling rate of 76\,Hz and 512 measured values were assumed reasonable for the following test runs.
 
 \begin{figure}[ht]
     \centering
@@ -239,8 +232,6 @@ The same natural frequencies appeared throughout repeated tests with varying exc
     \caption{frequency domain graph of the oscillation}
     \label{fig:50hzfft}
 \end{figure}
-
-After the 
 
 \begin{table}[ht]
 	\centering
@@ -273,7 +264,19 @@ After the
 	\label{tab:lab-ex}
 \end{table}
 
+In a next step multiple sensor nodes are installed to different positions on the test structure in order to test the SHM system as a whole.
+After the sensors are installed, the test structure was subjected to varying degrees of excitation.
+The calculated natural frequencies, and corresponding magnitude, are safed in the MySQL database and analyzed manually.
+The results of these test runs are shown in \autoref{tab:lab-ex} in the appendix.
 
+Every sensor calculated the same natural frequency to a precision of four decimal points regardless of sensor position and degree of excitation.
+The sensors installed on the top of the structure always calculates the highest corresponding magnitude and magnitudes decreased from top to bottom.
+These results are plausible and indicate, that the SHM system is working correctly.
+
+Through FFT analysis of oscillations the data traffic is decreased from 512 measured acceleration values per oscillation to two values, the natural frequency and the corresponding magnitude.
+A number stored in the used data format double occupies 8\,bytes of space.
+Therefore the data traffic was decreased by $510\times8\,B = 4080\,B = 3,98\,MB$ per sampling event
+This equates a 99.6\,\% decrease of data traffic.
 
 %----------------------------------------------------------------------------------------
 
@@ -281,7 +284,7 @@ After the
 
 In structural health monitoring, a decentralized data compression stragegy reduces data traffic and storage space.
 Using a fast Fourier transform to determine the natural frequency allows conclusions about the structural integrity of a structure.
-The transmitted data was reduced exponentially, saving up to xx MB per sampling event.
+The transmitted data was reduced exponentially, saving up to 3,96\,MB per sampling event.
 
 %----------------------------------------------------------------------------------------
 
