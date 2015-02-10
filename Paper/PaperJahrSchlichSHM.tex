@@ -1,5 +1,5 @@
 \documentclass[12pt,a4paper]{scrartcl}
-\usepackage[ngerman, english]{babel}
+\usepackage[english]{babel}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage[color=yellow!15]{todonotes}
@@ -15,63 +15,25 @@
 
 \makeatletter
 \renewcommand\section{\@startsection{section}{1}{\z@}%
-                     {-3.5ex \@plus -1ex \@minus -.2ex}%
+                     {-7.5ex \@plus -1ex \@minus -10.2ex}%
                      {2.3ex \@plus.2ex}%
-                     {\normalfont\large\bfseries}}
+                     {\sffamily\large\bfseries}}
 \makeatother
 
 
-
-%\usepackage{titlesec}
-%\titleformat{\section}{\large\bfseries}{\thesection}{1em}{}
-
-% The following parameters seem to provide a reasonable page setup.
-\topmargin -1.0cm
-\oddsidemargin 0.2cm
-\textwidth 15cm 
-\textheight 23cm
-\footskip 1.0cm
+\usepackage{geometry}
+\geometry{a4paper, top=30mm, left=30mm, right=30mm, bottom=40mm,
+headsep=10mm, footskip=12mm}
 
 
-\clubpenalty = 10000 % schliesst Schusterjungen aus
-\widowpenalty = 10000 \displaywidowpenalty = 10000% schliesst Hurenkinder aus 
+%% The following parameters seem to provide a reasonable page setup.
+%\topmargin -1.0cm
+%\oddsidemargin 0.2cm
+%\textwidth 15cm 
+%\textheight 23cm
+%\footskip 1.0cm
 
-
-%The next command sets up an environment for the abstract to your paper.
-\newenvironment{sciabstract}{%
-\begin{quote} \bfseries}
-{\end{quote}}
-
-
-% If your reference list includes text notes as well as references,
-% include the following line; otherwise, comment it out.
-
-%\renewcommand\refname{References and Notes}
-
-% The following lines set up an environment for the last note in the
-% reference list, which commonly includes acknowledgments of funding,
-% help, etc.  It's intended for users of BibTeX or the {thebibliography}
-% environment.  Users who are hand-coding their references at the end
-% using a list environment such as {enumerate} can simply add another
-% item at the end, and it will be numbered automatically.
-
-\newcounter{lastnote}
-\newenvironment{scilastnote}{%
-\setcounter{lastnote}{\value{enumiv}}%
-\addtocounter{lastnote}{+1}%
-\begin{list}%
-{\arabic{lastnote}.}
-{\setlength{\leftmargin}{.22in}}
-%{\setlength{\labelsep}{.5em}}
-}
-{\end{list}}
-
-
-% Include your paper's title here
-
-\title{\normalfont\textbf{ \Large {Reducing data traffic in wireless structural health monitoring systems using embedded computing}}}
-
-
+\title{\textbf{ \Large {Reducing data traffic in wireless structural health monitoring systems using embedded computing}}}
 \author
 {\large Katrin Jahr, Robert Schlich\\
 \\
@@ -81,16 +43,14 @@
 \normalsize{katrin.jahr@uni-weimar.de \qquad}
 \normalsize{robert.schlich@uni-weimar.de}
 }
-
-
-% Include the date command, but leave its argument blank.
 \date{}
 
+\clubpenalty = 10000 % schliesst Schusterjungen aus
+\widowpenalty = 10000 \displaywidowpenalty = 10000% schliesst Hurenkinder aus 
 
-
-%%%%%%%%%%%%%%%%% END OF PREAMBLE %%%%%%%%%%%%%%%%
-
-
+\newenvironment{sciabstract}{%
+\begin{quote} \itshape}
+{\end{quote}}
 
 \begin{document} 
 
@@ -101,14 +61,15 @@
 % Make the title.
 
 \maketitle 
+\vspace{-2em}
 
 % 
 %\sloppy
 \setlength{\emergencystretch}{3pt}
-\hyphenation{sample-rate auto-nomous moni-toring}
+\hyphenation{sample-rate auto-nomous moni-toring methods}
+
 
 \begin{sciabstract}
-
 Immense amounts of data incure during wireless structural health monitoring.
 Applying adequate data compression methods can significantly reduce the amount of data that has to be transmitted and stored.
 In this paper, the design and implementation of a wireless structural health monitoring system, capable of dezentralized data compression, is presented. 
@@ -116,48 +77,7 @@ A fast Fourier transform is embedded into each sensor node to analyze oscillatio
 By only transmitting the first natural frequency and the correlating magnitude, the data stream is reduced to two values per sampling event.
 The proposed approach was validated in laboratory experiments.
 
-
-%The dependability and the accuracy of wireless structural health monitoring systems can be affected by data loss during wireless data transmission.
-%Applying adequate data compression methods can significantly reduce the amount of data that has to be transmitted and lower the occurrence of data loss.
-%In this paper, the design and implementation of a wireless structural health monitoring system, capable of data compression, is presented. 
-%A fast Fourier transform is used on every sensor node to analyze oscillation frequencies. 
-%Only the first natural frequency of the oscillation and the correlated magnitude are transmitted to the base station.
-%In laboratory experiments, devised to validate the proposed approach, the data traffic is reduced by xx.
-
 \end{sciabstract}
-
-%----------------------------------------------------------------------------------------
-
-\linenumbers % Schaltet Zeilennummerierung ein
-\modulolinenumbers[5] % nur jede 5. Zeile
-%
-%\section*{Dictionary}
-%
-%\begin{tabular}{|l|l|}
-%\hline 
-%Sensorknoten (SunSPOT) & sensor node \\ 
-%\hline 
-%einzelner Messsensor (Thermometer) & sensor \\ 
-%\hline 
-%Knoten im neuronalen Netz & neuron \\ 
-%\hline 
-%eine abgeschlossene Messungreihe & test run \\ 
-%\hline 
-%gemessene Werte & sensor data \\ 
-%\hline 
-%vorhergesagte Werte & predicted data \\ 
-%\hline 
-%durch Vorhersage erwartete Werte & expected data \\ 
-%\hline 
-%einzelner Messwert & measurement \\ 
-%\hline 
-%Test & laboratory experiments\\ 
-%\hline
-%tatsächliche, nicht virtuelle Messung & actual measurement \\
-%\hline
-%Messaufbau & test setup \\
-%\hline
-%\end{tabular} 
 
 %----------------------------------------------------------------------------------------
 
@@ -221,10 +141,18 @@ The SHM system performs the following tasks:
 4. data storage,
 5. diagnostics and 
 6. information retrieval.
+The dataflow is illustrated in \autoref{fig:flow}.
 Tasks 1 to 3 are executed by the sensor nodes: During system operation, the sensor nodes acquire acceleration measurements and perform a fast Fourier transform to determine the characteristics of the oscillation of the structure. 
 The processed data is then transmitted via radio to the basestation and, finally, to the host computer.
 On the host computer, tasks 4 is conducted by storing the data in a MySQL database.
 Task 5 and 6---additional analysis and diagnosis---are conducted on the host computer in further steps.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics{figures/dataflow_tasks.eps}
+    \caption{Dataflow and associated SHM tasks}
+    \label{fig:flow}
+\end{figure}
 
 The SHM system is programmed object-oriented in Java. 
 Object orientation uses objects which are instanciated using classes as paradigm. 
@@ -249,7 +177,7 @@ Within the \texttt{Main\-Spot} class, instances of the \texttt{Acceleration\-Sam
 \begin{figure}[ht]
     \centering
     \includegraphics[width = \textwidth]{figures/uml-sensornode.pdf}
-    \caption{class diagram of the sensornode package}
+    \caption{Class diagram of the \texttt{sensornode} package}
     \label{fig:UML-sn}
 \end{figure}
 
@@ -262,7 +190,7 @@ The entry point of the program is the \texttt{run()} method in the \texttt{Main\
 \begin{figure}[h!]
     \centering
     \includegraphics[width = \textwidth]{figures/uml-basestation.pdf}
-    \caption{class diagram of the basestation package}
+    \caption{Class diagram of the \texttt{basestation} package}
     \label{fig:UML-bs}
 \end{figure}
 
@@ -314,18 +242,36 @@ The same natural frequencies appeared throughout repeated tests with varying exc
 
 After the 
 
-%\begin{table}[ht]
-%	\centering
-%	\begin{tabular}{c c c}
-%		\toprule
-%		1\textsuperscript{st} natural frequency & 2\textsuperscript{nd} natural frequency & 3\textsuperscript{rd} natural frequency \\ 
-%		\midrule
-%		2,3 & 8 & 16 \\
-%		\bottomrule
-%	\end{tabular}
-%	\caption{Natural frequencies of the test structure}
-%	\label{tab:nat-freqs}
-%\end{table}
+\begin{table}[ht]
+	\centering
+	\begin{tabular}{l l c c c}
+		\toprule
+		ID & Position & Magnitude & Natural frequency & Sampling rate\\ 
+		\midrule
+		1 & top & 3.78 & 2.2461 & 50\\ 
+		1 & middle & 3.23 & 2.2461 & 50\\ 
+		1 & bottom & 1.97 & 2.2461 & 50\\ 
+		\midrule
+		2 & top & 4.57 & 2.2461 & 50\\ 
+		2 & middle & 3.54 & 2.2461 & 50\\
+		2 & bottom & 2.43 & 2.2461 & 50\\ 
+		\midrule
+		3 & top & 8.20 & 2.2536 & 76\\
+		3 & middle & 6.35 & 2.2536 & 76\\ 
+		3 & bottom & 3.79 & 2.2536 & 76\\
+		\midrule	
+		4 & top & 5.74 & 2.2536 & 76\\  
+		4 & middle & 4.38 & 2.2536 & 76\\ 
+		4 & bottom & 2.55 & 2.2536 & 76\\
+		\midrule		
+		5 & top & 5.53 & 2.2536 & 76\\  
+		5 & middle & 4.62 & 2.2536 & 76\\ 
+		5 & bottom & 2.74 & 2.2536 & 76\\ 		
+		\bottomrule
+	\end{tabular}
+	\caption{Natural frequencies of the test structure}
+	\label{tab:lab-ex}
+\end{table}
 
 
 
