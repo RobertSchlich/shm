@@ -83,7 +83,7 @@ The analysis of the sensor data can reveal abnormal changes in material and geom
 
 Traditionally, the sensor nodes are connected to computer systems with cables.
 Using wired SHM systems has several disadvantages, including expensive wiring, high installation and labor costs as well as inaccessibility of optimal sensor location with wires.
-In wireless SHM systems, the sensor nodes communicate---through a basestation with each other and with computer systems--- via wireless transceivers, eradicating wiring-specific problems.
+In wireless SHM systems, the sensor nodes communicate with each other and with computer systems via wireless transceivers, eradicating wiring-specific problems.
 
 However, when using wireless SHM systems, special attention has to be paid to data transfer.
 Immense amounts of raw data incure and have to be transmitted.
@@ -92,12 +92,12 @@ To save transmission time and storage space, and to decrease the probability dat
 Depending on the measuring objective, first steps of data processing can be conducted decentralized directly on the sensor nodes.
 Transmitting analysis results instead of raw data can reduce the amount of transmitted data exponentially.
 
-In this paper, the natural frequency of a building structure is determined using a fast Fourier transform.
+In this paper, the natural frequency of a building structure is determined using a fast Fourier transform (FFT).
 Deviations from the natural frequency indicate changes in the vibration behavior, which may be caused by structural failures.
 
 This paper is organized as follows:
 First, a wireless structural health monitoring system is designed and implemented. 
-Next, a decentralized data analysis approach, using fast Fourier transform (FFT), is developed.
+Next, a decentralized data analysis approach, using fast Fourier transform, is developed.
 Then, the system is tested in laboratory experiments.
 Finally, the experimental results are discussed and future research directions are proposed.
 
@@ -132,7 +132,7 @@ Task 5 and 6---additional analysis and diagnosis---are conducted on the host com
 \end{figure}
 
 The SHM system is programmed object-oriented in Java. 
-Object orientation uses objects which are instanciated using classes as paradigm. 
+Object orientation uses objects, which are instanciated using classes as paradigm. 
 A class includes methods, allowing the objects to perform actions, and attributes, storing object-specific data.
 The SHM system consists of two packages---\texttt{sensornode} and \texttt{basestation}.
 A package organizes several Java classes that build a program.
@@ -181,11 +181,11 @@ In the following section, the laboratory experiments are described.
 First, a description of the test setup is given, second, the data aquisition and processing are depicted, and finally, the results are discussed. 
 
 To validate the proposed approach in laboratory experiments, the wireless SHM system is installed on a test structure.
-The test structure is a 4-story shear-frame consisting of four steel plates of 25\,cm\,$\times$\,50\,cm and a thickness of 0.8\,mm.
+The test structure is a 4-story shear-frame consisting of four steel plates of 25\,cm\,$\times$\,50\,cm\,$\times$\,0.8\,mm.
 The plates are mounted on threaded rods with a vertical clearance of 23\,cm.
-At the bottom, the rods are fixed into a solid block of 40\,cm\,$\times$\,60\,cm and a height of 30\,cm.
-The SHM system is installed on the test structure by fastening a wireless sensor node to the top three stories.
-The laboratory setup after system installation is shown in \autoref{fig:teststructure}.
+At the bottom, the rods are fixed into a solid block of 40\,cm\,$\times$\,60\,cm\,$\times$\,30\,cm.
+The SHM system is installed on the test structure by fastening one wireless sensor node to each of the top three stories.
+The laboratory setup is shown in \autoref{fig:teststructure}.
 
 \begin{figure}[ht]
     \centering
@@ -204,7 +204,7 @@ The implementation of the FFT has been verified by plotting the frequency domain
 The natural frequencies can be identified by the peaks in the magnitude graph.
 The first two natural frequencies are located at approximately 2.3\,Hz (1\textsuperscript{st} natural frequency) and 8\,Hz (2\textsuperscript{nd} natural frequency).
 Each sensor node transfers the values of the first natural frequency and the corresponding magnitude to the basestation. 
-The values are stored in the MySQL database and analyzed.
+The values are stored in a MySQL database and analyzed.
 
 \begin{figure}[htb]
     \centering
@@ -221,18 +221,18 @@ Therefore, a sampling rate of 76\,Hz and 512 measured values were chosen.
 
 Every sensor calculated the same natural frequency to a precision of four decimal points regardless of sensor position and degree of excitation.
 Example results are shown in \autoref{tab:lab-ex}.
-The identified magnitudes increases with ascending sensor node position from top to bottom, validating the SHM system.
+The identified magnitudes increase with ascending sensor node position from top to bottom, corresponding to the higher deflection at the top of the structure.
 
-Through FFT analysis of sampling events, the data traffic is decreased from 512 measured acceleration values per sampling event to two values.
+Through FFT analysis of sampling events, the data traffic is decreased from 512 doubles per sampling event to two doubles per sampling event.
 A number stored in the used data format double occupies 8\,bytes of space.
-The data traffic is decreased by 510$\times$8\,B\,=\,4080\,B\,=\,3,98\,MB per sampling event, decreasing data traffic by 99.6\,\%.
+The data traffic is decreased by (512$-$2)$\times$8\,B\,=\,4080\,B\,=\,3,98\,MB per sampling event, decreasing data traffic by 99.6\,\%.
 
 
 \begin{table}[hb]
 	\centering
 	\begin{tabular}{l l c c c}
 		\toprule
-		ID & Position & Magnitude & Natural frequency & Sampling rate\\ 
+		ID & Position & Magnitude & Natural frequency [Hz] & Sampling rate [Hz]\\ 
 		\midrule
 		1 & top & 3.78 & 2.2461 & 76\\ 
 		1 & middle & 3.23 & 2.2461 & 76\\ 
