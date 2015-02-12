@@ -1,78 +1,48 @@
 \documentclass[12pt,a4paper]{scrartcl}
-\usepackage[ngerman, english]{babel}
+\usepackage[english]{babel}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage[color=yellow!15]{todonotes}
 \usepackage{graphicx}
 \usepackage[numbers, sort&compress, square]{natbib}
 \usepackage[colorlinks, linkcolor=black, citecolor=blue, urlcolor=blue]{hyperref}
-
+\usepackage{titlesec}
 \usepackage{color}
+\usepackage{booktabs}
 
 % used for line numbering
 \usepackage{lineno}
 
-% The following parameters seem to provide a reasonable page setup.
-\topmargin -1.0cm
-\oddsidemargin 0.2cm
-\textwidth 15cm 
-\textheight 23cm
-\footskip 1.0cm
+\makeatletter
+\renewcommand\section{\@startsection{section}{1}{\z@}%
+                     {-7.5ex \@plus -1ex \@minus -10.2ex}%
+                     {2.3ex \@plus.2ex}%
+                     {\sffamily\large\bfseries}}
+\makeatother
 
 
-%The next command sets up an environment for the abstract to your paper.
-\newenvironment{sciabstract}{%
-\begin{quote} \bfseries}
-{\end{quote}}
+\usepackage{geometry}
+\geometry{a4paper, top=35mm, left=30mm, right=30mm, bottom=35mm,
+headsep=10mm, footskip=12mm}
 
-
-% If your reference list includes text notes as well as references,
-% include the following line; otherwise, comment it out.
-
-\renewcommand\refname{References and Notes}
-
-% The following lines set up an environment for the last note in the
-% reference list, which commonly includes acknowledgments of funding,
-% help, etc.  It's intended for users of BibTeX or the {thebibliography}
-% environment.  Users who are hand-coding their references at the end
-% using a list environment such as {enumerate} can simply add another
-% item at the end, and it will be numbered automatically.
-
-\newcounter{lastnote}
-\newenvironment{scilastnote}{%
-\setcounter{lastnote}{\value{enumiv}}%
-\addtocounter{lastnote}{+1}%
-\begin{list}%
-{\arabic{lastnote}.}
-{\setlength{\leftmargin}{.22in}}
-{\setlength{\labelsep}{.5em}}}
-{\end{list}}
-
-
-% Include your paper's title here
-
-\title{\textbf{ \Large{Decentralized autonomous sensor fault detection using neural networks}} }
-
-
+\title{\textbf{ \Large {Decentralized autonomous sensor fault detection using neural networks}}}
 \author
-{Katrin Jahr, Robert Schlich\\
+{\large Katrin Jahr, Robert Schlich\\
 \\
 \normalsize{Degree program “Civil Engineering” (M.Sc.)}\\
 \normalsize{Bauhaus-Universität Weimar, Germany}\\
 \\
-\normalsize{katrin.jahr@uni-weimar.de}\\
+\normalsize{katrin.jahr@uni-weimar.de \qquad}
 \normalsize{robert.schlich@uni-weimar.de}
 }
-
-
-% Include the date command, but leave its argument blank.
 \date{}
 
+\clubpenalty = 10000 % schliesst Schusterjungen aus
+\widowpenalty = 10000 \displaywidowpenalty = 10000% schliesst Hurenkinder aus 
 
-
-%%%%%%%%%%%%%%%%% END OF PREAMBLE %%%%%%%%%%%%%%%%
-
-
+\newenvironment{sciabstract}{%
+\begin{quote} \itshape}
+{\end{quote}}
 
 \begin{document} 
 
@@ -83,11 +53,12 @@
 % Make the title.
 
 \maketitle 
+\vspace{-2em}
 
 % 
 %\sloppy
 \setlength{\emergencystretch}{3pt}
-\hyphenation{sample-rate auto-nomous}
+\hyphenation{sample-rate auto-nomous moni-toring methods}
 
 \begin{sciabstract}
 
@@ -144,7 +115,7 @@ The obtained sensor data is collected by sensor nodes, and then analyzed and sto
 The analysis of the sensor data can reveal abnormal changes in material and geometric behaviour at an early stage.
 
 Traditionally, the sensor nodes are connected to computer systems with cables.
-However, using wired SHM systems has several disadvantages, including expensive wiring, high installation and labor costs as well as inaccessibility of optimal sensor location with wires.
+Using wired SHM systems has several disadvantages, including expensive wiring, high installation and labor costs as well as inaccessibility of optimal sensor location with wires.
 In wireless SHM systems, the sensor nodes communicate---through a basestation with each other and with computer systems--- via wireless transceivers, eradicating wiring-specific problems.
 
 Over their lifetime, sensors can become inaccurate, faulty, or may even break.
@@ -176,17 +147,9 @@ Finally, the experimental results are discussed and future research directions a
 In the following section, the wireless structural health monitoring system is introduced and the software implementation is described.
 The wireless SHM system consists of wireless sensor nodes and a host computer, linked with a basestation.
 The sensor nodes and the basestation are of type "Oracle Sun SPOT". 
-The Sun SPOTS are equipped with several components, see \autoref{fig:SPOT}.
+The Sun SPOTS are equipped with several components.
 Among others, the sensor board includes an accelerometer and eight independent RGB-LEDs.
-The 3-axis digital output accelerometer with sensitivity ranging between $\pm$\,2\,g and $\pm$\,8\,g has a maximum sampling rate of 125Hz \citep{eDemo2010}.
-
-\todo{citation BILD!}
-\begin{figure}[ht]
-    \centering
-    \includegraphics[scale=0.5]{figures/eDemoboard.png}
-    \caption{Layout of the Sun SPOT sensor board}
-    \label{fig:SPOT}
-\end{figure}
+The 3-axis digital output accelerometer with sensitivity ranging between $\pm$\,2\,g and $\pm$\,8\,g has a maximum sampling rate of 125\,Hz \citep{eDemo2010}.
 
 The SHM system performs the following tasks:
 1. data acquisition,
@@ -195,49 +158,64 @@ The SHM system performs the following tasks:
 4. data storage,
 5. diagnostics and 
 6. information retrieval.
-Tasks 1 to 3 are executed by the sensor nodes: During system operation, the sensor nodes acquire acceleration measurements and perform a fast Fourier transform to determine the characteristics of the oscillation of the structure. The processed data is then transmitted via radio to the basestation and, finally, to the host computer.
+The dataflow is illustrated in \autoref{fig:flow}.
+Tasks 1 to 3 are executed by the sensor nodes: During system operation, the sensor nodes acquire acceleration measurements and perform a FFT to determine the characteristics of the oscillation of the structure. 
+The processed data is then transmitted via radio to the basestation and, finally, to the host computer.
 On the host computer, tasks 4 is conducted by storing the data in a MySQL database.
 Task 5 and 6---additional analysis and diagnosis---are conducted on the host computer in further steps.
 
-\colorbox{cyan}{neuer Absatz:}
+\begin{figure}[htb]
+    \centering
+    \includegraphics{figures/dataflow_tasks.eps}
+    \caption{Dataflow and associated SHM tasks}
+    \label{fig:flow}
+\end{figure}
 
-The SHM system is programmed object-oriented in Java. Object orientation uses objects, that are instanciated using classes as paradigm. A class includes methods, allowing the objects to perform actions, and attributes, specific data.
-\autoref{fig:UML} describes the classes of the SHM system code.
+The SHM system is programmed object-oriented in Java. 
+Object orientation uses objects, which are instanciated using classes as paradigm. 
+A class includes methods, allowing the objects to perform actions, and attributes, storing object-specific data.
 The SHM system consists of two packages---\texttt{sensornode} and \texttt{basestation}.
 A package organizes several Java classes that build a program.
 
-The package \texttt{sensornode} consists of the classes \texttt{Acceleration\-Sampler}, \texttt{FFT}, \texttt{Communication} and \texttt{MainSpot}, which are embedded directly into the sensor nodes.
-The \texttt{AccelerationSampler} class is responsible for measuring the acceleration.
-There are two phases: \colorbox{cyan}{At} first, the acceleration is measured with a low sampling rate.
-Once the acceleration exceeds a threshold, the \colorbox{cyan}{second phase is entered} by increasing the sampling rate. 
+\autoref{fig:UML-sn} describes the classes of the \texttt{sensor\-node} package.
+The package \texttt{sensor\-node} consists of the classes \texttt{Acceleration\-Sampler}, \texttt{FFT}, \texttt{Communi\-cation} and \texttt{Main\-Spot}, which are embedded directly into the sensor nodes.
+The \texttt{Acceleration\-Sampler} class is responsible for measuring the acceleration.
+There are two phases: At first, the acceleration is measured with a low sampling rate.
+Once the acceleration exceeds a threshold, the second phase is entered by increasing the sampling rate. 
 The measured values are stored into an array.
 The different phases are indicatad by lighting different LEDs.
-The \texttt{FFT} class performs a fast Fourier transform on the measured accelerations. 
+The \texttt{FFT} class performs a FFT on the measured accelerations. 
 With the transformed data, the magnitudes and the correlating frequencies of the measured oscillation are calculated.
-Finally, the natural frequency \colorbox{cyan}{is} determined by extracting the maximal magnitude.
-The \texttt{Communication} class opens a radio connection between the sensor node and the basestation to transfer data from the sensor node to the basestation.
-For starting the operation of \colorbox{cyan}{the sensor node}, the entry point of the programm is the \texttt{startApp()} method in the \texttt{MainSpot} class. 
-Within the \texttt{MainSpot} class, instances of the \texttt{Acceleration\-Sampler} class, the \texttt{FFT} class and the \texttt{Communication} class are created to perform the measurement.
+Finally, the natural frequency is determined by extracting the maximal magnitude.
+The \texttt{Communi\-cation} class opens a radio connection between the sensor node and the basestation to transfer data from the sensor node to the basestation.
+For starting the operation of the sensor node, the entry point of the programm is the \texttt{start\-App()} method in the \texttt{Main\-Spot} class. 
+Within the \texttt{Main\-Spot} class, instances of the \texttt{Acceleration\-Sampler} class, the \texttt{FFT} class and the \texttt{Communication} class are created to perform the measurement.
 
-The package \texttt{basestation} runs on the host computer and operates the basestation.
-It consists of the classes \texttt{Database\-Handler} and \texttt{MainBase}.
-The \texttt{Database\-Handler} class establishes a connection to a MySQL database, creates a database table, if none with the specified name is available, and inserts data into the database table.
-The entry point of the program is the \texttt{run()} method in the \texttt{MainBase} class. The \texttt{MainBase} class opens a radio connection between the basestation and the sensor nodes, receives data sent by the sensor nodes and creates an instance of \texttt{Database\-Handler} to insert the data into the database.
-
-\begin{figure}[h!]
+\begin{figure}[htb]
     \centering
-    \includegraphics{figures/uml.pdf}
-    \caption{class diagram describing the structure of the implemented SHM system}
-    \label{fig:UML}
+    \includegraphics[width = \textwidth]{figures/uml-sensornode.pdf}
+    \caption{Class diagram of the \texttt{sensornode} package}
+    \label{fig:UML-sn}
 \end{figure}
 
-\newpage
+\autoref{fig:UML-bs} describes the classes of the \texttt{base\-station} package.
+The package \texttt{base\-station} runs on the host computer and operates the basestation.
+It consists of the classes \texttt{Database\-Handler} and \texttt{Main\-Base}.
+The \texttt{Database\-Handler} class establishes a connection to a MySQL database, creates a database table, if none with the specified name is available, and inserts data into the database table.
+The entry point of the program is the \texttt{run()} method in the \texttt{Main\-Base} class. The \texttt{Main\-Base} class opens a radio connection between the basestation and the sensor nodes, receives data sent by the sensor nodes and creates an instance of \texttt{Database\-Handler} to insert the data into the database.
+
+\begin{figure}[htb]
+    \centering
+    \includegraphics[width = \textwidth]{figures/uml-basestation.pdf}
+    \caption{Class diagram of the \texttt{basestation} package}
+    \label{fig:UML-bs}
+\end{figure}
 
 %----------------------------------------------------------------------------------------
 
 \section*{Implementation and training of neural networks}
 
-Neural networks are implemented into the sensor nodes using SNIPE\footnote{}, a open source Java Library.
+Neural networks are implemented into the sensor nodes using SNIPE, a open source Java Library.
 \begin{figure}[ht]
     \centering
     \includegraphics{figures/neuralnetwork.pdf}
@@ -272,54 +250,81 @@ Neural networks are implemented into the sensor nodes using SNIPE\footnote{}, a 
 
 %----------------------------------------------------------------------------------------
 
-
-\newpage
 \section*{Laboratory experiments}
 
+In the following section, the laboratory experiments are described.
+First, a description of the test setup is given, second, the data aquisition and processing are depicted, and finally, the results are discussed. 
+
 To validate the proposed approach in laboratory experiments, the wireless SHM system is installed on a test structure.
-The test structure is a 4-story shear-frame consisting of four steel plates of 25\,cm\,$\times$\,50\,cm and a thickness of 0.8\,mm.
+The test structure is a 4-story shear-frame consisting of four steel plates of 25\,cm\,$\times$\,50\,cm\,$\times$\,0.8\,mm.
 The plates are mounted on threaded rods with a vertical clearance of 23\,cm.
-At the bottom, the rods are fixed into a solid block of 40\,cm\,$\times$\,60\,cm and a height of 30\,cm.
-The SHM system is installed on the test structure by fastening a wireless sensor node to each story.
-The laboratory setup after system installation is shown in \autoref{fig:teststructure}.
+At the bottom, the rods are fixed into a solid block of 40\,cm\,$\times$\,60\,cm\,$\times$\,30\,cm.
+The SHM system is installed on the test structure by fastening one wireless sensor node to each of the top three stories.
+The laboratory setup is shown in \autoref{fig:teststructure}.
 
-\todo{Bild ersetzen durch ein Bild mit den fertig installierten SPOTS}
-
-\begin{figure}[h!]
+\begin{figure}[ht]
     \centering
-    \includegraphics[scale=0.3]{figures/teststructure.jpg}
-    \caption{Laboratory setup}
+    \includegraphics[scale=0.4]{figures/testsetup.png}
+    \caption{Laboratory setup (Source: own photograph)}
     \label{fig:teststructure}
 \end{figure}
 
+The structure is excited by deflecting and releasing the top of the structure.
 This excitation method ensures a free vibration in natural frequency with little interferences.
-After excitation, the sensor nodes automatically start the acceleration with a sampling rate of 40\,Hz.
-To minimize the wireless data communication, each node performs a fast Fourier transform algorithm once sufficient acceleration measurements have been collected.
-%Generally FFTs are used to convert equidistant samples of a function into a combination of frequencies, and the corresponding magnitudes, that has the same sample values. 
-The acceleration measurements are converted into the vibration frequencies and the corresponding magnitudes of the building.
-Each sensor node transfers only the values of the predominating frequency---i.e. the frequency with the biggest magnitude--- \colorbox{cyan}{to the basestation}. The values are then stored in the MySQL database at the host computer.
+After excitation, when the acceleration threshold is exceeded, the sensor nodes automatically start measuring the acceleration.
+To minimize the wireless data traffic, each sensor node performs a FFT, once sufficient acceleration measurements have been collected.
+By the use of the FFT, the acceleration measurements are converted into the oscillation frequencies and the corresponding magnitudes of the building \cite{rao2011fast}.
+
+The implementation of the FFT has been verified by plotting the frequency domain of various oscillation events, see \autoref{fig:76hzfft}.
+The natural frequencies can be identified by the peaks in the magnitude graph.
+The first two natural frequencies are located at approximately 2.3\,Hz (1\textsuperscript{st} natural frequency) and 8\,Hz (2\textsuperscript{nd} natural frequency).
+Each sensor node transfers the values of the first natural frequency and the corresponding magnitude to the basestation. 
+The values are stored in a MySQL database and analyzed.
+
+\begin{figure}[htb]
+    \centering
+    \includegraphics[scale=0.9]{figures/76HzHalf.pdf}
+    \caption{frequency domain graph of the oscillation}
+    \label{fig:76hzfft}
+\end{figure}
+
+The natural frequencies have been validated by repeated tests---using varying excitation forces, varying sampling rates, and varying quantities of measured values---and the results of a FE analysis.
+The highest possible sampling rate was determined at 76\,Hz.
+Higher samping rates could not be handled by the sensor nodes.
+Test runs with more than 512 measured values showed no significant increase in precision.
+Therefore, a sampling rate of 76\,Hz and 512 measured values were chosen.
+
+Every sensor calculated the same natural frequency to a precision of four decimal points regardless of sensor position and degree of excitation.
+Example results are shown in \autoref{tab:lab-ex}.
+The identified magnitudes increase with ascending sensor node position from top to bottom, corresponding to the higher deflection at the top of the structure.
+
+Through FFT analysis of sampling events, the data traffic is decreased from 512 doubles per sampling event to two doubles per sampling event.
+A number stored in the used data format double occupies 8\,bytes of space.
+The data traffic is decreased by (512$-$2)$\times$8\,B\,=\,4080\,B\,=\,3,98\,MB per sampling event, decreasing data traffic by 99.6\,\%.
 
 
-
-%\textbf{2. paragraph: data measurement and processing}
-%
-%\emph{\begin{itemize}
-%\item learning phase
-%\item excitation
-%\item sensors start measuring
-%\item sensor nodes \textbf{perform fft} - what is fft
-%\item sensor nodes exchange frequencies
-%\item neural networks check integrity
-%\item if no faults detected, sensor nodes send data to basestation
-%\end{itemize}}
-%
-%\textbf{3. paragraph: sensor fault detection}
-%
-%\begin{itemize}
-%\item simulation of sensor fault
-%\item neural networks check integrity -> error!
-%\item sensor node sends alert to basestation
-%\end{itemize}
+\begin{table}[hb]
+	\centering
+	\begin{tabular}{l l c c c}
+		\toprule
+		ID & Position & Magnitude & Natural frequency [Hz] & Sampling rate [Hz]\\ 
+		\midrule
+		1 & top & 3.78 & 2.2461 & 76\\ 
+		1 & middle & 3.23 & 2.2461 & 76\\ 
+		1 & bottom & 1.97 & 2.2461 & 76\\ 
+		\midrule	
+		2 & top & 5.74 & 2.2536 & 76\\  
+		2 & middle & 4.38 & 2.2536 & 76\\ 
+		2 & bottom & 2.55 & 2.2536 & 76\\
+		\midrule
+		3 & top & 8.20 & 2.2536 & 76\\
+		3 & middle & 6.35 & 2.2536 & 76\\ 
+		3 & bottom & 3.79 & 2.2536 & 76\\
+		\bottomrule
+	\end{tabular}
+	\caption{Natural frequencies of the test structure}
+	\label{tab:lab-ex}
+\end{table}
 
 %----------------------------------------------------------------------------------------
 
