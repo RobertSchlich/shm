@@ -166,11 +166,12 @@ Task 5 and 6---additional analysis and diagnosis---are conducted on the host com
 
 \begin{figure}[htb]
     \centering
-    \includegraphics{figures/dataflow_tasks.eps}
+    \includegraphics{figures/dataflow_tasks_nn.eps}
     \caption{Dataflow and associated SHM tasks}
     \label{fig:flow}
 \end{figure}
 
+\colorbox{cyan}{neuer Absatz:}
 The SHM system is programmed object-oriented in Java. 
 Object orientation uses objects, which are instanciated using classes as paradigm. 
 A class includes methods, allowing the objects to perform actions, and attributes, storing object-specific data.
@@ -180,15 +181,15 @@ A package organizes several Java classes that build a program.
 \autoref{fig:UML-sn} describes the classes of the \texttt{sensor\-node} package.
 The package \texttt{sensor\-node} consists of the classes \texttt{Acceleration\-Sampler}, \texttt{FFT}, \texttt{Communi\-cation} and \texttt{Main\-Spot}, which are embedded directly into the sensor nodes.
 The \texttt{Acceleration\-Sampler} class is responsible for measuring the acceleration.
-There are two phases: At first, the acceleration is measured with a low sampling rate.
-Once the acceleration exceeds a threshold, the second phase is entered by increasing the sampling rate. 
+There are two phases: \colorbox{cyan}{At} first, the acceleration is measured with a low sampling rate.
+Once the acceleration exceeds a threshold, the \colorbox{cyan}{second phase is entered} by increasing the sampling rate. 
 The measured values are stored into an array.
 The different phases are indicatad by lighting different LEDs.
 The \texttt{FFT} class performs a FFT on the measured accelerations. 
 With the transformed data, the magnitudes and the correlating frequencies of the measured oscillation are calculated.
-Finally, the natural frequency is determined by extracting the maximal magnitude.
+Finally, the natural frequency \colorbox{cyan}{is} determined by extracting the maximal magnitude.
 The \texttt{Communi\-cation} class opens a radio connection between the sensor node and the basestation to transfer data from the sensor node to the basestation.
-For starting the operation of the sensor node, the entry point of the programm is the \texttt{start\-App()} method in the \texttt{Main\-Spot} class. 
+For starting the operation of \colorbox{cyan}{the sensor node}, the entry point of the programm is the \texttt{start\-App()} method in the \texttt{Main\-Spot} class. 
 Within the \texttt{Main\-Spot} class, instances of the \texttt{Acceleration\-Sampler} class, the \texttt{FFT} class and the \texttt{Communication} class are created to perform the measurement.
 
 \begin{figure}[htb]
@@ -294,13 +295,13 @@ Higher samping rates could not be handled by the sensor nodes.
 Test runs with more than 512 measured values showed no significant increase in precision.
 Therefore, a sampling rate of 76\,Hz and 512 measured values were chosen.
 
-Every sensor calculated the same natural frequency to a precision of four decimal points regardless of sensor position and degree of excitation.
+\textit{Every sensor calculated the same natural frequency to a precision of four decimal points regardless of sensor position and degree of excitation.
 Example results are shown in \autoref{tab:lab-ex}.
-The identified magnitudes increase with ascending sensor node position from top to bottom, corresponding to the higher deflection at the top of the structure.
+The identified magnitudes increase with ascending sensor node position from top to bottom, corresponding to the higher deflection at the top of the structure.}
 
-Through FFT analysis of sampling events, the data traffic is decreased from 512 doubles per sampling event to two doubles per sampling event.
+\textit{Through FFT analysis of sampling events, the data traffic is decreased from 512 doubles per sampling event to two doubles per sampling event.
 A number stored in the used data format double occupies 8\,bytes of space.
-The data traffic is decreased by (512$-$2)$\times$8\,B\,=\,4080\,B\,=\,3,98\,MB per sampling event, decreasing data traffic by 99.6\,\%.
+The data traffic is decreased by (512$-$2)$\times$8\,B\,=\,4080\,B\,=\,3,98\,MB per sampling event, decreasing data traffic by 99.6\,\%.}
 
 
 \begin{table}[hb]
