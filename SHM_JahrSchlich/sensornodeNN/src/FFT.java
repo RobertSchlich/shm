@@ -1,4 +1,4 @@
-package sensornode;
+package sensornodeNN;
 /**
  * @author Orlando Selenu
  * modified by Jahr&Schlich

@@ -28,6 +28,8 @@ public class MainBase {
     private static final String TABLE_NAME = "measurements";
     private int samplerate = 76;  // in milliseconds
     
+    String ourAddress = System.getProperty("IEEE_ADDRESS");
+    
     private void run() throws Exception {
     	
     	//Establish a radio connection to the sensor nodes
@@ -58,7 +60,9 @@ public class MainBase {
 
         // Main data collection loop
         while (true) {
+        	
             try {
+                System.out.println("Wiederhole try");
                 // Read sensor sample received over the radio
                 rCon.receive(dg);
                 String addr = dg.getAddress();  		 // read sender's Id
@@ -70,7 +74,12 @@ public class MainBase {
                 System.err.println("Caught " + e +  " while reading sensor samples.");
                 throw e;
             }
+        
+        System.out.println("Wiederhole while");
+        
+        
         }
+        
     }
     
     public static void main(String[] args) throws Exception {

@@ -1,4 +1,4 @@
-package sensornode;
+package sensornodeNN;
 
 import com.sun.spot.io.j2me.radiogram.*;
 import com.sun.spot.resources.Resources;
@@ -22,18 +22,19 @@ public class MainSpot extends MIDlet {
     private int ARRAY_LENGTH = 128;
     private double SAMPLERATE = 1000. / (double)SAMPLE_PERIOD_MEASURING;
     private double THRESHOLD = 0.2;
-    private int NUMBER_OF_OTHER_SENSORS = 1;
-    
-    
+
+    private String[] SENSOR_NAMES = {"0014.4F01.0000.7840",
+    								"0014.4F01.0000.792D"};
+//    								"0014.4F01.0000.7AFA"}
     private String ourAddress = System.getProperty("IEEE_ADDRESS");
-    private String otherAddress = "0014.4F01.0000.763F";
+    
     
     protected void startApp() throws MIDletStateChangeException {
 
         // Listen for downloads/commands over USB connection
     	new BootloaderListenerService().getInstance().start();
     	// initalize communication between spots
-		CommunicationNormal communication = new CommunicationNormal();
+		CommunicationNN communication = new CommunicationNN();
 		
 		//Radiogram
 		//communication.EstablishConnection(HOST_PORT);
@@ -58,10 +59,23 @@ public class MainSpot extends MIDlet {
 			Measurement ownMeas =  FFT.calcNaturalFreq(magnitude, frequency, ourAddress);
 			System.out.println("I did my FFT!");
 			
-			// exchange measurement with measurement of other sensors
-			Measurement othMeas = communication.ExchangeData(ownMeas, otherAddress, HOST_PORT);
 			
 			
+			int numberOfSensors = SENSOR_NAMES.length;
+			
+			Measurement othMeas[] = new Measurement[numberOfSensors];
+			
+			for(int i = 0; i<numberOfSensors; i++){
+				
+				String otherAddress = SENSOR_NAMES[i];
+				
+				// exchange measurement with measurement of other sensors
+				othMeas[i] = communication.ReceiveData(ownMeas, otherAddress, HOST_PORT);
+				
+
+			}
+				
+		
 			
 			/*
 			
