@@ -193,7 +193,7 @@ public class FFT {
 		//System.out.println("maxMagnitude= "+ maxMagnitude+
 		//									", maxFrequency= " + maxFrequency);
 		
-		Measurement measurement = new Measurement(ourAddress, maxMagnitude, maxFrequency);
+		Measurement measurement = new Measurement(ourAddress, maxMagnitude, maxFrequency,0);
         return measurement;
     }
 }

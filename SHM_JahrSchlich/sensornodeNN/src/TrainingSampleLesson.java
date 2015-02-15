@@ -1,4 +1,4 @@
-package spot.src.org.sunspotworld.demo.neuralnetwork;
+package sensornodeNN;
 
 
 //import java.io.Serializable;

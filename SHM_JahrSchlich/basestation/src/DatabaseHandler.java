@@ -46,7 +46,8 @@ public class DatabaseHandler {
 					+ "SpotID VARCHAR(19), "
 					+ "Magnitude DOUBLE, "
 					+ "Frequency FLOAT, "
-					+ "Samplerate INTEGER)");
+					+ "ExpectedMagnitude DOUBLE, "
+					+ "Error INT)");
 			statement.close();
 		}
 		resultSet.close();
@@ -54,11 +55,7 @@ public class DatabaseHandler {
 	
 	
 	public void writeMeasurement(String tableName, 
-								String spotID, 
-								double magnitude, 
-								float frequency, 
-								int samplerate) throws Exception {
-		
+								Measurement meas) throws Exception {
 		
 		//Get current systemtime as timestamp to avoid trouble with unsynchronized SunSPOTs
 		Calendar calendar = Calendar.getInstance();
@@ -67,12 +64,12 @@ public class DatabaseHandler {
 		System.out.println("Writing measurement into Database");
 		PreparedStatement preparedStatement = dbConn.prepareStatement("INSERT INTO "
 				+ tableName
-				+ " (Time, SpotID, Magnitude, Frequency, Samplerate) VALUES (?,?,?,?,?)");
+				+ " (Time, SpotID, Magnitude, Frequency, ExpectedMagnitude, Error) VALUES (?,?,?,?,?,?)");
 			preparedStatement.setTimestamp(1, now);
-			preparedStatement.setString(2, spotID);
-			preparedStatement.setDouble(3, magnitude);
-			preparedStatement.setFloat(4, frequency);
-			preparedStatement.setFloat(5, samplerate);
+			preparedStatement.setString(2, meas.address);
+			preparedStatement.setDouble(3, meas.magnitude);
+			preparedStatement.setFloat(4, meas.frequency);
+			preparedStatement.setFloat(5, meas.error);
 			preparedStatement.execute();
 			System.out.println(preparedStatement);
 		preparedStatement.close();

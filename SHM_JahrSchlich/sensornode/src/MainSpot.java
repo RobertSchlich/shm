@@ -35,13 +35,9 @@ public class MainSpot extends MIDlet {
     	// initalize communication between spots
 		CommunicationNormal communication = new CommunicationNormal();
 		
-		//Radiogram
-		//communication.EstablishConnection(HOST_PORT);
-		
         //initialize AccelerationSampler
         AccelerationSampler sensorSampler = new AccelerationSampler();
 		
-        
        
         while (true){
 	        // get acceleration for this sensornode
@@ -59,38 +55,8 @@ public class MainSpot extends MIDlet {
 			System.out.println("I did my FFT!");
 			
 			// exchange measurement with measurement of other sensors
-			Measurement othMeas = communication.ExchangeData(ownMeas, otherAddress, HOST_PORT);
+			communication.ExchangeData(ownMeas, otherAddress, HOST_PORT);
 			
-			
-			
-			/*
-			
-			// get FFT from other sensors			
-			double[] allmagnitudes = new double[NUMBER_OF_OTHER_SENSORS];
-			for (int i = 0; i < NUMBER_OF_OTHER_SENSORS; i++){
-				Measurement measurement = communication.RetrieveSensorData();
-				// store recieved data in array
-				allmagnitudes[i] = measurement.magnitude;
-				System.out.println("I got " + i + " other FFTs!");
-			}
-			
-			*/
-			
-			
-			
-			/*
-			
-			
-			TRAIN NETWORK
-			
-			
-			*/
-
-			
-			
-			
-		
-			//send processed data to basestation
 
 			Utils.sleep(2000);
 		}   

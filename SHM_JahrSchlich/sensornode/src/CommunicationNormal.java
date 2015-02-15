@@ -21,28 +21,8 @@ public class CommunicationNormal {
         DataInputStream dis;
         DataOutputStream dos; 
         
-        public void EstablishStreamConnection(int hostPort, String otherAddress){
-            try {
-                // Open up a broadcast connection to the host port
-                // where the 'on Desktop' portion of this demo is listening
-                conn = (RadiostreamConnection)Connector.open("radiostream://" + otherAddress + ":" + hostPort);
-                
-                DataInputStream dis = conn.openDataInputStream();
-                DataOutputStream dos = conn.openDataOutputStream();
-                
-                System.out.println("Starting communication on" + ourAddress + " with " + otherAddress);
-                
-                dos.writeUTF("HALLO");
-                
-                
-            } catch (Exception e) {
-                System.err.println("Caught " + e + " in connection initialization.");
-            }	
-        }
+        public void ExchangeData (Measurement ourMeas, String otherAddress, int hostPort) {
 
-        public Measurement ExchangeData (Measurement ourMeas, String otherAddress, int hostPort) {
-            //object for other measurement
-            Measurement othMeas = new Measurement();
         	try {     
         		
         		System.out.println("starting ExchangeData. ");
@@ -63,6 +43,7 @@ public class CommunicationNormal {
         			try{
 	            		dos.writeFloat(ourMeas.frequency);
 	    				dos.writeDouble(ourMeas.magnitude);
+	    				dos.writeInt(ourMeas.error);
 	    				dos.flush();
 	    				System.out.println("datastream flushed." );
 	    				
@@ -96,11 +77,7 @@ public class CommunicationNormal {
         		
         	} catch (Exception e) {   
         		 System.err.println("Caught " + e + " in exchanging data.");
-        	} finally {
-
-	    		return othMeas;
-        	}
-
         	
+        	}
         }
 }

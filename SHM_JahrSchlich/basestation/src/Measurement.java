@@ -1,4 +1,5 @@
-package sensornode;
+package basestation;
+
 public class Measurement{
 	
 	public String address;
