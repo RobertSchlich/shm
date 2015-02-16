@@ -72,37 +72,37 @@ These results indicate that the use of neural networks for fault detection incre
 \end{sciabstract}
 
 %----------------------------------------------------------------------------------------
-
-\linenumbers % Schaltet Zeilennummerierung ein
-\modulolinenumbers[5] % nur jede 5. Zeile
-\section*{Dictionary}
-
-\begin{tabular}{|l|l|}
-\hline 
-Sensorknoten (SunSPOT) & sensor node \\ 
-\hline 
-einzelner Messsensor (Thermometer) & sensor \\ 
-\hline 
-Knoten im neuronalen Netz & neuron \\ 
-\hline 
-eine abgeschlossene Messungreihe & test run \\ 
-\hline 
-gemessene Werte & sensor data \\ 
-\hline 
-vorhergesagte Werte & predicted data \\ 
-\hline 
-durch Vorhersage erwartete Werte & expected data \\ 
-\hline 
-einzelner Messwert & measurement \\ 
-\hline 
-Test & laboratory experiments\\ 
-\hline
-tatsächliche, nicht virtuelle Messung & actual measurement \\
-\hline
-Messaufbau & test setup \\
-\hline
-
-\end{tabular} 
+%
+%\linenumbers % Schaltet Zeilennummerierung ein
+%\modulolinenumbers[5] % nur jede 5. Zeile
+%\section*{Dictionary}
+%
+%\begin{tabular}{|l|l|}
+%\hline 
+%Sensorknoten (SunSPOT) & sensor node \\ 
+%\hline 
+%einzelner Messsensor (Thermometer) & sensor \\ 
+%\hline 
+%Knoten im neuronalen Netz & neuron \\ 
+%\hline 
+%eine abgeschlossene Messungreihe & test run \\ 
+%\hline 
+%gemessene Werte & sensor data \\ 
+%\hline 
+%vorhergesagte Werte & predicted data \\ 
+%\hline 
+%durch Vorhersage erwartete Werte & expected data \\ 
+%\hline 
+%einzelner Messwert & measurement \\ 
+%\hline 
+%Test & laboratory experiments\\ 
+%\hline
+%tatsächliche, nicht virtuelle Messung & actual measurement \\
+%\hline
+%Messaufbau & test setup \\
+%\hline
+%
+%\end{tabular} 
 
 %----------------------------------------------------------------------------------------
 
@@ -171,7 +171,7 @@ Task 5 and 6---additional analysis and diagnosis---are conducted on the host com
     \label{fig:flow}
 \end{figure}
 
-\colorbox{cyan}{neuer Absatz:}
+\colorbox{cyan}{section ab hier teilweise neu (NN):}
 The SHM system is programmed object-oriented in Java. 
 Object orientation uses objects, which are instanciated using classes as paradigm. 
 A class includes methods, allowing the objects to perform actions, and attributes, storing object-specific data.
@@ -179,7 +179,9 @@ The SHM system consists of two packages---\texttt{sensornode} and \texttt{basest
 A package organizes several Java classes that build a program.
 
 \autoref{fig:UML-sn} describes the classes of the \texttt{sensor\-node} package.
-The package \texttt{sensor\-node} consists of the classes \texttt{Acceleration\-Sampler}, \texttt{FFT}, \texttt{Communi\-cation} and \texttt{Main\-Spot}, which are embedded directly into the sensor nodes.
+The package \texttt{sensor\-node} consists of the classes \texttt{Acceleration\-Sampler}, \texttt{FFT}, \texttt{Measure\-ment}, \texttt{Network\-Training}, \texttt{Communi\-cation} and \texttt{Main\-Spot}, forming the SHM system, and several classes obtained from the Java library "SNIPE" \todo{Quelle für SNIPE!} that implement a framework for neural networks.
+The classes are embedded directly into the sensor nodes.
+
 The \texttt{Acceleration\-Sampler} class is responsible for measuring the acceleration.
 There are two phases: \colorbox{cyan}{At} first, the acceleration is measured with a low sampling rate.
 Once the acceleration exceeds a threshold, the \colorbox{cyan}{second phase is entered} by increasing the sampling rate. 
@@ -188,9 +190,14 @@ The different phases are indicatad by lighting different LEDs.
 The \texttt{FFT} class performs a FFT on the measured accelerations. 
 With the transformed data, the magnitudes and the correlating frequencies of the measured oscillation are calculated.
 Finally, the natural frequency \colorbox{cyan}{is} determined by extracting the maximal magnitude.
-The \texttt{Communi\-cation} class opens a radio connection between the sensor node and the basestation to transfer data from the sensor node to the basestation.
+
+The \texttt{Measure\-ment} class defines analyzed measurements by storing the address of the sensor node, the maximal magnitude, the natural frequency and if a sensor defect was detected.
+For every measurement, one object of the type \texttt{Measure\-ment} is instantiated.
+Using the SNIPE library, a neural network is defined and created for fault detection.
+The \texttt{Network\-Training} class defines a routine to train the neural network with prior measured \texttt{Measure\-ment} objects.
+The \texttt{Communi\-cation} class opens a radio connection between the sensor node and the basestation to transfer the \texttt{Measure\-ment} objects from the sensor node to the basestation.
 For starting the operation of \colorbox{cyan}{the sensor node}, the entry point of the programm is the \texttt{start\-App()} method in the \texttt{Main\-Spot} class. 
-Within the \texttt{Main\-Spot} class, instances of the \texttt{Acceleration\-Sampler} class, the \texttt{FFT} class and the \texttt{Communication} class are created to perform the measurement.
+Within the \texttt{Main\-Spot} class, instances of the \texttt{Acceleration\-Sampler} class, the \texttt{FFT} class, the SNIPE \texttt{Neural\-Network} class, the \texttt{Network\-Training} class and the \texttt{Communi\-cation} class are created to perform the measurement.
 
 \begin{figure}[htb]
     \centering
