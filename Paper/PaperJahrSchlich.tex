@@ -283,11 +283,11 @@ After excitation, when the acceleration threshold is exceeded, the sensor nodes 
 To minimize the wireless data traffic, each sensor node performs a FFT, once sufficient acceleration measurements have been collected.
 By the use of the FFT, the acceleration measurements are converted into the oscillation frequencies and the corresponding magnitudes of the building \cite{rao2011fast}.
 
-The implementation of the FFT has been verified by plotting the frequency domain of various oscillation events, see \autoref{fig:76hzfft}.
+\textit{The implementation of the FFT has been verified by plotting the frequency domain of various oscillation events, see \autoref{fig:76hzfft}.
 The natural frequencies can be identified by the peaks in the magnitude graph.
 The first two natural frequencies are located at approximately 2.3\,Hz (1\textsuperscript{st} natural frequency) and 8\,Hz (2\textsuperscript{nd} natural frequency).
 Each sensor node transfers the values of the first natural frequency and the corresponding magnitude to the basestation. 
-The values are stored in a MySQL database and analyzed.
+The values are stored in a MySQL database and analyzed.}
 
 \begin{figure}[htb]
     \centering
@@ -296,19 +296,31 @@ The values are stored in a MySQL database and analyzed.
     \label{fig:76hzfft}
 \end{figure}
 
-The natural frequencies have been validated by repeated tests---using varying excitation forces, varying sampling rates, and varying quantities of measured values---and the results of a FE analysis.
+\textit{The natural frequencies have been validated by repeated tests---using varying excitation forces, varying sampling rates, and varying quantities of measured values---and the results of a FE analysis.
 The highest possible sampling rate was determined at 76\,Hz.
 Higher samping rates could not be handled by the sensor nodes.
 Test runs with more than 512 measured values showed no significant increase in precision.
-Therefore, a sampling rate of 76\,Hz and 512 measured values were chosen.
+Therefore, a sampling rate of 76\,Hz and 512 measured values were chosen.}
 
-\textit{Every sensor calculated the same natural frequency to a precision of four decimal points regardless of sensor position and degree of excitation.
-Example results are shown in \autoref{tab:lab-ex}.
-The identified magnitudes increase with ascending sensor node position from top to bottom, corresponding to the higher deflection at the top of the structure.}
+\begin{itemize}
+\item neuronales Netz
+\item TRAININGSPHASE
+\item Austausch der gemessenen FFT zwischen den Sensoren
+\item trainieren des neuronalen Netzes, bis keine Verbesserung bei Vorhersagegenauigkeit eintritt
+\item MESSPHASE
+\item Austausch der gemessenen FFT zwischen den Sensoren
+\item Nutzen des neuronalen Netzes, um eventuellen Fehler zu finden
+\item KÜNSTLICHEN FEHLER ERZEUGEN
+\item TABELLE MIT ERMITTELTEN / GEMESSENEN WERTEN; MIT / OHNE FEHLER
+\end{itemize}
 
-\textit{Through FFT analysis of sampling events, the data traffic is decreased from 512 doubles per sampling event to two doubles per sampling event.
-A number stored in the used data format double occupies 8\,bytes of space.
-The data traffic is decreased by (512$-$2)$\times$8\,B\,=\,4080\,B\,=\,3,98\,MB per sampling event, decreasing data traffic by 99.6\,\%.}
+%\textit{Every sensor calculated the same natural frequency to a precision of four decimal points regardless of sensor position and degree of excitation.
+%Example results are shown in \autoref{tab:lab-ex}.
+%The identified magnitudes increase with ascending sensor node position from top to bottom, corresponding to the higher deflection at the top of the structure.}
+%
+%\textit{Through FFT analysis of sampling events, the data traffic is decreased from 512 doubles per sampling event to two doubles per sampling event.
+%A number stored in the used data format double occupies 8\,bytes of space.
+%The data traffic is decreased by (512$-$2)$\times$8\,B\,=\,4080\,B\,=\,3,98\,MB per sampling event, decreasing data traffic by 99.6\,\%.}
 
 
 \begin{table}[hb]
