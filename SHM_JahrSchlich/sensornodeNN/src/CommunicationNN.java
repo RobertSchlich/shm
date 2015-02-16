@@ -18,6 +18,7 @@ public class CommunicationNN {
         ITriColorLED led2 = (ITriColorLED)Resources.lookup(ITriColorLED.class, "LED2");
         ITriColorLED led3 = (ITriColorLED)Resources.lookup(ITriColorLED.class, "LED3");
         ITriColorLED led5 = (ITriColorLED)Resources.lookup(ITriColorLED.class, "LED5");
+        ITriColorLED led6 = (ITriColorLED)Resources.lookup(ITriColorLED.class, "LED6");
         
         RadiostreamConnection conn;
         DataInputStream dis;
@@ -64,8 +65,7 @@ public class CommunicationNN {
         		dos.close();
         		conn.close();
         		
-        		// wait half a second, turn off the light
-				Utils.sleep(500);
+        		// turn off the light
         		led2.setOff();
 				led3.setOff();
 	    		        		
@@ -81,11 +81,19 @@ public class CommunicationNN {
         public void StoreData(Measurement[] allMeas, int hostPort, String baseAddress) {
         	//object for other measurement
         	
-        	for (int meas = 0; meas < allMeas.length; meas++){
+        	System.out.println("allMeas.length= "+ allMeas.length);
+        	
+        	int meas = 0;
+        	
+        	while ( meas < allMeas.length){
         		
-	        	try {     
+	        	try {   
+	            	System.out.println("meas= "+ meas);
+	            		        		
+	        		
 	        		conn = (RadiostreamConnection)Connector.open("radiostream://" + baseAddress + ":" + hostPort);
-
+	        		conn.setTimeout(300); 
+	        		
 	        		DataInputStream dis = conn.openDataInputStream();
 	        		DataOutputStream dos = conn.openDataOutputStream();
 	        		
@@ -98,7 +106,14 @@ public class CommunicationNN {
 	        		// try to send data until basestation sent okay
 	        		while(okay == false){
 	        			try{
-	    	                 // send Data
+
+	        		        led6.setRGB(255, 0, 0);
+	        	            led6.setOn();
+	        				Utils.sleep(1000);
+	        	            led6.setOff();	        				
+	        	            
+	        	            // send Data
+	        				System.out.println(allMeas[meas].address);
 	    	        		dos.writeUTF(allMeas[meas].address);
 	    	        		dos.writeFloat(allMeas[meas].frequency);
 	    	        		dos.writeDouble(allMeas[meas].magnitude);
@@ -109,8 +124,11 @@ public class CommunicationNN {
 		    				okay = dis.readBoolean();
 		    				System.out.println("okay received." );
 	        			} catch(Exception e){
+	               		 	System.err.println("Caught " + e + " in exchanging data 1.");
 	    					continue;
 	    				}
+	        			
+	        			meas++;
 
 	        		}
         			//turn off
@@ -121,7 +139,7 @@ public class CommunicationNN {
 	        		conn.close();
 	    		
 	        	} catch (Exception e) {   
-	        		 System.err.println("Caught " + e + " in exchanging data.");
+	        		 System.err.println("Caught " + e + " in exchanging data 2.");
 	        	}
         	}
 

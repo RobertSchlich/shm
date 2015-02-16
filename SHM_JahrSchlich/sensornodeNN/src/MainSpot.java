@@ -24,9 +24,9 @@ public class MainSpot extends MIDlet {
     private double THRESHOLD = 0.2;
 
     // communication
-    private String BASE_NAME = "0014.4F01.0000.74AD";
-    private String[] SENSOR_NAMES = {"0014.4F01.0000.7840",
-    								"0014.4F01.0000.792D"};
+    private String BASE_NAME = "0014.4F01.0000.77BA";
+    private String[] SENSOR_NAMES = {"0014.4F01.0000.792D",
+    								"0014.4F01.0000.7840"};
 //    								"0014.4F01.0000.7AFA"}
     private String ourAddress = System.getProperty("IEEE_ADDRESS");
     private int HOST_PORT = 67;
@@ -36,7 +36,7 @@ public class MainSpot extends MIDlet {
     // neural network
     private int HIDDEN_UNITS = 3;
     
-    private int trainingEvents = 3;
+    private int trainingEvents = 1;
 
     protected void startApp() throws MIDletStateChangeException {
 
@@ -169,7 +169,7 @@ public class MainSpot extends MIDlet {
 			Measurement[] allMeas = new Measurement[othMeas.length+1];
 			allMeas[0]=ownMeas;
 			
-			for (int i=1; i<othMeas.length;i++) allMeas[i]=othMeas[i-1];
+			for (int i=1; i<othMeas.length+1;i++) allMeas[i]=othMeas[i-1];
 			
 			
 			communication.StoreData(allMeas, HOST_PORT_BASE, BASE_NAME);

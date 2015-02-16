@@ -36,9 +36,6 @@ public class CommunicationNormal {
         		System.out.println("Starting communication on" + ourAddress + " with " + otherAddress);
 
         		boolean okay = false;
-        		
-        		        		
-        		
         		while(okay == false){
         			try{
 	            		dos.writeFloat(ourMeas.frequency);
