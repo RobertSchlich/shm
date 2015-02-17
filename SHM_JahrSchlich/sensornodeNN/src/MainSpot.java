@@ -86,7 +86,7 @@ public class MainSpot extends MIDlet {
 			double[] frequency = FFT.calcFreq(transform, SAMPLERATE);
 			// instanziate und initialize measurement object
 			Measurement ownMeas =  FFT.calcNaturalFreq(magnitude, frequency, ourAddress);
-			System.out.println("I did my FFT!");
+			//System.out.println("I did my FFT!");
 			
 			// write magnitude to NN output array
 			desiredOutputs[event][0] = ownMeas.magnitude; 
@@ -111,7 +111,7 @@ public class MainSpot extends MIDlet {
 		// NEURAL NETWORK TRAINING
     	// create lessonMeasurement
     	TrainingSampleLesson lesson = new TrainingSampleLesson(inputs, desiredOutputs);
-    	System.out.println("sample lesson created");	    	
+    	//System.out.println("sample lesson created");	    	
 
         // train the neural network
         NetworkTraining training = new NetworkTraining();
@@ -135,7 +135,7 @@ public class MainSpot extends MIDlet {
 			double[] frequency = FFT.calcFreq(transform, SAMPLERATE);
 			// instanziate und initialize measurement object
 			Measurement ownMeas =  FFT.calcNaturalFreq(magnitude, frequency, ourAddress);
-			System.out.println("I did my FFT!");
+			//System.out.println("I did my FFT!");
 			
 			double[] magnitudes = new double[numberOfSensors];
 			// COMMUNICATION

@@ -29,23 +29,23 @@ public class CommunicationNN {
             Measurement othMeas = new Measurement();
         	try {     
         		
-        		System.out.println("starting ExchangeData. ");
+        		//System.out.println("starting ExchangeData. ");
         		conn = (RadiostreamConnection)Connector.open("radiostream://" + otherAddress + ":" + hostPort);
         		// set timeout for connection
         		// conn.setTimeout(10000); 
         		DataInputStream dis = conn.openDataInputStream();
         		DataOutputStream dos = conn.openDataOutputStream();
                  
-        		System.out.println("Starting communication on" + ourAddress + " with " + otherAddress);
+        		//System.out.println("Starting communication on" + ourAddress + " with " + otherAddress);
 
-				System.out.println("try to recieve." );	
+				//System.out.println("try to recieve." );	
 				// receive data from stream
 	            othMeas.address = otherAddress;
 	    		othMeas.magnitude = dis.readDouble();
 	    		othMeas.frequency = dis.readFloat();
 	    		othMeas.error = dis.readInt();
 	    		
-				System.out.println("datastream received." );
+				//System.out.println("datastream received." );
 	    		
 		        // blink third LED
 		        led3.setRGB(0, 255, 255);
@@ -54,7 +54,7 @@ public class CommunicationNN {
 	            // send "okay"
         		dos.writeBoolean(true);
 				dos.flush();
-				System.out.println("received message flushed." );
+				//System.out.println("received message flushed." );
 				
 		        // blink second LED
 		        led2.setRGB(0, 255, 0);
@@ -81,14 +81,14 @@ public class CommunicationNN {
         public void StoreData(Measurement[] allMeas, int hostPort, String baseAddress) {
         	//object for other measurement
         	
-        	System.out.println("allMeas.length= "+ allMeas.length);
+        	//System.out.println("allMeas.length= "+ allMeas.length);
         	
         	int meas = 0;
         	
         	while ( meas < allMeas.length){
         		
 	        	try {   
-	            	System.out.println("meas= "+ meas);
+	            	//System.out.println("meas= "+ meas);
 	            		        		
 	        		
 	        		conn = (RadiostreamConnection)Connector.open("radiostream://" + baseAddress + ":" + hostPort);
@@ -113,16 +113,15 @@ public class CommunicationNN {
 	        	            led6.setOff();	        				
 	        	            
 	        	            // send Data
-	        				System.out.println(allMeas[meas].address);
-	    	        		dos.writeUTF(allMeas[meas].address);
+	        				dos.writeUTF(allMeas[meas].address);
 	    	        		dos.writeFloat(allMeas[meas].frequency);
 	    	        		dos.writeDouble(allMeas[meas].magnitude);
 	    	        		dos.writeInt(allMeas[meas].error);
 	    	        		
 	    					dos.flush();
-	    					System.out.println("flushed to basestation." );
+	    					//System.out.println("flushed to basestation." );
 		    				okay = dis.readBoolean();
-		    				System.out.println("okay received." );
+		    				//System.out.println("okay received." );
 	        			} catch(Exception e){
 	               		 	System.err.println("Caught " + e + " in exchanging data 1.");
 	    					continue;
