@@ -1,26 +1,18 @@
 package basestation;
 
+/* Commented imports, because they are unused
 import com.sun.spot.io.j2me.radiogram.*;
-import com.sun.spot.io.j2me.radiostream.RadiostreamConnection;
-import com.sun.spot.peripheral.ota.OTACommandServer;
-import com.sun.spot.util.Utils;
-
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.sql.DriverManager;
-import java.sql.Connection;
-import java.sql.Timestamp;
-import java.sql.SQLException;
-import java.text.DateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Properties;
-
-import javax.microedition.io.*;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+*/
+
+import com.sun.spot.io.j2me.radiostream.RadiostreamConnection;
+
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+
+import javax.microedition.io.*;
 
 public class MainBase {
     // Broadcast port on which we listen for sensor samples
@@ -30,7 +22,7 @@ public class MainBase {
     private static final String DATABASE_USER = "shm";
     private static final String DATABASE_PASSWORD = "pass";
     private static final String TABLE_NAME = "measurements";
-    private int samplerate = 76;  // in milliseconds
+    //private int samplerate = 76;  // in milliseconds
     
     private String otherAddress = "0014.4F01.0000.763F";
     
@@ -59,21 +51,29 @@ public class MainBase {
 				System.out.println("try to recieve." );	
 				// receive data from stream
 	            othMeas.address = dis.readUTF();
+	            System.out.println("Adress: " + othMeas.address);
 	    		othMeas.magnitude = dis.readDouble();
+	    		System.out.println("Magnitude: " + othMeas.magnitude);
 	    		othMeas.frequency = dis.readFloat();
+	    		System.out.println("Frequency: " + othMeas.frequency);
+	    		othMeas.error = dis.readInt();
+	    		System.out.println("Error: " + othMeas.error);
 	    		
 				System.out.println("object received." );
 	            
+	    		//Utils.sleep(1000);
+	    		
 	            // send "okay"
 	    		dos.writeBoolean(true);
 				dos.flush();
 				System.out.println("received message flushed." );
-				
+	    		
 	            // close streams and connection
 	    		dis.close();
 	    		dos.close();
 	    		conn.close();
 				
+	    		/*
 				//DATABASE
 				//Create a DatabaseHandler, the DatabaseHandler will take care of 
 		        // database interaction
@@ -94,6 +94,7 @@ public class MainBase {
 	                System.err.println("Caught " + e +  " while reading sensor samples.");
 	                throw e;
 	            }
+	            */
 			
 	    	} catch (Exception e) {   
 	    		 System.err.println("Caught " + e + " in exchanging data.");
@@ -111,7 +112,7 @@ public class MainBase {
     public static void main(String[] args) throws Exception {
         // register the application's name with the OTA Command server 
     	// & start OTA running
-        OTACommandServer.start("SendDataDemo");
+        //OTACommandServer.start("MainBase");
 
         MainBase app = new MainBase();
         app.run();
