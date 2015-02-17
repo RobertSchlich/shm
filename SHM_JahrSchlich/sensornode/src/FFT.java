@@ -179,11 +179,12 @@ public class FFT {
     		newMagnitude[i] = magnitude[i];
     	
     	// determine maximal magnitude
-		double maxMagnitude = magnitude[0];
+		double maxMagnitude = newMagnitude[0];
 		int indexMax = 0;
-		for ( int i = 1; i < magnitude.length; i++) {
-		    if ( magnitude[i] > maxMagnitude) {
-		    	maxMagnitude = magnitude[i];
+		for ( int i = 1; i < newMagnitude.length; i++) {
+			//System.out.println(newMagnitude[i]);
+		    if ( newMagnitude[i] > maxMagnitude) {
+		    	maxMagnitude = newMagnitude[i];
 		    	indexMax = i;
 		    }
 		}
@@ -193,7 +194,7 @@ public class FFT {
 		//System.out.println("maxMagnitude= "+ maxMagnitude+
 		//									", maxFrequency= " + maxFrequency);
 		
-		Measurement measurement = new Measurement(ourAddress, maxMagnitude, maxFrequency, 0);
+		Measurement measurement = new Measurement(ourAddress, maxMagnitude, maxFrequency,0);
         return measurement;
     }
 }

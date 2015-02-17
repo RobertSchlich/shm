@@ -18,10 +18,10 @@ public class MainSpot extends MIDlet {
 
     private int HOST_PORT = 67;
     private int SAMPLE_PERIOD_LISTENING = 1 * 500;  // in milliseconds
-    private int SAMPLE_PERIOD_MEASURING = 13;  // in milliseconds
-    private int ARRAY_LENGTH = 128;
+    private int SAMPLE_PERIOD_MEASURING = 20;  // in milliseconds
+    private int ARRAY_LENGTH = 256;
     private double SAMPLERATE = 1000. / (double)SAMPLE_PERIOD_MEASURING;
-    private double THRESHOLD = 0.2;
+    private double THRESHOLD = 0.15;
     private int NUMBER_OF_OTHER_SENSORS = 1;
     
     
