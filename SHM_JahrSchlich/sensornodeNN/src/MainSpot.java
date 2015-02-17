@@ -161,20 +161,21 @@ public class MainSpot extends MIDlet {
 			double threshold = 0.01;
 			
 			if (errorNN > threshold) ownMeas.error = -1;
+			Measurement NNmeas = new Measurement("NeuralNetwork", expMeas, 0, 0);
+			
+			
+			if (errorNN > threshold) ownMeas.error = -1;
 			else ownMeas.error = 1;
-			
-			
+
 			//SEND DATA TO BASESTATION
+			Measurement[] allMeas = new Measurement[othMeas.length+2];
+			allMeas[0]=NNmeas;
+			allMeas[1]=ownMeas;
 			
-			Measurement[] allMeas = new Measurement[othMeas.length+1];
-			allMeas[0]=ownMeas;
-			
-			for (int i=1; i<othMeas.length+1;i++) allMeas[i]=othMeas[i-1];
-			
+			for (int i=2; i<othMeas.length+2;i++) allMeas[i]=othMeas[i-2];
 			
 			communication.StoreData(allMeas, HOST_PORT_BASE, BASE_NAME);
-
-			Utils.sleep(2000);			
+			Utils.sleep(2000);		
         }
     }
     
