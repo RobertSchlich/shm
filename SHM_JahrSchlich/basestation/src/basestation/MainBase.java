@@ -17,7 +17,7 @@ import javax.microedition.io.*;
 public class MainBase {
     // Broadcast port on which we listen for sensor samples
     private static final int HOST_PORT = 68;
-    private static final String DATABASE_URL = "jdbc:mysql://localhost:3306/";
+    private static final String DATABASE_URL = "jdbc:mysql://141.54.51.238:3306/";
     private static final String DATABASE_NAME = "SunSPOT";
     private static final String DATABASE_USER = "shm";
     private static final String DATABASE_PASSWORD = "pass";
@@ -52,10 +52,13 @@ public class MainBase {
 				// receive data from stream
 	            othMeas.address = dis.readUTF();
 	            System.out.println("Adress: " + othMeas.address);
-	    		othMeas.magnitude = dis.readDouble();
-	    		System.out.println("Magnitude: " + othMeas.magnitude);
+	            
 	    		othMeas.frequency = dis.readFloat();
 	    		System.out.println("Frequency: " + othMeas.frequency);
+	    		
+	    		othMeas.magnitude = dis.readDouble();
+	    		System.out.println("Magnitude: " + othMeas.magnitude);
+	    		
 	    		othMeas.error = dis.readInt();
 	    		System.out.println("Error: " + othMeas.error);
 	    		
@@ -73,7 +76,6 @@ public class MainBase {
 	    		dos.close();
 	    		conn.close();
 				
-	    		/*
 				//DATABASE
 				//Create a DatabaseHandler, the DatabaseHandler will take care of 
 		        // database interaction
@@ -89,12 +91,12 @@ public class MainBase {
 		        // Main data collection loop
 	            try {
 	                // Write measurement to Database
+	            	System.out.println("Writing to database!");
 	                dbHandler.writeMeasurement(TABLE_NAME, othMeas);
 	            } catch (Exception e) {
 	                System.err.println("Caught " + e +  " while reading sensor samples.");
 	                throw e;
 	            }
-	            */
 			
 	    	} catch (Exception e) {   
 	    		 System.err.println("Caught " + e + " in exchanging data.");

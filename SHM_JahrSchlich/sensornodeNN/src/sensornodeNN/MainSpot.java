@@ -21,7 +21,7 @@ public class MainSpot extends MIDlet {
     private int SAMPLE_PERIOD_MEASURING = 20;  // in milliseconds
     private int ARRAY_LENGTH = 256;
     private double SAMPLERATE = 1000. / (double)SAMPLE_PERIOD_MEASURING;
-    private double THRESHOLD = 0.15;
+    private double THRESHOLD = 0.2;
 
     // communication
     private String BASE_NAME = "0014.4F01.0000.77BA";
@@ -36,7 +36,7 @@ public class MainSpot extends MIDlet {
     // neural network
     private int HIDDEN_UNITS = 3;
     
-    private int trainingEvents = 3;
+    private int trainingEvents = 1;
 
     protected void startApp() throws MIDletStateChangeException {
 
@@ -87,7 +87,6 @@ public class MainSpot extends MIDlet {
 			// instanziate und initialize measurement object
 			Measurement ownMeas =  FFT.calcNaturalFreq(magnitude, frequency, ourAddress);
 			//System.out.println("I did my FFT!");
-			System.out.println("training: magnitude: " + ownMeas.magnitude + " frequency: " + ownMeas.frequency);
 			
 			// write magnitude to NN output array
 			desiredOutputs[event][0] = ownMeas.magnitude; 
@@ -100,8 +99,6 @@ public class MainSpot extends MIDlet {
 				//talk to next sensor in list
 				String otherAddress = SENSOR_NAMES[sensor];
 				othMeas[sensor] = communication.ReceiveData(otherAddress, HOST_PORT);
-				
-				System.out.println("communication: "+othMeas[sensor].address+ "magnitude: " + othMeas[sensor].magnitude + " frequency: " + othMeas[sensor].frequency);
 				
 				// write magnitude to NN input array
 				inputs[event][sensor] = othMeas[sensor].magnitude;	
@@ -139,7 +136,6 @@ public class MainSpot extends MIDlet {
 			// instanziate und initialize measurement object
 			Measurement ownMeas =  FFT.calcNaturalFreq(magnitude, frequency, ourAddress);
 			//System.out.println("I did my FFT!");
-			System.out.println("measurement: magnitude: " + ownMeas.magnitude + " frequency: " + ownMeas.frequency);
 			
 			double[] magnitudes = new double[numberOfSensors];
 			// COMMUNICATION

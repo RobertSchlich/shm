@@ -38,7 +38,8 @@ public class CommunicationNormal {
         		boolean okay = false;
         		while(okay == false){
         			try{
-	            		dos.writeFloat(ourMeas.frequency);
+	            		
+	    				dos.writeFloat(ourMeas.frequency);
 	    				dos.writeDouble(ourMeas.magnitude);
 	    				dos.writeInt(ourMeas.error);
 	    				dos.flush();

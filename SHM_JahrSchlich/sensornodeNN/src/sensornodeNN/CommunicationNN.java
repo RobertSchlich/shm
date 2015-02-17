@@ -40,9 +40,10 @@ public class CommunicationNN {
 
 				//System.out.println("try to recieve." );	
 				// receive data from stream
+        		
 	            othMeas.address = otherAddress;
+	            othMeas.frequency = dis.readFloat();
 	    		othMeas.magnitude = dis.readDouble();
-	    		othMeas.frequency = dis.readFloat();
 	    		othMeas.error = dis.readInt();
 	    		
 				//System.out.println("datastream received." );

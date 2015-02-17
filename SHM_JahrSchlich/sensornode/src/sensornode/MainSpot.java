@@ -52,7 +52,7 @@ public class MainSpot extends MIDlet {
 			double[] frequency = FFT.calcFreq(transform, SAMPLERATE);
 			// instanziate und initialize measurement object
 			Measurement ownMeas =  FFT.calcNaturalFreq(magnitude, frequency, ourAddress);
-			System.out.println("I did my FFT!");
+			System.out.println("magnitude: " + ownMeas.magnitude + " frequency: " + ownMeas.frequency);
 			
 			// exchange measurement with measurement of other sensors
 			communication.ExchangeData(ownMeas, otherAddress, HOST_PORT);
