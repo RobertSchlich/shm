@@ -107,7 +107,6 @@ These results indicate that the use of neural networks for fault detection incre
 %\end{tabular} 
 
 %----------------------------------------------------------------------------------------
-
 \section*{Introduction}
 
 Civil engineering structures are exposed to various external impacts during their lifetime. 
@@ -183,7 +182,7 @@ The processed data is then transmitted via radio to the basestation and, finally
 On the host computer, task 4 is conducted by storing the data in a MySQL database.
 Task 5 and 6 are conducted on the host computer in further steps.
 
-\begin{figure}[hbtp]
+\begin{figure}[hbt]
     \centering
     \includegraphics{figures/dataflow_tasks_nn.eps}
     \caption{Dataflow and associated SHM tasks}
@@ -196,7 +195,7 @@ Each sensor node of the SHM system embeds a distinct neural network; a sensor no
 Measurements of other sensor nodes are fed into the input neurons of the neural network; the output neuron returns the predicted measurement of the embedding sensor node.
 Hidden neurons are used for computation and do not have a physical counterpart.
 
-\begin{figure}[hbtp]
+\begin{figure}[hbt]
     \centering
     \includegraphics{figures/neuralnetwork.pdf}
     \caption{Scheme of the neural network}
@@ -221,7 +220,7 @@ The \texttt{FFT} class performs a FFT on the measured accelerations to transform
 With the transformed data, the magnitudes and the correlating frequencies of the measured vibrations are calculated.
 Finally, the natural frequency is determined by extracting the maximal magnitude.
 The \texttt{Measure\-ment} class defines analyzed measurements by storing the following parameters: the address of the sensor node, the maximal magnitude, the natural frequency and a boolean value that indicates if a sensor fault was detected during runtime.
-Using the SNIPE library, a neural network is defined and created for fault detection.
+Using the SNIPE library, a neural network is described and created for fault detection.
 The \texttt{Network\-Training} class defines a routine to train the neural network with previously measured \texttt{Measure\-ment} objects.
 The \texttt{Communi\-cation} class ensures the wireless communication by opening a radio connection between the sensor node and the basestation to transfer the \texttt{Measure\-ment} objects from the sensor node to the basestation.
 For starting the operation of the sensor node, the entry point of the programm is the \texttt{start\-App()} method in the \texttt{Main\-Spot} class. 
@@ -229,7 +228,7 @@ Within the \texttt{Main\-Spot} class, instances of the \texttt{Acceleration\-Sam
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[scale=0.83]{figures/uml-sensornode.pdf}
+    \includegraphics[width = \textwidth]{figures/uml-sensornode.pdf}
     \caption{Class diagram of the \texttt{sensornode} package ((Update auf NN folgt))}
     \label{fig:UML-sn}
 \end{figure}
@@ -240,12 +239,12 @@ It includes the classes \texttt{Database\-Handler} and \texttt{Main\-Base}.
 The \texttt{Database\-Handler} class establishes a connection to a MySQL database, creates a database table, if none with the specified name is available, and inserts data into the database table.
 The entry point of the program is the \texttt{run()} method in the \texttt{Main\-Base} class. The \texttt{Main\-Base} class opens a radio connection between the basestation and the sensor nodes, receives data sent by the sensor nodes and creates an instance of \texttt{Database\-Handler} to insert the data into the database.
 
-\begin{figure}[htbp]
-    \centering
-    \includegraphics[scale=0.85]{figures/uml-basestation.pdf}
-    \caption{Class diagram of the \texttt{basestation} package}
-    \label{fig:UML-bs}
-\end{figure}
+%\begin{figure}[htbp]
+%    \centering
+%    \includegraphics[width = \textwidth]{figures/uml-basestation.pdf}
+%    \caption{Class diagram of the \texttt{basestation} package}
+%    \label{fig:UML-bs}
+%\end{figure}
 
 \section*{Laboratory experiments}
 In this section, laboratory experiments, devised to validate the proposed SHM system, are described.
@@ -256,6 +255,7 @@ The test structure is a 4-story shear-frame structure consisting of four steel p
 The plates are mounted on threaded rods with a vertical clearance of 23\,cm.
 At the bottom of the structure, the rods are fixed into a solid block of 40\,cm\,$\times$\,60\,cm\,$\times$\,30\,cm.
 The SHM system is installed on the test structure by mounting one wireless sensor node to each of the three top stories.
+Ensuring a free vibration in natural frequency with little interferences, the structure is excited by a deflection of the top of the structure.
 
 \begin{figure}
 \centering
@@ -264,30 +264,62 @@ The SHM system is installed on the test structure by mounting one wireless senso
 \label{fig:teststructure}
 \end{figure}
 
-Ensuring a free vibration in natural frequency with little interferences, the structure is excited by a deflection of the top of the structure.
+Several test runs were conducted.
+During each test run, all sensor nodes run simultaneously.
+A test run includes a training phase and a data collection phase.
+The training phase consists of the description, the creation and the training of a neural network.
+During the training of the neural network, several measurements are performed and used as training input.
+A measurement includes the excitation of the structure, acceleration sampling, calculation of the natural frequency and corresponding magnitude, and data exchange with the other sensor nodes.
 
-After excitation, i.e. when the acceleration threshold is exceeded as detected by the sensor nodes, the sensor nodes automatically start measuring the acceleration.
-Each sensor node performs a FFT, once sufficient acceleration measurements have been collected.
-By applying the FFT, the acceleration measurements are converted into the vibration frequencies and the corresponding magnitudes of the structure \cite{rao2011fast}.
+The data collection phase consists of any desired number of measurements, sensor fault detection, and data storage.
+After every measurement, the measured magnitudes of the other sensor nodes are used as input of the neural network to predict the expected magnitude of the embedding sensor nodes for sensor fault detection.
+The deviation of the expected magnitude and the measured magnitude is calculated.
+If the deviation exceeds a threshold, a sensor fault is assumed.
+After the sensor fault detection, the following are stored into the database: the time of the measurement, the natural frequency, the measured magnitude, the expected magnitude, the deviation,  and a boolean value that indicates if a sensor fault was detected.
+
+
+
+
+In several test runs, the properties of the neural network are optimized.
+
+
+has been tested with varying numbers of training measurements (\autoref{fig:traininputs}).
+With increasing numbers of training measurement, the prediction accuracy increases.
+
+
+
+
+
+The neural network has been validated by repeated tests---using varying excitation forces, varying sampling rates, and varying quantities of measured values.
+
+
+
+The implementation of the FFT has been verified by plotting the frequency sprectrum of various vibration measurements, (\autoref{fig:76hzfft}).
+The natural frequencies can be identified by the peaks in the magnitude graph.
+Each sensor node stores the calculated first natural frequency and the corresponding magnitude in a \texttt{Measurement} object and transmits the object to the other sensor nodes.
+
+
+
 
 \begin{itemize}
 \item \textbf{neuronales Netz}
-\item TRAININGSPHASE
-\item Austausch der gemessenen FFT zwischen den Sensoren
-\item trainieren des neuronalen Netzes, bis keine Verbesserung bei Vorhersagegenauigkeit eintritt
-\item MESSPHASE
-\item Austausch der gemessenen FFT zwischen den Sensoren
-\item Nutzen des neuronalen Netzes, um eventuellen Fehler zu finden
+%\item TRAININGSPHASE
+%\item Austausch der gemessenen FFT zwischen den Sensoren
+%\item trainieren des neuronalen Netzes, bis keine Verbesserung bei Vorhersagegenauigkeit eintritt
+%\item MESSPHASE
+%\item Austausch der gemessenen FFT zwischen den Sensoren
+%\item Nutzen des neuronalen Netzes, um eventuellen Fehler zu finden
 \item KÜNSTLICHEN FEHLER ERZEUGEN
 \item TABELLE MIT ERMITTELTEN / GEMESSENEN WERTEN; MIT / OHNE FEHLERN
 \end{itemize}
 
 %The neural network has been validated by repeated tests---using varying excitation forces, varying sampling rates, and varying quantities of measured values.
 
+%After excitation, i.e. when the acceleration threshold is exceeded as detected by the sensor nodes, the sensor nodes automatically start measuring the acceleration.
+%Each sensor node performs a FFT, once sufficient acceleration measurements have been collected.
+%By applying the FFT, the acceleration measurements are converted into the vibration frequencies and the corresponding magnitudes of the structure \cite{rao2011fast}.
 
-%The implementation of the FFT has been verified by plotting the frequency domain of various vibration events, see \autoref{fig:76hzfft}.
-%The natural frequencies can be identified by the peaks in the magnitude graph.
-%Each sensor node stores the calculated first natural frequency and the corresponding magnitude in a \texttt{Measurement} object and transmits the object to the other sensor nodes.
+
 
 %\begin{figure}[htb]
 %    \centering
@@ -340,17 +372,6 @@ Autonomous sensor fault detection has been realized by implementing a neural net
 The neural networks have been trained to predict expected sensor measurements to be compared to actual measurments, in order to detect sensor faults.
 The SHM system has been verified with laboratory experiments, proving that sensor fault detection using neural networks can improve the dependability and the accuracy of structural health monitoring systems.
 
-
-
-
-
-The dependability and the accuracy of structural health moni\-toring systems can be affected by sensor faults. 
-In this paper, the design and implementation of a wireless structural health monitoring system, capable of decentralized autonomous fault detection, are presented. 
-For self-detecting sensor faults, each sensor node predicts expected sensor data and compares it to the measured sensor data. 
-The predictions are computed using neural networks based on measured sensor data of adjacent sensor nodes.
-In laboratory experiments, devised to validate the proposed approach, several simulated sensor faults are detected.
-These results indicate that the use of neural networks for fault detection increases the dependability and the accuracy of structural health monitoring systems.
-
 In this study, a wireless SHM system capable of decentralized autonomous fault detection, is presented.
 The sensor nodes calculate the natural frequency of the structure to monitor the structural integrity.
 The corresponding magnitudes are used for sensor fault detection:
@@ -358,11 +379,6 @@ A neural network is implemented into each sensor node and trained---with magnitu
 During runtime, the neural networks compute expected magnitudes for the embedding sensor node.
 A deviation between the expected and the measured magnitude indicates a sensor fault.
 
-This paper is organized as follows:
-First, a dezentralized wireless structural health monitoring system is designed and implemented. 
-Next, a neural network is implemented into each sensor node and trained to predict the sensor measurements of the specific node for detecting sensor faults in a decentralized manner. 
-Then, the system is tested in laboratory experiments. 
-Finally, the experimental results are discussed and future research directions are proposed.
 
 %----------------------------------------------------------------------------------------
 
