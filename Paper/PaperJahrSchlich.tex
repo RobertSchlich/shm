@@ -256,7 +256,7 @@ First, a description of the test setup is given; second, the data aquisition, da
 To validate the proposed approach in laboratory experiments, the wireless SHM system is installed on a test structure, as shown in \autoref{fig:teststructure}.
 The test structure is a 4-story shear-frame structure consisting of four steel plates of 25\,cm\,$\times$\,50\,cm\,$\times$\,0.8\,mm.
 The plates are mounted on threaded rods with a vertical clearance of 23\,cm.
-At the bottom of the structure, the rods are fixed into a solid block of 40\,cm\,$\times$\,60\,cm\,$\times$\,30\,cm.
+At the bottom of the structure, the rods are embedded into a solid block of 40\,cm\,$\times$\,60\,cm\,$\times$\,30\,cm.
 The SHM system is installed on the test structure by mounting one wireless sensor node to each of the three top stories.
 Ensuring a free vibration in natural frequency with little interferences, the structure is excited by a deflection of the top of the structure.
 
@@ -265,12 +265,12 @@ Ensuring a free vibration in natural frequency with little interferences, the st
 	\centering
 	
 	\begin{subfigure}{0.49\textwidth}
-		\includegraphics[width=\textwidth]{figures/testsetup.png}
+		\includegraphics[width=\textwidth]{figures/testsetupcorrect.jpg}
     	\caption{Regular sensor arrangement}
 		\label{fig:teststructure}
     \end{subfigure}
   	\begin{subfigure}{0.49\textwidth}
-		\includegraphics[width=\textwidth]{figures/testsetup.png}
+		\includegraphics[width=\textwidth]{figures/testsetuperror.jpg}
     	\caption{Simulated sensor fault}
         \label{fig:sensorfault}
 	\end{subfigure}
@@ -343,6 +343,7 @@ Through decentralized data processing, embedded in each sensor node, the data tr
 It has been proven, that sensor fault detection using neural networks can improve the dependability and the accuracy of structural health monitoring systems.
 
 %----------------------------------------------------------------------------------------
+
 
 \bibliographystyle{unsrtnat}
 \bibliography{literature}
