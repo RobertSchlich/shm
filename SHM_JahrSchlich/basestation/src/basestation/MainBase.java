@@ -59,6 +59,9 @@ public class MainBase {
 	    		othMeas.magnitude = dis.readDouble();
 	    		System.out.println("Magnitude: " + othMeas.magnitude);
 	    		
+	    		othMeas.prediction = dis.readDouble();
+	    		System.out.println("prediction: " + othMeas.prediction);	    		
+	    		
 	    		othMeas.error = dis.readInt();
 	    		System.out.println("Error: " + othMeas.error);
 	    		

@@ -45,7 +45,8 @@ public class DatabaseHandler {
 					+ "Time TIMESTAMP, "
 					+ "SpotID VARCHAR(19), "
 					+ "Magnitude DOUBLE, "
-					+ "Frequency FLOAT, "
+					+ "Frequency FLOAT,"
+					+ "Prediction DOUBLE "					
 					+ "Error INT)");
 			statement.close();
 		}
@@ -63,12 +64,13 @@ public class DatabaseHandler {
 		System.out.println("Writing measurement into Database");
 		PreparedStatement preparedStatement = dbConn.prepareStatement("INSERT INTO "
 				+ tableName
-				+ " (Time, SpotID, Magnitude, Frequency, Error) VALUES (?,?,?,?,?)");
+				+ " (Time, SpotID, Magnitude, Frequency, Prediction, Error) VALUES (?,?,?,?,?,?)");
 			preparedStatement.setTimestamp(1, now);
 			preparedStatement.setString(2, meas.address);
 			preparedStatement.setDouble(3, meas.magnitude);
 			preparedStatement.setFloat(4, meas.frequency);
-			preparedStatement.setFloat(5, meas.error);
+			preparedStatement.setDouble(5, meas.prediction);
+			preparedStatement.setInt(6, meas.error);
 			preparedStatement.execute();
 			System.out.println(preparedStatement);
 		preparedStatement.close();

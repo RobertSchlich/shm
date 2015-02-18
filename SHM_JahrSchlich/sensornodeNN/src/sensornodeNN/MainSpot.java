@@ -163,7 +163,6 @@ public class MainSpot extends MIDlet {
 			if (errorNN > threshold) ownMeas.error = -1;
 			Measurement NNmeas = new Measurement("NeuralNetwork", expMeas, 0, 0);
 			
-			
 			if (errorNN > threshold) ownMeas.error = -1;
 			else ownMeas.error = 1;
 

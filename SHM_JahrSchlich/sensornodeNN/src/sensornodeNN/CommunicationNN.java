@@ -143,7 +143,5 @@ public class CommunicationNN {
 	        		 System.err.println("Caught " + e + " in exchanging data 2.");
 	        	}
         	}
-
-        	
         }
 }
