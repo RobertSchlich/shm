@@ -117,6 +117,7 @@ public class CommunicationNN {
 	        				dos.writeUTF(allMeas[meas].address);
 	    	        		dos.writeFloat(allMeas[meas].frequency);
 	    	        		dos.writeDouble(allMeas[meas].magnitude);
+	    	        		dos.writeDouble(allMeas[meas].prediction);
 	    	        		dos.writeInt(allMeas[meas].error);
 	    	        		
 	    					dos.flush();

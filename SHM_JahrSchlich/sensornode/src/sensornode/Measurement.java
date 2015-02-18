@@ -5,6 +5,7 @@ public class Measurement{
 	public float frequency;
 	public double magnitude;
 	public int error;
+	public double prediction = 0;
 	
 	// initiates a measurement
 	Measurement(String a, double m, float f, int e){
