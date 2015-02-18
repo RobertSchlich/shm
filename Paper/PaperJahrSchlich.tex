@@ -292,6 +292,7 @@ After the sensor fault detection, the following are stored into the database: th
 
 The neural network has been tested with varying numbers of training measurements (\autoref{fig:traininputs}).
 With increasing numbers of training measurements, the prediction accuracy of the expected magnitude increases.
+With 24 training measurements, a minimum deviation---between the expected magnitude and the measured magnitude---of average 0.47\% has been reached.
 
 \begin{figure}[htb]
     \centering
@@ -323,8 +324,6 @@ The SHM system recognized the deviation and the boolean was set to "TRUE" accord
 	\label{tab:sensorfault}
 \end{table}
 
-
-
 Through the embedded FFT analysis of sampling events, the data traffic is decreased from 512 values per measurement and sensor node to 4 values per sampling event.
 A number stored in the used data format double occupies 8\,bytes of space.
 The data traffic is decreased by (512$-$4)$\times$8\,B\,=\,4064\,B\,=\,3.97\,MB per sampling event, decreasing data traffic by 99.3\,\%.
@@ -336,15 +335,12 @@ The data traffic is decreased by (512$-$4)$\times$8\,B\,=\,4064\,B\,=\,3.97\,MB 
 This paper has shown a decentralized autonomous sensor fault detection strategy for structural health monitoring systems based on neural networks. 
 Autonomous sensor fault detection has been realized by implementing a neural network into each sensor node.
 The neural networks have been trained to predict expected sensor measurements to be compared to actual measurments, in order to detect sensor faults.
-The SHM system has been verified with laboratory experiments, proving that sensor fault detection using neural networks can improve the dependability and the accuracy of structural health monitoring systems.
-
-In this study, a wireless SHM system capable of decentralized autonomous fault detection, is presented.
-The sensor nodes calculate the natural frequency of the structure to monitor the structural integrity.
-The corresponding magnitudes are used for sensor fault detection:
-A neural network is implemented into each sensor node and trained---with magnitudes of past vibrations---to map the correlation of the magnitudes calculated by different sensor nodes.
-During runtime, the neural networks compute expected magnitudes for the embedding sensor node.
-A deviation between the expected and the measured magnitude indicates a sensor fault.
-
+The structural integrity of the monitored structure are detected by observing the natural frequency.
+To verify the proposed approach, the SHM system has been installed on a test structure to be tested in laboratory experiments.
+During several testruns, the prediction accuracy could be reduced up to a deviation of average 0.47\%.
+Simulated sensor faults have been detected reliably.
+Through decentralized data processing, embedded in each sensor node, the data traffic has been reduced by 99.3\,\%.
+It has been proven, that sensor fault detection using neural networks can improve the dependability and the accuracy of structural health monitoring systems.
 
 %----------------------------------------------------------------------------------------
 
