@@ -65,12 +65,22 @@ public class ErrorMeasurement {
 		for (int i = 0; i < inputs.length; i++) {
 
 			double[] outputs = net.propagate(inputs[i]);
+			
+			System.out.println("outputs: " + outputs[0]);
 
 			for (int j = 0; j < outputs.length; j++) {
 				double temp = 0.0;
+				
 				temp = desiredOutputs[i][j] - outputs[j];
-				temp = temp * temp;
-				temp = Math.sqrt(temp);
+
+				System.out.println( i + " temp: " +temp);
+				
+				
+				temp = Math.abs(temp);
+				
+				//temp = temp * temp;
+				//temp = Math.sqrt(temp);
+				
 				error += temp;
 			}
 		}

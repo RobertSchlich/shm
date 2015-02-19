@@ -17,7 +17,7 @@ import com.sun.spot.service.BootloaderListenerService;
 public class MainSpot extends MIDlet {
 	
 	// measurement
-    private int SAMPLE_PERIOD_LISTENING = 1 * 500;  // in milliseconds
+    private int SAMPLE_PERIOD_LISTENING = 1 * 100;  // in milliseconds
     private int SAMPLE_PERIOD_MEASURING = 20;  // in milliseconds
     private int ARRAY_LENGTH = 256;
     private double SAMPLERATE = 1000. / (double)SAMPLE_PERIOD_MEASURING;
@@ -36,7 +36,7 @@ public class MainSpot extends MIDlet {
     // neural network
     private int HIDDEN_UNITS = 3;
     
-    private int trainingEvents = 1;
+    private int trainingEvents = 6;
 
     protected void startApp() throws MIDletStateChangeException {
 
@@ -90,6 +90,7 @@ public class MainSpot extends MIDlet {
 			
 			// write magnitude to NN output array
 			desiredOutputs[event][0] = ownMeas.magnitude; 
+			System.out.println(ownMeas.address +" magnitude: " + ownMeas.magnitude);
 			
 			// COMMUNICATION
         	
@@ -102,6 +103,12 @@ public class MainSpot extends MIDlet {
 				
 				// write magnitude to NN input array
 				inputs[event][sensor] = othMeas[sensor].magnitude;	
+
+				
+				System.out.println(othMeas[sensor].address +" magnitude: " + othMeas[sensor].magnitude);
+
+				Utils.sleep(1000);	
+			
 			}
 			
 			event++;
@@ -111,7 +118,7 @@ public class MainSpot extends MIDlet {
 		// NEURAL NETWORK TRAINING
     	// create lessonMeasurement
     	TrainingSampleLesson lesson = new TrainingSampleLesson(inputs, desiredOutputs);
-    	//System.out.println("sample lesson created");	    	
+    	System.out.println("sample lesson created");	    	
 
         // train the neural network
         NetworkTraining training = new NetworkTraining();
@@ -152,29 +159,25 @@ public class MainSpot extends MIDlet {
 			
 			
 			//FAULT DETECTION
-			double expMeas = nn.propagate(magnitudes)[0];
-			double errorNN = Math.abs(expMeas-ownMeas.magnitude) /  ownMeas.magnitude;
+			ownMeas.prediction = nn.propagate(magnitudes)[0];
+			double errorNN = Math.abs(ownMeas.prediction-ownMeas.magnitude) /  ownMeas.prediction;
 			
-			System.out.println("expMeas: " + expMeas + " ownMeas: " + ownMeas.magnitude);
+			System.out.println("expMeas: " + ownMeas.prediction + " ownMeas: " + ownMeas.magnitude);
 			System.out.println("deviation measured / expected value" + errorNN*100. + "%!");
 			
 			double threshold = 0.01;
 			
 			if (errorNN > threshold) ownMeas.error = -1;
-			Measurement NNmeas = new Measurement("NeuralNetwork", expMeas, 0, 0);
-			
-			if (errorNN > threshold) ownMeas.error = -1;
 			else ownMeas.error = 1;
 
 			//SEND DATA TO BASESTATION
-			Measurement[] allMeas = new Measurement[othMeas.length+2];
-			allMeas[0]=NNmeas;
-			allMeas[1]=ownMeas;
-			
-			for (int i=2; i<othMeas.length+2;i++) allMeas[i]=othMeas[i-2];
+			Measurement[] allMeas = new Measurement[othMeas.length+1];
+			//insert all Measurements in one array
+			allMeas[0]=ownMeas;
+			for (int i=0; i<othMeas.length;i++) allMeas[i+1]=othMeas[i];
 			
 			communication.StoreData(allMeas, HOST_PORT_BASE, BASE_NAME);
-			Utils.sleep(2000);		
+
         }
     }
     
