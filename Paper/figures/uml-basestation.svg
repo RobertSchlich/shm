@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="581.8891"
+   height="220.15794"
+   id="svg5315"
+   version="1.1"
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="uml-basestation.svg">
+  <defs
+     id="defs5317" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="2.0822242"
+     inkscape:cx="293.32215"
+     inkscape:cy="80.828061"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     units="cm"
+     inkscape:window-width="1680"
+     inkscape:window-height="1025"
+     inkscape:window-x="1920"
+     inkscape:window-y="30"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata5320">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Ebene 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-30,-420.36218)">
+    <rect
+       style="fill:none;stroke:#000000;stroke-width:1"
+       height="25"
+       width="180.25397"
+       x="30.5"
+       y="420.86218"
+       id="rect4983" />
+    <text
+       style="font-size:12px;font-family:CMU Sans Serif"
+       font-size="12"
+       x="59.830208"
+       y="438.33917"
+       id="text4985">
+      <tspan
+         style="font-size:14px;font-weight:bold;-inkscape-font-specification:CMU Sans Serif Bold"
+         id="tspan5408">basestation</tspan>
+    </text>
+    <rect
+       style="fill:none;stroke:#000000;stroke-width:1"
+       height="194.15794"
+       width="580.8891"
+       x="30.5"
+       y="445.86218"
+       id="rect4987" />
+    <polyline
+       transform="translate(-136.33188,404.94115)"
+       style="fill:none;stroke:#000000;stroke-width:1"
+       points="368,62 346,62"
+       id="polyline4989" />
+    <line
+       style="fill:#000000;stroke:#000000;stroke-width:1"
+       x1="221.66812"
+       x2="209.66812"
+       y1="459.94116"
+       y2="466.94116"
+       id="line4991" />
+    <line
+       style="fill:#000000;stroke:#000000;stroke-width:1"
+       x1="221.66812"
+       x2="209.66812"
+       y1="473.94116"
+       y2="466.94116"
+       id="line4993" />
+    <rect
+       style="fill:#ffffff;stroke:#ffffff;stroke-width:1"
+       height="114"
+       width="171"
+       x="39.668121"
+       y="458.94116"
+       id="rect4997" />
+    <rect
+       style="fill:none;stroke:#000000;stroke-width:1"
+       height="114"
+       width="171"
+       x="39.668121"
+       y="458.94116"
+       id="rect4999" />
+    <text
+       style="font-size:12px;font-family:CMU Sans Serif"
+       font-size="12"
+       x="43.082031"
+       y="475.99008"
+       id="text5001">
+      <tspan
+         style="font-weight:bold;-inkscape-font-specification:CMU Sans Serif Bold"
+         id="tspan5410">basestation::DatabaseHandler</tspan>
+    </text>
+    <rect
+       style="fill:#000000;stroke:#000000;stroke-width:0.1"
+       height="1"
+       width="171"
+       x="39.668121"
+       y="483.94116"
+       id="rect5003" />
+    <text
+       style="font-size:12px;font-family:CMU Sans Serif"
+       font-size="12"
+       x="43.668121"
+       y="501.28217"
+       id="text5005">+dbConn: Connection</text>
+    <rect
+       style="fill:#000000;stroke:#000000;stroke-width:0.1"
+       height="1"
+       width="171"
+       x="39.668121"
+       y="509.94116"
+       id="rect5007" />
+    <g
+       id="g5446"
+       transform="translate(-6.8318787,1.8178456)">
+      <text
+         id="text5009"
+         y="524.86218"
+         x="50.5"
+         font-size="12"
+         style="font-size:12px;font-family:CMU Sans Serif">+getConnection(): void</text>
+      <text
+         id="text5011"
+         y="542.86218"
+         x="50.5"
+         font-size="12"
+         style="font-size:12px;font-family:CMU Sans Serif">+createTableIfNeeded(): void</text>
+      <text
+         id="text5013"
+         y="560.86218"
+         x="50.5"
+         font-size="12"
+         style="font-size:12px;font-family:CMU Sans Serif">+writeMeasurement(): void</text>
+    </g>
+    <rect
+       style="fill:#ffffff;stroke:#ffffff;stroke-width:1"
+       height="168"
+       width="192"
+       x="231.66812"
+       y="458.94116"
+       id="rect5015" />
+    <rect
+       style="fill:none;stroke:#000000;stroke-width:1"
+       height="168"
+       width="192"
+       x="231.66812"
+       y="458.94116"
+       id="rect5017" />
+    <text
+       style="font-size:12px;font-family:CMU Sans Serif"
+       font-size="12"
+       x="265.78177"
+       y="475.99008"
+       id="text5019">
+      <tspan
+         style="font-style:normal;font-weight:bold;-inkscape-font-specification:CMU Sans Serif Bold"
+         id="tspan5412">basestation::MainBase</tspan>
+    </text>
+    <rect
+       style="fill:#000000;stroke:#000000;stroke-width:0.1"
+       height="1"
+       width="192"
+       x="231.66812"
+       y="483.94116"
+       id="rect5021" />
+    <g
+       id="g5432"
+       transform="translate(-6.8318787,1.3050296)">
+      <text
+         id="text5023"
+         y="498.86218"
+         x="242.5"
+         font-size="12"
+         style="font-size:12px;font-family:CMU Sans Serif">−HOST_PORT: Integer</text>
+      <text
+         id="text5025"
+         y="516.86218"
+         x="242.5"
+         font-size="12"
+         style="font-size:12px;font-family:CMU Sans Serif">−DATABASE_URL: String</text>
+      <text
+         id="text5027"
+         y="534.86218"
+         x="242.5"
+         font-size="12"
+         style="font-size:12px;font-family:CMU Sans Serif">−DATABASE_NAME: String</text>
+      <text
+         id="text5029"
+         y="552.86218"
+         x="242.5"
+         font-size="12"
+         style="font-size:12px;font-family:CMU Sans Serif">−DATABASE_USER: String</text>
+      <text
+         id="text5031"
+         y="570.86218"
+         x="242.5"
+         font-size="12"
+         style="font-size:12px;font-family:CMU Sans Serif">−DATABASE_PASSWORD: String</text>
+      <text
+         id="text5033"
+         y="588.86218"
+         x="242.5"
+         font-size="12"
+         style="font-size:12px;font-family:CMU Sans Serif">−TABLE_NAME: String</text>
+    </g>
+    <rect
+       style="fill:#000000;stroke:#000000;stroke-width:0.1"
+       height="1"
+       width="192"
+       x="231.66812"
+       y="599.94116"
+       id="rect5035" />
+    <text
+       style="font-size:12px;font-family:CMU Sans Serif"
+       font-size="12"
+       x="235.66812"
+       y="616.67352"
+       id="text5037">−run(): void</text>
+    <rect
+       style="fill:#ffffff;stroke:#ffffff;stroke-width:1"
+       height="127"
+       width="152"
+       x="447.66812"
+       y="458.94116"
+       id="rect5233" />
+    <rect
+       style="fill:none;stroke:#000000;stroke-width:1"
+       height="127"
+       width="152"
+       x="447.66812"
+       y="458.94116"
+       id="rect5235" />
+    <text
+       style="font-size:12px;font-family:CMU Sans Serif"
+       font-size="12"
+       x="451.62802"
+       y="476.15988"
+       id="text5237">
+      <tspan
+         style="font-weight:bold;-inkscape-font-specification:CMU Sans Serif Bold"
+         id="tspan5414">basestation::Measurement</tspan>
+    </text>
+    <rect
+       style="fill:#000000;stroke:#000000;stroke-width:0.1"
+       height="1"
+       width="152"
+       x="447.66812"
+       y="483.94116"
+       id="rect5239" />
+    <g
+       id="g5424"
+       transform="translate(-6.8318787,2.2477509)">
+      <text
+         id="text5241"
+         y="498.86218"
+         x="458.5"
+         font-size="12"
+         style="font-size:12px;font-family:CMU Sans Serif">+address: String</text>
+      <text
+         id="text5243"
+         y="516.86218"
+         x="458.5"
+         font-size="12"
+         style="font-size:12px;font-family:CMU Sans Serif">+frequency: float</text>
+      <text
+         id="text5245"
+         y="534.86218"
+         x="458.5"
+         font-size="12"
+         style="font-size:12px;font-family:CMU Sans Serif">+magnitude: double</text>
+      <text
+         id="text5247"
+         y="552.86218"
+         x="458.5"
+         font-size="12"
+         style="font-size:12px;font-family:CMU Sans Serif">+error: int</text>
+    </g>
+    <rect
+       style="fill:#000000;stroke:#000000;stroke-width:0.1"
+       height="1"
+       width="152"
+       x="447.66812"
+       y="563.94116"
+       id="rect5249" />
+    <polyline
+       transform="matrix(0.94122445,0,0,0.94122445,-101.97757,408.58523)"
+       style="fill:none;stroke:#000000;stroke-width:1.06244588"
+       points="559,62 584,62"
+       id="polyline5251" />
+    <line
+       style="fill:#000000;stroke:#000000;stroke-width:1"
+       x1="435.66812"
+       x2="447.66812"
+       y1="473.94116"
+       y2="466.94116"
+       id="line5253" />
+    <line
+       style="fill:#000000;stroke:#000000;stroke-width:1"
+       x1="435.66812"
+       x2="447.66812"
+       y1="459.94116"
+       y2="466.94116"
+       id="line5255" />
+  </g>
+</svg>

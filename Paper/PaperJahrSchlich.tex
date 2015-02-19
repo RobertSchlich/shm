@@ -63,7 +63,7 @@ headsep=10mm, footskip=12mm}
 % 
 \sloppy
 \setlength{\emergencystretch}{3pt}
-\hyphenation{sample-rate auto-nomous moni-toring methods}
+\hyphenation{sample-rate auto-nomous moni-toring methods during}
 
 \begin{sciabstract}
 
@@ -116,7 +116,7 @@ Civil engineering structures are exposed to various external impacts during thei
 Structural health monitoring (SHM) systems can be deployed to evaluate the conditions and to ensure the structural stability of civil engineering structures.
 \citet{BisbySHM} defines SHM as "a non-destructive \textit{in-situ} structural evaluation method that uses any of several sensors which are attached to, or embedded in, a structure".
 The obtained sensor data is collected by sensor nodes, and then analyzed and stored on a computer system over long periods of time. 
-The analysis of the sensor data can reveal abnormal changes in material and geometric behaviour at an early stage.
+The analysis of the sensor data can reveal abnormal changes in material and geometric behavior at an early stage.
 
 Traditionally, the sensor nodes are connected to computer systems with cables.
 Using wired SHM systems has several disadvantages, including expensive wiring, high installation and labor costs as well as inaccessibility of optimal sensor location with wires.
@@ -125,7 +125,7 @@ To reduce transmission time, storage space and power consumption, and to decreas
 
 As data reduction strategy, the natural frequency of a structure can be calculated on the sensor nodes instead of transmitting the raw measurements.
 Changes in the natural frequency result from changes in the vibration behavior, which indicate structural damage \citep{salawu1997detection}.
-The natural frequency can be determined by analysing the frequency spectrum of a vibration of a structure.
+The natural frequency can be determined by analyzing the frequency spectrum of a vibration of a structure.
 The frequency spectrum shows the relationship between the frequencies and magnitudes---magnitudes represent the influence a certain frequency has in a vibration.
 The natural frequency is defined as the frequency with the highest magnitude.
 While the frequencies are specific for a structure, the scale of the magnitudes are dependent on the structure, the degree of the vibration and the observed location on the structure.
@@ -155,7 +155,7 @@ During runtime, the neural networks compute expected magnitudes for the embeddin
 A deviation between the expected and the measured magnitude indicates a sensor fault.
 
 This paper is organized as follows:
-First, a dezentralized wireless structural health monitoring system is designed and implemented. 
+First, a decentralized wireless structural health monitoring system is designed and implemented. 
 Next, a neural network is implemented into each sensor node and trained to predict the sensor measurements of the specific node for detecting sensor faults in a decentralized manner. 
 Then, the system is tested in laboratory experiments. 
 Finally, the experimental results are discussed and future research directions are proposed.
@@ -177,7 +177,7 @@ The SHM system performs the following monitoring tasks:
 4. data storage,
 5. diagnostics and 
 6. information retrieval, see \citet{BisbySHM}.
-The dataflow is illustrated in \autoref{fig:flow}.
+The data flow is illustrated in \autoref{fig:flow}.
 Tasks 1 to 3 are executed by the sensor nodes: During system operation, the sensor nodes acquire acceleration measurements and
 determine the natural frequency and the corresponding magnitude of the structure using a fast Fourier transform (FFT).
 The magnitudes of the natural frequencies are fed into a neural network to detect sensor faults.
@@ -187,8 +187,8 @@ Task 5 and 6 are conducted on the host computer in further steps.
 
 \begin{figure}[hbt]
     \centering
-    \includegraphics{figures/dataflow_tasks_nn.eps}
-    \caption{Dataflow and associated SHM tasks}
+    \includegraphics[scale=0.9]{figures/dataflow_tasks_nn.eps}
+    \caption{Data flow and associated SHM tasks}
     \label{fig:flow}
 \end{figure}
 
@@ -206,7 +206,7 @@ Hidden neurons are used for computation and do not have a physical counterpart.
 \end{figure}
 
 The SHM system is implemented in an object-oriented way using Java programming language. 
-Object orientation uses objects, which are instanciated using classes. 
+Object orientation uses objects, which are instantiated using classes. 
 A class includes methods, allowing the objects to perform actions, and attributes, storing object-specific data.
 The SHM system is organized in two packages---\texttt{sensornode} and \texttt{basestation} that organize several Java classes belonging to a program.
 
@@ -218,7 +218,7 @@ The \texttt{Acceleration\-Sampler} class is responsible for measuring the accele
 There are two phases: first, the acceleration is measured with a low sampling rate.
 Once the acceleration exceeds a threshold, the second phase is entered by increasing the sampling rate. 
 The measured values are stored in the sensors nodes in an array.
-The different phases are indicatad by lighting different LEDs.
+The different phases are indicated by lighting different LEDs.
 The \texttt{FFT} class performs a FFT on the measured accelerations to transform the measured values from time domain into frequency domain. 
 With the transformed data, the magnitudes and the correlating frequencies of the measured vibrations are calculated.
 Finally, the natural frequency is determined by extracting the maximal magnitude.
@@ -226,13 +226,13 @@ The \texttt{Measure\-ment} class defines analyzed measurements by storing the fo
 Using the SNIPE library, a neural network is described and created for fault detection.
 The \texttt{Network\-Training} class defines a routine to train the neural network with previously measured \texttt{Measure\-ment} objects.
 The \texttt{Communi\-cation} class ensures the wireless communication by opening a radio connection between the sensor node and the basestation to transfer the \texttt{Measure\-ment} objects from the sensor node to the basestation.
-For starting the operation of the sensor node, the entry point of the programm is the \texttt{start\-App()} method in the \texttt{Main\-Spot} class. 
+For starting the operation of the sensor node, the entry point of the program is the \texttt{start\-App()} method in the \texttt{Main\-Spot} class. 
 Within the \texttt{Main\-Spot} class, instances of the \texttt{Acceleration\-Sampler} class, the \texttt{FFT} class, the SNIPE neural network classes, the \texttt{Network\-Training} class and the \texttt{Communi\-cation} class are created to perform the monitoring tasks.
 
 \begin{figure}[htbp]
     \centering
     \includegraphics[width = \textwidth]{figures/uml-sensornode.pdf}
-    \caption{Class diagram of the \texttt{sensornode} package ((Update auf NN folgt))}
+    \caption{Class diagram of the \texttt{sensornode} package}
     \label{fig:UML-sn}
 \end{figure}
 
@@ -251,7 +251,7 @@ The entry point of the program is the \texttt{run()} method in the \texttt{Main\
 
 \section*{Laboratory experiments}
 In this section, laboratory experiments, devised to validate the proposed SHM system, are described.
-First, a description of the test setup is given; second, the data aquisition, data processing and sensor fault detection are illustrated; and, finally, the results are discussed. 
+First, a description of the test setup is given; second, the data acquisition, data processing and sensor fault detection are illustrated; and, finally, the results are discussed. 
 
 To validate the proposed approach in laboratory experiments, the wireless SHM system is installed on a test structure, as shown in \autoref{fig:teststructure}.
 The test structure is a 4-story shear-frame structure consisting of four steel plates of 25\,cm\,$\times$\,50\,cm\,$\times$\,0.8\,mm.
@@ -264,12 +264,13 @@ Ensuring a free vibration in natural frequency with little interferences, the st
 
 	\centering
 	
-	\begin{subfigure}{0.49\textwidth}
+	\begin{subfigure}{0.48\textwidth}
 		\includegraphics[width=\textwidth]{figures/testsetupcorrect.jpg}
     	\caption{Regular sensor arrangement}
 		\label{fig:teststructure}
     \end{subfigure}
-  	\begin{subfigure}{0.49\textwidth}
+    \quad
+  	\begin{subfigure}{0.48\textwidth}
 		\includegraphics[width=\textwidth]{figures/testsetuperror.jpg}
     	\caption{Simulated sensor fault}
         \label{fig:sensorfault}
@@ -288,7 +289,7 @@ The data collection phase consists of any desired number of measurements, sensor
 After every measurement, the measured magnitudes of the other sensor nodes are used as input of the neural network to predict the expected magnitude of the embedding sensor nodes for sensor fault detection.
 The deviation of the expected magnitude and the measured magnitude is calculated.
 If the deviation exceeds a threshold, a sensor fault is assumed.
-After the sensor fault detection, the following are stored into the database: the time of the measurement, the natural frequency, the measured magnitude, the expected magnitude, the deviation,  and a boolean value that indicates if a sensor fault was detected.
+After the sensor fault detection, the following variables are stored into the database: the time of the measurement, the natural frequency, the measured magnitude, the expected magnitude, the deviation,  and a boolean value that indicates if a sensor fault was detected.
 
 The neural network has been tested with varying numbers of training measurements (\autoref{fig:traininputs}).
 With increasing numbers of training measurements, the prediction accuracy of the expected magnitude increases.
@@ -296,14 +297,14 @@ With 24 training measurements, a minimum deviation---between the expected magnit
 
 \begin{figure}[htb]
     \centering
-    %\includegraphics{figures/traininputs.pdf}
-    \caption{correlation between number of traing measurements and mean error during collection phase}
+    \includegraphics{figures/traininputs.pdf}
+    \caption{Correlation of number of training measurements and mean deviation \quad(between expected magnitude and measured magnitude)}
     \label{fig:traininputs}
 \end{figure}
 
 To validate the autonomous sensor fault detection, a sensor fault was simulated by shifting and rotating one of the sensor nodes after completion of the training phase.
 The expected magnitudes deviated from the measured magnitudes (\autoref{tab:sensorfault}).
-The SHM system recognized the deviation and the boolean was set to "TRUE" accordingly.
+The SHM system recognized the deviation and the "fault detected" boolean was set to "TRUE" accordingly, showing that the implemented sensor fault detection increases the dependability of the SHM system.
 
 \begin{table}[hb]
 	\centering
@@ -324,7 +325,7 @@ The SHM system recognized the deviation and the boolean was set to "TRUE" accord
 	\label{tab:sensorfault}
 \end{table}
 
-Through the embedded FFT analysis of sampling events, the data traffic is decreased from 512 values per measurement and sensor node to 4 values per sampling event.
+Through the embedded FFT analysis of measurements, the data traffic is decreased from 512 values per measurement and sensor node to 4 values.
 A number stored in the used data format double occupies 8\,bytes of space.
 The data traffic is decreased by (512$-$4)$\times$8\,B\,=\,4064\,B\,=\,3.97\,MB per sampling event, decreasing data traffic by 99.3\,\%.
 
@@ -334,10 +335,10 @@ The data traffic is decreased by (512$-$4)$\times$8\,B\,=\,4064\,B\,=\,3.97\,MB 
 
 This paper has shown a decentralized autonomous sensor fault detection strategy for structural health monitoring systems based on neural networks. 
 Autonomous sensor fault detection has been realized by implementing a neural network into each sensor node.
-The neural networks have been trained to predict expected sensor measurements to be compared to actual measurments, in order to detect sensor faults.
-The structural integrity of the monitored structure are detected by observing the natural frequency.
+The neural networks have been trained to predict expected sensor measurements to be compared to actual measurements, in order to detect sensor faults.
+The structural integrity of the observed structure is monitored by calculating the natural frequency.
 To verify the proposed approach, the SHM system has been installed on a test structure to be tested in laboratory experiments.
-During several testruns, the prediction accuracy could be reduced up to a deviation of average 0.47\%.
+During several test runs, the prediction accuracy could be reduced up to a deviation of average 0.47\%.
 Simulated sensor faults have been detected reliably.
 Through decentralized data processing, embedded in each sensor node, the data traffic has been reduced by 99.3\,\%.
 It has been proven, that sensor fault detection using neural networks can improve the dependability and the accuracy of structural health monitoring systems.
