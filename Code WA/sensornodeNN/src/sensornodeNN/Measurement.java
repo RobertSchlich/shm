@@ -1,9 +1,11 @@
 /**
+ * 
  * @author Jahr&Schlich
- *
+ * 
  */
 
-package basestation;
+package sensornodeNN;
+
 public class Measurement{
 	
 	public String address;
@@ -14,6 +16,7 @@ public class Measurement{
 	
 	// initiates a measurement
 	Measurement(String a, double m, float f, int e){
+		
 		address = a;
 		magnitude = m;
 		frequency = f;
@@ -22,6 +25,7 @@ public class Measurement{
 	
 	// initiates a measurement
 	Measurement(){
+		
 		address = "a";
 		magnitude = 0;
 		frequency = 0;
