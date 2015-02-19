@@ -1,3 +1,8 @@
+/**
+ * @author Jahr&Schlich
+ * 
+ */
+
 package sensornodeNN;
 
 import com.sun.spot.io.j2me.radiogram.*;
@@ -13,8 +18,7 @@ import com.sun.spot.util.Utils;
 import javax.microedition.io.*;
 
 public class CommunicationNN {
-		
-	    String ourAddress = System.getProperty("IEEE_ADDRESS");
+		String ourAddress = System.getProperty("IEEE_ADDRESS");
         ITriColorLED led2 = (ITriColorLED)Resources.lookup(ITriColorLED.class, "LED2");
         ITriColorLED led3 = (ITriColorLED)Resources.lookup(ITriColorLED.class, "LED3");
         ITriColorLED led5 = (ITriColorLED)Resources.lookup(ITriColorLED.class, "LED5");
@@ -24,96 +28,68 @@ public class CommunicationNN {
         DataInputStream dis;
         DataOutputStream dos; 
         
+        // receive measurements from other sensors
         public Measurement ReceiveData(String otherAddress, int hostPort) {
-            //object for other measurement
+            //instantiate object for received measurement of other sensor
             Measurement othMeas = new Measurement();
         	try {     
-        		
-        		//System.out.println("starting ExchangeData. ");
-        		conn = (RadiostreamConnection)Connector.open("radiostream://" + otherAddress + ":" + hostPort);
-        		// set timeout for connection
-        		// conn.setTimeout(10000); 
+
+        		conn = (RadiostreamConnection)Connector.open("radiostream://" 
+        								+ otherAddress + ":" + hostPort);
         		DataInputStream dis = conn.openDataInputStream();
         		DataOutputStream dos = conn.openDataOutputStream();
                  
-        		//System.out.println("Starting communication on" + ourAddress + " with " + otherAddress);
-
-				//System.out.println("try to recieve." );	
 				// receive data from stream
-        		
 	            othMeas.address = otherAddress;
 	            othMeas.frequency = dis.readFloat();
 	    		othMeas.magnitude = dis.readDouble();
 	    		othMeas.error = dis.readInt();
-	    		
-				//System.out.println("datastream received." );
-	    		
-		        // blink third LED
-		        led3.setRGB(0, 255, 255);
-	            led3.setOn();
+
+		        // blink third LED to indicate received measurement
+		        led3.setRGB(0, 255, 255); led3.setOn();
 	            
-	            // send "okay"
+	            // send "okay", so other sensor node stops to try to send
         		dos.writeBoolean(true);
 				dos.flush();
-				//System.out.println("received message flushed." );
-				
-		        // blink second LED
-		        led2.setRGB(0, 255, 0);
-	            led2.setOn();
+
+				// blink second LED
+		        led2.setRGB(0, 255, 0); led2.setOn();
 	            
 	            // close streams and connection
-        		dis.close();
-        		dos.close();
-        		conn.close();
+        		dis.close(); dos.close(); conn.close();
         		
         		// turn off the light
-        		led2.setOff();
-				led3.setOff();
+        		led2.setOff(); led3.setOff();
 	    		        		
-        		
         	} catch (Exception e) {   
         		 System.err.println("Caught " + e + " in exchanging data.");
         	} finally {
 	    		return othMeas;
         	}
-
         }
         
+        // send all measurements to basestation
         public void StoreData(Measurement[] allMeas, int hostPort, String baseAddress) {
-        	//object for other measurement
-        	
-        	//System.out.println("allMeas.length= "+ allMeas.length);
-        	
         	int meas = 0;
-        	
+        	// iterate over list of measurements
         	while ( meas < allMeas.length){
-        		
 	        	try {   
-	            	//System.out.println("meas= "+ meas);
-	            		        		
-	        		
-	        		conn = (RadiostreamConnection)Connector.open("radiostream://" + baseAddress + ":" + hostPort);
-	        		conn.setTimeout(300); 
-	        		
+	        		conn = (RadiostreamConnection)Connector.open("radiostream://" 
+	        									+ baseAddress + ":" + hostPort);
 	        		DataInputStream dis = conn.openDataInputStream();
 	        		DataOutputStream dos = conn.openDataOutputStream();
-	        		
-	        		boolean okay = false;
-	        		
-    		        // turn on fifth LED
-    		        led5.setRGB(0, 255, 0);
-    	            led5.setOn();
-    	            
+	        		// set timeout to repeat flushing
+	        		conn.setTimeout(300); 
+
+	        		// turn on fifth LED
+    		        led5.setRGB(0, 255, 0); led5.setOn();
+    		        boolean okay = false;
 	        		// try to send data until basestation sent okay
 	        		while(okay == false){
 	        			try{
-
-	        		        led6.setRGB(255, 0, 0);
-	        	            led6.setOn();
-	        				Utils.sleep(1000);
-	        	            led6.setOff();	        				
-	        	            
-	        	            // send Data
+	        		        led6.setRGB(255, 0, 0); led6.setOn();
+	        				
+	        	            // write data to stream
 	        				dos.writeUTF(allMeas[meas].address);
 	    	        		dos.writeFloat(allMeas[meas].frequency);
 	    	        		dos.writeDouble(allMeas[meas].magnitude);
@@ -121,25 +97,20 @@ public class CommunicationNN {
 	    	        		dos.writeInt(allMeas[meas].error);
 	    	        		
 	    					dos.flush();
-	    					//System.out.println("flushed to basestation." );
-		    				okay = dis.readBoolean();
-		    				//System.out.println("okay received." );
+	    					// check if basestation received stream
+	    					okay = dis.readBoolean();
+		    				led6.setOff();
 	        			} catch(Exception e){
 	               		 	System.err.println("Caught " + e + " in exchanging data 1.");
 	    					continue;
 	    				}
-	        			
 	        			meas++;
-
 	        		}
         			//turn off
         			led5.setOff();
         			// close streams and connection
-	        		dis.close();
-	        		dos.close();
-	        		conn.close();
-	    		
-	        	} catch (Exception e) {   
+	        		dis.close(); dos.close(); conn.close();
+	    		} catch (Exception e) {   
 	        		 System.err.println("Caught " + e + " in exchanging data 2.");
 	        	}
         	}

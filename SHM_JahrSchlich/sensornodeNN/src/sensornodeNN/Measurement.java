@@ -1,3 +1,9 @@
+/**
+ * 
+ * @author Jahr&Schlich
+ * 
+ */
+
 package sensornodeNN;
 
 public class Measurement{

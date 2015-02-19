@@ -1,8 +1,5 @@
 package sensornodeNN;
 
-
-
-
 /**
  * 
  * This class contains several methods of error measurement for use in a static

@@ -1,3 +1,8 @@
+/**
+ * @author Jahr&Schlich
+ * 
+ */
+
 package sensornode;
 
 import com.sun.spot.io.j2me.radiogram.*;
@@ -13,7 +18,6 @@ import com.sun.spot.resources.transducers.IAccelerometer3D;
 import com.sun.spot.service.BootloaderListenerService;
 //import java.io.Writer;
 
-
 public class MainSpot extends MIDlet {
 
     private int HOST_PORT = 67;
@@ -24,7 +28,6 @@ public class MainSpot extends MIDlet {
     private double THRESHOLD = 0.15;
     private int NUMBER_OF_OTHER_SENSORS = 1;
     
-    
     private String ourAddress = System.getProperty("IEEE_ADDRESS");
     private String otherAddress = "0014.4F01.0000.763F";
     
@@ -34,11 +37,9 @@ public class MainSpot extends MIDlet {
     	new BootloaderListenerService().getInstance().start();
     	// initalize communication between spots
 		CommunicationNormal communication = new CommunicationNormal();
-		
-        //initialize AccelerationSampler
+	    //initialize AccelerationSampler
         AccelerationSampler sensorSampler = new AccelerationSampler();
-		
-       
+	   
         while (true){
 	        // get acceleration for this sensornode
 	        double[] accelerationArray = sensorSampler.getaccelerationArray
@@ -52,11 +53,11 @@ public class MainSpot extends MIDlet {
 			double[] frequency = FFT.calcFreq(transform, SAMPLERATE);
 			// instanziate und initialize measurement object
 			Measurement ownMeas =  FFT.calcNaturalFreq(magnitude, frequency, ourAddress);
-			System.out.println("magnitude: " + ownMeas.magnitude + " frequency: " + ownMeas.frequency);
+			System.out.println("magnitude: " + ownMeas.magnitude + 
+											" frequency: " + ownMeas.frequency);
 			
 			// exchange measurement with measurement of other sensors
 			communication.ExchangeData(ownMeas, otherAddress, HOST_PORT);
-			
 
 			Utils.sleep(2000);
 		}   

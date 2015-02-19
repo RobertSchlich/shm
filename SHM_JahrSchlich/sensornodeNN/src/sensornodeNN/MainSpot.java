@@ -1,3 +1,8 @@
+/**
+ * @author Jahr&Schlich
+ * 
+ */
+
 package sensornodeNN;
 
 import com.sun.spot.io.j2me.radiogram.*;
@@ -12,68 +17,63 @@ import javax.microedition.midlet.MIDletStateChangeException;
 import com.sun.spot.resources.transducers.IAccelerometer3D;
 import com.sun.spot.service.BootloaderListenerService;
 
-
-
 public class MainSpot extends MIDlet {
 	
-	// measurement
+	// constants for measurement
     private int SAMPLE_PERIOD_LISTENING = 1 * 100;  // in milliseconds
     private int SAMPLE_PERIOD_MEASURING = 20;  // in milliseconds
     private int ARRAY_LENGTH = 256;
     private double SAMPLERATE = 1000. / (double)SAMPLE_PERIOD_MEASURING;
     private double THRESHOLD = 0.2;
 
-    // communication
+    // constants for communication
     private String BASE_NAME = "0014.4F01.0000.77BA";
     private String[] SENSOR_NAMES = {"0014.4F01.0000.792D",
-    								"0014.4F01.0000.7840"};
-//    								"0014.4F01.0000.7AFA"}
+    								"0014.4F01.0000.7840",
+    								"0014.4F01.0000.7AFA"}
     private String ourAddress = System.getProperty("IEEE_ADDRESS");
     private int HOST_PORT = 67;
     private int HOST_PORT_BASE = 68;
     
-    
-    // neural network
+    //  constants for neural network
     private int HIDDEN_UNITS = 3;
-    
     private int trainingEvents = 6;
 
     protected void startApp() throws MIDletStateChangeException {
-
+		ITriColorLED led4 = (ITriColorLED)Resources.lookup(ITriColorLED.class, "LED4");
+		int numberOfSensors = SENSOR_NAMES.length;	
+		
         // Listen for downloads/commands over USB connection
     	new BootloaderListenerService().getInstance().start();
     	// initalize communication between spots
 		CommunicationNN communication = new CommunicationNN();
-		
-		//Radiogram for communication to basestation
-		//communication.EstablishConnection(HOST_PORT);
-		
-        //initialize AccelerationSampler
+		//initialize AccelerationSampler
         AccelerationSampler sensorSampler = new AccelerationSampler();
-		
-    	ITriColorLED led4 = (ITriColorLED)Resources.lookup(ITriColorLED.class, "LED4");
-    	
-		int numberOfSensors = SENSOR_NAMES.length;	
-		
+        
 		// NEURAL NETWORK CREATION
-		// descriptor
-		NeuralNetworkDescriptor descriptorNN = new NeuralNetworkDescriptor( numberOfSensors, HIDDEN_UNITS,  1);
+		// create descriptor
+		NeuralNetworkDescriptor descriptorNN = 
+				new NeuralNetworkDescriptor(numberOfSensors, HIDDEN_UNITS, 1);
     	descriptorNN.setSettingsTopologyFeedForward();
-
     	// create neural network
     	NeuralNetwork nn = new NeuralNetwork(descriptorNN);
     	System.out.println("neural network created");
     	
     	// SAMPLING TRAINING DATA
-    	// input and output 2D arrays
+    	// build input and output 2D arrays with measured data
     	double[][] inputs = new double[trainingEvents][numberOfSensors];
     	double[][] desiredOutputs = new double [trainingEvents][1];
-
+    	
+    	/*
+    	 * TRAINING PHASE
+    	 */
+    	
+    	// measure, listen to data from other sensors and 
+    	//fill inputs and desiredOutputs
     	int event = 0;
         while (event < trainingEvents ){
         	
         	// MEASUREMENTS
-  	
 	        // get acceleration for this sensornode
 	        double[] accelerationArray = sensorSampler.getaccelerationArray
 					        (SAMPLE_PERIOD_LISTENING, SAMPLE_PERIOD_MEASURING, 
@@ -86,14 +86,12 @@ public class MainSpot extends MIDlet {
 			double[] frequency = FFT.calcFreq(transform, SAMPLERATE);
 			// instanziate und initialize measurement object
 			Measurement ownMeas =  FFT.calcNaturalFreq(magnitude, frequency, ourAddress);
-			//System.out.println("I did my FFT!");
 			
 			// write magnitude to NN output array
 			desiredOutputs[event][0] = ownMeas.magnitude; 
 			System.out.println(ownMeas.address +" magnitude: " + ownMeas.magnitude);
 			
 			// COMMUNICATION
-        	
 			Measurement othMeas[] = new Measurement[numberOfSensors];
 			// receive measurements from other sensors
 			for(int sensor = 0; sensor<numberOfSensors; sensor++){
@@ -103,20 +101,13 @@ public class MainSpot extends MIDlet {
 				
 				// write magnitude to NN input array
 				inputs[event][sensor] = othMeas[sensor].magnitude;	
-
-				
-				System.out.println(othMeas[sensor].address +" magnitude: " + othMeas[sensor].magnitude);
-
-				Utils.sleep(1000);	
-			
+				Utils.sleep(500);	
 			}
-			
 			event++;
-        }
-			
+        }	
 
 		// NEURAL NETWORK TRAINING
-    	// create lessonMeasurement
+    	// create lesson from collected measurements
     	TrainingSampleLesson lesson = new TrainingSampleLesson(inputs, desiredOutputs);
     	System.out.println("sample lesson created");	    	
 
@@ -126,6 +117,9 @@ public class MainSpot extends MIDlet {
         // blink third LED
         led4.setRGB(0, 255, 255); led4.setOn(); Utils.sleep(500); led4.setOff();
         
+    	/*
+    	 * COLLECTION PHASE
+    	 */
         
         while (true){
         	
@@ -142,8 +136,8 @@ public class MainSpot extends MIDlet {
 			double[] frequency = FFT.calcFreq(transform, SAMPLERATE);
 			// instanziate und initialize measurement object
 			Measurement ownMeas =  FFT.calcNaturalFreq(magnitude, frequency, ourAddress);
-			//System.out.println("I did my FFT!");
 			
+			// array as input for neural network
 			double[] magnitudes = new double[numberOfSensors];
 			// COMMUNICATION
 			Measurement othMeas[] = new Measurement[numberOfSensors];
@@ -153,31 +147,29 @@ public class MainSpot extends MIDlet {
 				String otherAddress = SENSOR_NAMES[sensor];
 				othMeas[sensor] = communication.ReceiveData(otherAddress, HOST_PORT);
 				
-				// write magnitude to NN input array
+				// write magnitude to input arry of neural network
 				magnitudes[sensor] = othMeas[sensor].magnitude;	
 			}
 			
 			
 			//FAULT DETECTION
+			// use neural network to predict magnitude
 			ownMeas.prediction = nn.propagate(magnitudes)[0];
-			double errorNN = Math.abs(ownMeas.prediction-ownMeas.magnitude) /  ownMeas.prediction;
+			// calculate error between predicted and measured magnitude
+			double errorNN = Math.abs(ownMeas.prediction-ownMeas.magnitude) /  
+															ownMeas.prediction;
 			
-			System.out.println("expMeas: " + ownMeas.prediction + " ownMeas: " + ownMeas.magnitude);
-			System.out.println("deviation measured / expected value" + errorNN*100. + "%!");
+			System.out.println("expMeas: " + ownMeas.prediction + " ownMeas: " + 
+															ownMeas.magnitude);
+			System.out.println("deviation: measured/expected: " + errorNN*100. + "%");
 			
-			double threshold = 0.01;
-			
-			if (errorNN > threshold) ownMeas.error = -1;
-			else ownMeas.error = 1;
-
 			//SEND DATA TO BASESTATION
 			Measurement[] allMeas = new Measurement[othMeas.length+1];
 			//insert all Measurements in one array
 			allMeas[0]=ownMeas;
 			for (int i=0; i<othMeas.length;i++) allMeas[i+1]=othMeas[i];
-			
+			// transfer all measurements to basestation
 			communication.StoreData(allMeas, HOST_PORT_BASE, BASE_NAME);
-
         }
     }
     

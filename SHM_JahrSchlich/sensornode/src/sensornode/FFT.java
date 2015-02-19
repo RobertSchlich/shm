@@ -1,12 +1,11 @@
-package sensornode;
 /**
  * @author Orlando Selenu
- * modified by Jahr&Schlich
+ * additional methods by Jahr&Schlich
  * 
  */
+package sensornode;
 
 import java.lang.Math;
-
 import com.sun.squawk.util.MathUtils;
 
 public class FFT {
@@ -145,7 +144,7 @@ public class FFT {
     }
     
     
-	// calculate magnitude as norm of imaginary and real part 
+	// calculate magnitudes as norm of imaginary and real part 
     public static double[] calcMagnitude(double[] transform)
     {
     	int nummeas = transform.length / 2;
@@ -158,7 +157,7 @@ public class FFT {
 		return magnitude;
     }
     
-    // calculate frequencies from samplerate and sampled values
+    // calculate frequencies from samplerate and number of sampled values
     public static double[] calcFreq(double[] transform, double samplerate)
     {
     	int nummeas = transform.length / 2;
@@ -170,30 +169,26 @@ public class FFT {
 		return frequency;
     }
     
-	//get maximal magnitude -> natural frequency
+	//get maximal magnitude and of natural frequency
     public static Measurement calcNaturalFreq (double[] magnitude, double[] frequency, String ourAddress)
     {
     	// split array in half to get rid of double frequencies
     	double[] newMagnitude = new double[magnitude.length/2];
     	for(int i =0;i < newMagnitude.length;i++)
     		newMagnitude[i] = magnitude[i];
-    	
+    	    	
     	// determine maximal magnitude
 		double maxMagnitude = newMagnitude[0];
 		int indexMax = 0;
 		for ( int i = 1; i < newMagnitude.length; i++) {
-			//System.out.println(newMagnitude[i]);
 		    if ( newMagnitude[i] > maxMagnitude) {
 		    	maxMagnitude = newMagnitude[i];
 		    	indexMax = i;
 		    }
 		}
-		
 		//get frequency for maximal  magnitude
 		float maxFrequency = (float) frequency[indexMax];
-		//System.out.println("maxMagnitude= "+ maxMagnitude+
-		//									", maxFrequency= " + maxFrequency);
-		
+
 		Measurement measurement = new Measurement(ourAddress, maxMagnitude, maxFrequency,0);
         return measurement;
     }

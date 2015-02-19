@@ -1,3 +1,8 @@
+/**
+ * @author Jahr&Schlich
+ * 
+ */
+
 package sensornode;
 public class Measurement{
 	
@@ -8,8 +13,7 @@ public class Measurement{
 	public double prediction = 0;
 	
 	// initiates a measurement
-	Measurement(String a, double m, float f, int e){
-		
+	Measurement(String a, double m, float f, int e){		
 		address = a;
 		magnitude = m;
 		frequency = f;
@@ -17,8 +21,7 @@ public class Measurement{
 	}
 	
 	// initiates a measurement
-	Measurement(){
-		
+	Measurement(){		
 		address = "a";
 		magnitude = 0;
 		frequency = 0;
